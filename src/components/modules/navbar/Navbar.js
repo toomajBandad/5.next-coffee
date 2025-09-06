@@ -9,7 +9,7 @@ export default function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   return (
-    <nav className=" w-full z-50 bg-white text-black border-b border-black ">
+    <nav className=" w-full z-50 bg-white text-black border-b border-black sticky top-0">
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-center gap-60 items-center h-16">
           {/* Logo */}
