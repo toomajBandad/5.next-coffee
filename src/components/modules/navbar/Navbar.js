@@ -14,7 +14,7 @@ export default function Navbar() {
         <div className="flex justify-center gap-60 items-center h-16">
           {/* Logo */}
           <div className="text-2xl font-bold">
-            <Link href="/">NEXT</Link>
+            <Link href="/">Next Coffee</Link>
           </div>
 
           {/* Navigation Links */}
