@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   phone: { type: String, required: true },
   role: { type: String, default: "USER" },
+  refreshToken: { type: String, required: false },
 });
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);

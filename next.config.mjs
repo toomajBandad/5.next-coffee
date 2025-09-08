@@ -8,10 +8,10 @@ const nextConfig = {
     images: {
         domains: ["images.unsplash.com", "plus.unsplash.com"],
     },
-    experimental: {
-        appDir: true,
-        serverComponentsExternalPackages: ["mongoose"],
-    },
+    // experimental: {
+    //     appDir: true,
+    //     serverComponentsExternalPackages: ["mongoose"],
+    // },
 };
 
 export default nextConfig;
