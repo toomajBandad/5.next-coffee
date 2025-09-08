@@ -3,7 +3,7 @@ import { FaAngleRight } from "react-icons/fa";
 
 function TitleBar({ title, subtitle, link }) {
   return (
-    <div className="px-6 md:px-16 my-10">
+    <div className="my-10 max-w-7xl mx-auto px-4 md:px-10 lg:px-5">
       <div className="flex items-center justify-between">
         {/* Title and Subtitle */}
         <div className="flex flex-col">

@@ -1,12 +1,12 @@
 import React from "react";
 import Image from "next/image";
 import { FaStar } from "react-icons/fa";
-import image from "../../../../public/images/cards/1.jpg";
+import image from "@images/cards/4.jpg";
 
 function Card({ product }) {
   return (
-    <div className="bg-white shadow-md rounded-xl overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-lg">
-      <div className="relative w-full h-48">
+    <div className="bg-white shadow-md rounded-xl overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-lg cursor-pointer">
+      <div className="relative w-full h-64 ">
         <Image
           src={image}
           alt={product.title}
