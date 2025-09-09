@@ -64,7 +64,7 @@ export default function AuthForm() {
           setEmail("");
           setPassword("");
           setIsLogin(true);
-          router.push("/dashboard");
+          router.push("/");
         } else {
           Swal.fire({
             title: "Error",

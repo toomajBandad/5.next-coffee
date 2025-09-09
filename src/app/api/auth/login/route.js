@@ -46,7 +46,7 @@ export const POST = async (req) => {
 
   try {
     // Generate access token
-    const accessToken = generateAccessToken({
+    const accessToken = await generateAccessToken({
       id: user._id,
       username: user.username,
       role: user.role,
@@ -77,7 +77,7 @@ export const POST = async (req) => {
       {
         status: 201,
         headers: {
-          "Set-Cookie": `token=${accessToken}; HttpOnly; Path=/; Max-Age=900; Secure; SameSite=Strict`,
+          "Set-Cookie": `token=${accessToken}; HttpOnly; Path=/;`,
           "Content-Type": "application/json",
         },
       }
