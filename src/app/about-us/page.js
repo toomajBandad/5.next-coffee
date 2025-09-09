@@ -3,12 +3,12 @@ import image1 from "@images/about/about1.jpg";
 import image2 from "@images/about/about2.jpg";
 import image3 from "@images/about/about3.jpg";
 import Image from "next/image";
-import Breadcrumb from "@/components/modules/breadcrumb/Breadcrumb";
+import HeroTop from "@/components/modules/heroTop/HeroTop";
 
 function About() {
   return (
     <div className="min-h-screen bg-black text-white">
-      <Breadcrumb route="about-us" bg="/images/about/about3.jpg"/>
+      <HeroTop route="about-us" bg="/images/about/about3.jpg"/>
 
       {/* Image Gallery */}
       <section className="grid grid-cols-1 gap-6 px-6 sm:grid-cols-2 md:grid-cols-3">

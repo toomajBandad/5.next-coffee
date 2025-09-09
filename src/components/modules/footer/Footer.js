@@ -1,4 +1,7 @@
 import React from "react";
+import { FaTwitter } from "react-icons/fa";
+import { FaTelegramPlane } from "react-icons/fa";
+import { AiFillInstagram } from "react-icons/ai";
 
 function Footer() {
   return (
@@ -44,22 +47,13 @@ function Footer() {
           <h3 className="text-lg font-semibold mb-3">Connect</h3>
           <div className="flex space-x-4">
             <a href="#" className="text-gray-400 hover:text-white transition">
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                {/* Twitter Icon */}
-                <path d="M..." />
-              </svg>
+                <FaTwitter />
+            </a>
+             <a href="#" className="text-gray-400 hover:text-white transition">
+                <FaTelegramPlane />
             </a>
             <a href="#" className="text-gray-400 hover:text-white transition">
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                {/* Instagram Icon */}
-                <path d="M..." />
-              </svg>
-            </a>
-            <a href="#" className="text-gray-400 hover:text-white transition">
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                {/* LinkedIn Icon */}
-                <path d="M..." />
-              </svg>
+                <AiFillInstagram />
             </a>
           </div>
         </div>

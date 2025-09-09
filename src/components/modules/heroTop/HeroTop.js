@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 
-function Breadcrumb({ route, bg }) {
+function HeroTop({ route, bg }) {
   return (
     <header
       className="relative mb-20 h-[400px] lg:h-[500px] bg-center bg-cover"
@@ -37,4 +37,4 @@ function Breadcrumb({ route, bg }) {
   );
 }
 
-export default Breadcrumb;
+export default HeroTop;
