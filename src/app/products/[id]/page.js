@@ -6,7 +6,6 @@ function Product() {
   return (
     <div>
       <Detail />
-      <Gallery />
     </div>
   );
 }
