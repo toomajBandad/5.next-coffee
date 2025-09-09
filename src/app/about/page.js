@@ -1,0 +1,78 @@
+import React from "react";
+import image1 from "@images/about/about1.jpg";
+import image2 from "@images/about/about2.jpg";
+import image3 from "@images/about/about3.jpg";
+import Image from "next/image";
+
+function About() {
+  return (
+    <div className="min-h-screen bg-black text-white">
+      {/* Hero Section */}
+      <section className="flex flex-col items-center justify-center px-6 py-16 text-center">
+        <h1 className="text-4xl font-extrabold sm:text-5xl md:text-6xl">
+          About Us
+        </h1>
+        <p className="mt-6 max-w-2xl text-lg text-gray-300">
+          Welcome to Toomaj Coffee — where every bean is a story, and every cup
+          is a ritual. We specialize in premium coffee beans, artisan powders,
+          and everything you need to brew perfection.
+        </p>
+      </section>
+
+      {/* Image Gallery */}
+      <section className="grid grid-cols-1 gap-6 px-6 sm:grid-cols-2 md:grid-cols-3">
+        <div className="overflow-hidden rounded-lg">
+          <Image
+            width={200}
+            height={200}
+            src={image1}
+            alt="Coffee Shop Interior"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="overflow-hidden rounded-lg">
+          <Image
+            width={200}
+            height={200}
+            src={image2}
+            alt="Coffee Beans and Powder"
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="overflow-hidden rounded-lg">
+          <Image
+            width={200}
+            height={200}
+            src={image3}
+            alt="Coffee Product Display"
+            className="w-full h-full object-cover"
+          />
+        </div>
+      </section>
+
+      {/* Story Section */}
+      <section className="px-6 py-16 text-center">
+        <h2 className="text-3xl font-bold sm:text-4xl">Our Story</h2>
+        <p className="mt-4 max-w-3xl mx-auto text-gray-400 text-sm sm:text-base">
+          Born from a love of bold flavors and timeless design, Toomaj Coffee
+          began as a small roastery with a big dream: to bring ethically
+          sourced, expertly roasted coffee to every corner of the world. Today,
+          we offer a curated selection of beans, powders, and brewing tools —
+          all crafted to elevate your coffee ritual.
+        </p>
+      </section>
+
+      {/* CTA Section */}
+      <section className="flex flex-col items-center justify-center px-6 pb-16">
+        <a
+          href="/shop"
+          className="mt-6 inline-block rounded border border-white px-6 py-2 text-sm font-medium transition duration-300 hover:bg-white hover:text-black"
+        >
+          Explore Our Coffee
+        </a>
+      </section>
+    </div>
+  );
+}
+
+export default About;
