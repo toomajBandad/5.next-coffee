@@ -3,21 +3,12 @@ import image1 from "@images/about/about1.jpg";
 import image2 from "@images/about/about2.jpg";
 import image3 from "@images/about/about3.jpg";
 import Image from "next/image";
+import Breadcrumb from "@/components/modules/breadcrumb/Breadcrumb";
 
 function About() {
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Hero Section */}
-      <section className="flex flex-col items-center justify-center px-6 py-16 text-center">
-        <h1 className="text-4xl font-extrabold sm:text-5xl md:text-6xl">
-          About Us
-        </h1>
-        <p className="mt-6 max-w-2xl text-lg text-gray-300">
-          Welcome to Toomaj Coffee — where every bean is a story, and every cup
-          is a ritual. We specialize in premium coffee beans, artisan powders,
-          and everything you need to brew perfection.
-        </p>
-      </section>
+      <Breadcrumb route="about-us" bg="/images/about/about3.jpg"/>
 
       {/* Image Gallery */}
       <section className="grid grid-cols-1 gap-6 px-6 sm:grid-cols-2 md:grid-cols-3">
