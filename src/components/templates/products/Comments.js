@@ -2,7 +2,7 @@ import React from "react";
 import Comment from "@/components/modules/comment/Comment";
 import CommentForm from "./CommentForm";
 
-function Comments({ comments }) {
+function Comments({ comments,productID }) {
   return (
     <section className="mt-16">
       <h2 className="text-2xl font-bold text-gray-800 mb-8 text-center">
@@ -28,7 +28,7 @@ function Comments({ comments }) {
           <h3 className="text-lg font-semibold text-gray-700 mb-4">
             Leave a Comment
           </h3>
-          <CommentForm />
+          <CommentForm productID={productID}/>
         </div>
       </div>
     </section>

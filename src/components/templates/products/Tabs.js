@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import Description from "./Description";
 import MoreInfoes from "./MoreInfoes";
@@ -37,7 +37,10 @@ function Tabs({ product }) {
         {activeTab === "description" && <Description />}
         {activeTab === "moreInfoes" && <MoreInfoes />}
         {activeTab === "comments" && (
-          <Comments comments={JSON.parse(JSON.stringify(product.comments))} />
+          <Comments
+            comments={JSON.parse(JSON.stringify(product.comments))}
+            productID={product._id}
+          />
         )}
       </div>
     </div>

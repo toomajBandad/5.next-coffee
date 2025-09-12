@@ -40,10 +40,26 @@ export async function POST(req) {
       email,
       score,
     });
-    const updatedProduct = await ProductModel.findOneAndUpdate(
-      { _id: productID },
-      { $push: { comments: newComment._id } }
+
+    // Push the new comment ID to the product
+    await ProductModel.findByIdAndUpdate(productID, {
+      $push: { comments: newComment._id },
+    });
+
+    // Update product score
+    const productComments = await CommentModel.find({ productID });
+    const totalScore = productComments.reduce(
+      (sum, comment) => sum + comment.score,
+      0
     );
+    const averageScore =
+      productComments.length > 0
+        ? Math.round(totalScore / productComments.length)
+        : 0;
+
+    await ProductModel.findByIdAndUpdate(productID, {
+      $set: { score: averageScore },
+    });
 
     return NextResponse.json(
       {
