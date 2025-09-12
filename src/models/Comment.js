@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import Product from "./Product";
 
 const commentSchema = new mongoose.Schema({
-  product: { type: mongoose.Types.ObjectId, ref: "Product", required: true },
+  productID: { type: mongoose.Types.ObjectId, ref: "Product", required: true },
   username: { type: String, required: true },
   body: { type: String, required: true },
   email: { type: String, required: true },

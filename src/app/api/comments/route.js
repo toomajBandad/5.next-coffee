@@ -1,17 +1,18 @@
 import connectToDB from "@/configs/db";
+import CommentModel from "@/models/Comment";
 import ProductModel from "@/models/Product";
 import { NextResponse } from "next/server";
-import "@/models/Comment";
+import "@/models/Product";
 
 export async function GET() {
   try {
     await connectToDB();
-    const products = await ProductModel.find({}, "-__v").populate("comments");
+    const comments = await CommentModel.find({}, "-__v").populate("productID");
 
     return NextResponse.json(
       {
-        message: "Products fetched successfully!",
-        data: products,
+        message: "comments fetched successfully!",
+        data: comments,
         success: true,
       },
       { status: 200 }
@@ -30,25 +31,24 @@ export async function GET() {
 export async function POST(req) {
   try {
     await connectToDB();
+    const { productID, username, body, email, score } = await req.json();
 
-    const { name, price, shortDesc, desc, weight, suitable, smell, tags } =
-      await req.json();
-
-    const newProduct = await ProductModel.create({
-      name,
-      price,
-      shortDesc,
-      desc,
-      weight,
-      suitable,
-      smell,
-      tags,
+    const newComment = await CommentModel.create({
+      productID,
+      username,
+      body,
+      email,
+      score,
     });
+    const updatedProduct = await ProductModel.findOneAndUpdate(
+      { _id: productID },
+      { $push: { comments: newComment._id } }
+    );
 
     return NextResponse.json(
       {
-        message: "Product created successfully!",
-        data: newProduct,
+        message: "Comment created successfully!",
+        data: newComment,
         success: true,
       },
       { status: 201 }
