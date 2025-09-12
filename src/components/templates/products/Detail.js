@@ -5,7 +5,7 @@ import React from "react";
 import useBreadcrumbItems from "@/hooks/breadCrumbItemHook";
 import Gallery from "./Gallery";
 
-function Detail() {
+function Detail({product}) {
   const items = useBreadcrumbItems();
 
   return (
@@ -13,7 +13,7 @@ function Detail() {
       {/* Left Column */}
       <div className="flex flex-col gap-20 p-10">
         <Breadcrumb items={items}/>
-        <ProductInfo />
+        <ProductInfo product={product}/>
       </div>
 
       {/* Right Column */}

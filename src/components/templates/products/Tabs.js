@@ -3,14 +3,14 @@ import Description from "./Description";
 import MoreInfoes from "./MoreInfoes";
 import Comments from "./Comments";
 
-function Tabs() {
+function Tabs({ product }) {
   return (
     <div>
       <div>3 Tabs about product with 3 titles</div>
 
       <Description />
       <MoreInfoes />
-      <Comments />
+      <Comments comments={JSON.parse(JSON.stringify(product.comments))} />
     </div>
   );
 }

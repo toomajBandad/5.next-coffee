@@ -11,7 +11,7 @@ const verifyPassword = async (password, hashedPassword) => {
   return isVerified;
 };
 
-const generateAccessToken = async (data) => {
+const generateAccessToken = (data) => {
   const token = sign({ ...data }, process.env.Access_Token_key, {
     expiresIn: "60d",
   });
@@ -31,20 +31,24 @@ const generateRefreshToken = (data) => {
 };
 
 const validateEmail = (email) => {
-  const pattern = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/g
-  return pattern.test(email)
+  const pattern = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/g;
+  return pattern.test(email);
 };
+
 const validatePhone = (phone) => {
-  const pattern = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/g
-  return pattern.test(phone)
+  const pattern = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/g;
+  return pattern.test(phone);
 };
+
 const validatePassword = (password) => {
-  const pattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/g
-  return pattern.test(password)
+  const pattern =
+    /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/g;
+  return pattern.test(password);
 };
+
 const validateUsername = (username) => {
-  const pattern = /^[a-z0-9_-]{3,15}$/g
-  return pattern.test(username)
+  const pattern = /^[a-z0-9_-]{3,15}$/g;
+  return pattern.test(username);
 };
 
 export {

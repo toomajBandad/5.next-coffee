@@ -1,9 +1,16 @@
-import React from 'react'
+import React from "react";
 
-function Comment() {
+function Comment({ comment }) {
   return (
-    <div>Comment</div>
-  )
+    <div>
+      <div>{comment.productID}</div>
+      <div>{comment.username}</div>
+      <div>{comment.body}</div>
+      <div>{comment.email}</div>
+      <div>{comment.score}</div>
+      <div>{comment.date}</div>
+    </div>
+  );
 }
 
-export default Comment
+export default Comment;
