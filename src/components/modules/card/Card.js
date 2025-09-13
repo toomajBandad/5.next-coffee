@@ -9,7 +9,7 @@ function Card({ product }) {
       <div className="relative w-full h-64 ">
         <Image
           src={image}
-          alt={product.title}
+          alt="image alt"
           fill
           className="object-cover"
         />

@@ -17,11 +17,13 @@ export default async function Product({ params }) {
     JSON.stringify(await productModel.findById(productID).populate("comments"))
   );
 
+  const relatedProduct = await productModel.find({ smell: product.smell });
+
   return (
     <div>
       <Detail product={product} />
       <Tabs product={product} />
-      <MoreSameProducts />
+      <MoreSameProducts relatedProduct={relatedProduct} />
     </div>
   );
 }

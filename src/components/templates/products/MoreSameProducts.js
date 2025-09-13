@@ -1,16 +1,15 @@
 import Card from "@/components/modules/card/Card";
 import React from "react";
 
-function MoreSameProducts() {
+function MoreSameProducts({ relatedProduct }) {
   return (
-    <div>
+    <div className="p-5 lg:p-40">
       <div>MoreSameProducts</div>
       <div>Carousel with cards</div>
       <div className="flex ga-5">
-        {/* <Card />
-        <Card />
-        <Card />
-        <Card /> */}
+        {relatedProduct.map((product) => (
+          <Card key={product._id} product={product} />
+        ))}
       </div>
     </div>
   );
