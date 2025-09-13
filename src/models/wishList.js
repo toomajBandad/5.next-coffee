@@ -4,8 +4,8 @@ import "./Product";
 
 const wishListSchema = new mongoose.Schema(
   {
-    userId: { type: mongoose.Types.ObjectId, ref: "User", require: true },
-    productId: { type: mongoose.Types.ObjectId, ref: "Product", require: true },
+    userId: { type: mongoose.Types.ObjectId, ref: "User", required: true },
+    productId: { type: mongoose.Types.ObjectId, ref: "Product", required: true },
   },
   {
     timestamps: true,
@@ -13,6 +13,6 @@ const wishListSchema = new mongoose.Schema(
 );
 
 const WishList =
-  mongoose.models.Comment || mongoose.model("WishList", wishListSchema);
+  mongoose.models.WishList || mongoose.model("WishList", wishListSchema);
 
 export default WishList;

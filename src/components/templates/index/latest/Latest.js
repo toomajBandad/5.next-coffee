@@ -4,11 +4,11 @@ import React from "react";
 
 function Latest() {
   const productArray = [
-    { id: 1, title: "title", img: "../../../../public/images/cards/1.jpg", price: 2000 },
-    { id: 2, title: "title", img: "../../../../public/images/cards/1.jpg", price: 2000 },
-    { id: 3, title: "title", img: "../../../../public/images/cards/1.jpg", price: 2000 },
-    { id: 4, title: "title", img: "../../../../public/images/cards/1.jpg", price: 2000 },
-    { id: 5, title: "title", img: "../../../../public/images/cards/1.jpg", price: 2000 },
+    { id: 1, name: "name", img: "../../../../public/images/cards/1.jpg", price: 2000 },
+    { id: 2, name: "name", img: "../../../../public/images/cards/1.jpg", price: 2000 },
+    { id: 3, name: "name", img: "../../../../public/images/cards/1.jpg", price: 2000 },
+    { id: 4, name: "name", img: "../../../../public/images/cards/1.jpg", price: 2000 },
+    { id: 5, name: "name", img: "../../../../public/images/cards/1.jpg", price: 2000 },
   ];
 
   return (
