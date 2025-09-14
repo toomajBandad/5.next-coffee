@@ -33,12 +33,14 @@ export async function POST(req) {
 
     const { userId, productId } = await req.json();
 
-    const newWishlist = await WishlistModel.create({ userId, productId });
+    const wish = await WishlistModel.findOne({ userId, productId });
+    if (!wish) {
+      await WishlistModel.create({ userId, productId });
+    }
 
     return NextResponse.json(
       {
         message: "Product add to wishlist successfully!",
-        data: newWishlist,
         success: true,
       },
       { status: 201 }

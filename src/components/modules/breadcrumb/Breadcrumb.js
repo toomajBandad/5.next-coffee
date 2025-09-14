@@ -1,7 +1,10 @@
-// components/Breadcrumb.tsx
+"use client"
 import Link from "next/link";
+import useBreadcrumbItems from "@/hooks/breadCrumbItemHook";
 
-export default function Breadcrumb({ items }) {
+export default function Breadcrumb() {
+  const items = useBreadcrumbItems();
+
   return (
     <nav className="text-sm text-gray-800" aria-label="Breadcrumb">
       <ol className="flex space-x-2">

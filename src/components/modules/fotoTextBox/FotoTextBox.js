@@ -15,6 +15,7 @@ function FotoTextBox({ reverse, title, text, btn }) {
             src="/images/cards/2.jpg"
             alt="Monochrome visual"
             fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover grayscale"
           />
         </div>
