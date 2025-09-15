@@ -19,7 +19,7 @@ function Information() {
   ];
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-12 bg-white rounded-lg shadow-lg">
+    <div className="max-w-4xl mx-auto px-6 py-12">
       <h3 className="text-4xl font-extrabold text-black mb-10 text-center">
         Contact Information
       </h3>

@@ -1,22 +1,17 @@
+import React from "react";
 import HeroTop from "@/components/modules/heroTop/HeroTop";
 import Navbar from "@/components/modules/navbar/Navbar";
-import ContactForm from "@/components/templates/contact-us/ContactForm";
-import Information from "@/components/templates/contact-us/Information";
 import { authUser } from "@/utils/authUser";
-import React from "react";
+import ContactUsClient from "@/components/templates/contact-us/ContactUsClient";
 
-async function ContactUs() {
+export default async function ContactUsPage() {
   const user = await authUser();
+
   return (
-    <div>
-      <Navbar isLogin={user ? true : false} />
+    <div className="bg-gray-50 min-h-screen">
+      <Navbar isLogin={!!user} />
       <HeroTop />
-      <duv className="flex  items-center justify-center">
-        <Information />
-        <ContactForm />
-      </duv>
+      <ContactUsClient />
     </div>
   );
 }
-
-export default ContactUs;
