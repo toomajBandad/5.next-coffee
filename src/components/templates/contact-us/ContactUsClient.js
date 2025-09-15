@@ -2,7 +2,14 @@
 import React from "react";
 import ContactForm from "@/components/templates/contact-us/ContactForm";
 import Information from "@/components/templates/contact-us/Information";
-import LeafletMap from "@/components/templates/contact-us/LeafletMap";
+// import LeafletMap from "@/components/templates/contact-us/LeafletMap";
+
+import dynamic from 'next/dynamic';
+
+const LeafletMap = dynamic(() => import('@/components/templates/contact-us/LeafletMap'), {
+  ssr: false,
+});
+
 
 const madrid = [40.416775, -3.703790];
 const barcelona = [41.385063, 2.173404];
