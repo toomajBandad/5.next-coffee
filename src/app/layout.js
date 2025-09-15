@@ -1,3 +1,4 @@
+import Footer from "@/components/modules/footer/Footer";
 import "./globals.css";
 import AOSInit from "@/utils/aos";
 import ScrollToTop from "@/utils/scrollToTop";
@@ -14,6 +15,7 @@ export default function RootLayout({ children }) {
       <body>
         <AOSInit />
         {children}
+        <Footer/>
         <ScrollToTop />
       </body>
     </html>

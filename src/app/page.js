@@ -1,5 +1,4 @@
 import Banner from "@/components/modules/banner/Banner";
-import Footer from "@/components/modules/footer/Footer";
 import Navbar from "@/components/modules/navbar/Navbar";
 import Articles from "@/components/templates/index/articles/Articles";
 import Latest from "@/components/templates/index/latest/Latest";
@@ -29,7 +28,6 @@ export default async function Home() {
       <Latest />
       <Promote />
       <Articles />
-      <Footer />
     </>
   );
 }

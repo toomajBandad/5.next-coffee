@@ -4,11 +4,15 @@ import image2 from "@images/about/about2.jpg";
 import image3 from "@images/about/about3.jpg";
 import Image from "next/image";
 import HeroTop from "@/components/modules/heroTop/HeroTop";
+import Navbar from "@/components/modules/navbar/Navbar";
+import { authUser } from "@/utils/authUser";
 
-function About() {
+async function About() {
+  const user = await authUser();
   return (
     <div className="min-h-screen bg-black text-white">
-      <HeroTop route="about-us" bg="/images/about/about3.jpg"/>
+      <Navbar isLogin={user ? true : false} />
+      <HeroTop route="about-us" bg="/images/about/about3.jpg" />
 
       {/* Image Gallery */}
       <section className="grid grid-cols-1 gap-6 px-6 sm:grid-cols-2 md:grid-cols-3">

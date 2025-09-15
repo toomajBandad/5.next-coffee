@@ -5,11 +5,11 @@ import { AiFillInstagram } from "react-icons/ai";
 
 function Footer() {
   return (
-    <footer className="bg-black text-white px-6 py-10 mt-10">
+    <footer className="bg-black text-white px-6 py-20">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Logo & Description */}
         <div>
-          <h2 className="text-2xl font-bold mb-2">YourBrand</h2>
+          <h2 className="text-2xl font-bold mb-2">Next Coffee</h2>
           <p className="text-sm text-gray-400">
             Crafting digital experiences with elegance and precision.
           </p>
