@@ -1,8 +1,10 @@
 import mongoose from "mongoose";
-import Product from "./Product";
+import "./User";
+import "./Product";
 
 const commentSchema = new mongoose.Schema({
   productID: { type: mongoose.Types.ObjectId, ref: "Product", required: true },
+  userID: { type: mongoose.Types.ObjectId, ref: "User", required: true },
   username: { type: String, required: true },
   body: { type: String, required: true },
   email: { type: String, required: true },
