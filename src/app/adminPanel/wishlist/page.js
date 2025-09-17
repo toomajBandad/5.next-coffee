@@ -2,7 +2,6 @@ import WishListCard from "@/components/templates/p-user/WishListCard";
 import connectToDB from "@/configs/db";
 import { authUser } from "@/utils/authUser";
 import wishListModel from "@/models/wishList";
-import { Suspense } from "react";
 
 async function AdminWishList() {
   try {

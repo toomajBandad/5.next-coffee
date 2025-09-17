@@ -9,8 +9,8 @@ export async function GET() {
     // Connect to the database
     await connectToDB();
 
-    // Get cookies and extract token
-    const cookieStore = cookies();
+    // Await cookies API and extract token
+    const cookieStore = await cookies();
     const token = cookieStore.get("token");
 
     // If no token, return unauthorized
@@ -66,7 +66,6 @@ export async function GET() {
       { status: 200 }
     );
   } catch (err) {
-    // Server error
     return NextResponse.json(
       {
         message: err.message || "Internal server error.",
