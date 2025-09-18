@@ -12,12 +12,12 @@ import {
 import Swal from "sweetalert2";
 
 const navItems = [
-  { name: "Dashboard", href: "/adminPanel", icon: HiOutlineHome },
-  { name: "Orders", href: "/adminPanel/orders", icon: HiOutlineShoppingCart },
-  { name: "Tickets", href: "/adminPanel/tickets", icon: HiOutlineTicket },
-  { name: "Comments", href: "/adminPanel/comments", icon: HiOutlineChat },
-  { name: "Favorites", href: "/adminPanel/wishlist", icon: HiOutlineHeart },
-  { name: "Setting", href: "/adminPanel/setting", icon: HiOutlineCog },
+  { name: "Dashboard", href: "/userPanel", icon: HiOutlineHome },
+  { name: "Orders", href: "/userPanel/orders", icon: HiOutlineShoppingCart },
+  { name: "Tickets", href: "/userPanel/tickets", icon: HiOutlineTicket },
+  { name: "Comments", href: "/userPanel/comments", icon: HiOutlineChat },
+  { name: "Favorites", href: "/userPanel/wishlist", icon: HiOutlineHeart },
+  { name: "Setting", href: "/userPanel/setting", icon: HiOutlineCog },
 ];
 
 async function logoutUser() {

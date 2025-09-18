@@ -8,7 +8,8 @@ export const metadata = {
   description: "Coffee Shop Project",
 };
 
-export default async function AdminLayout({ children }) {
+
+export default async function UserLayout({ children }) {
   const user = await authUser();
 
   if (!user) {
