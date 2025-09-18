@@ -1,8 +1,6 @@
 import Ticket from "@/components/modules/ticket/Ticket";
 
 export default function Tickets({ tickets }) {
-  console.log((tickets) );
-  
   return (
     <div className="p-6 bg-gray-50 rounded-lg mt-10">
       <h2 className="text-xl font-bold mb-4">Recent Tickets</h2>
