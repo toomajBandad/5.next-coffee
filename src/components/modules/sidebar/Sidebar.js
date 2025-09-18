@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import { MdLogout } from "react-icons/md";
 import Swal from "sweetalert2";
@@ -11,7 +12,7 @@ import {
   HiOutlineCog,
 } from "react-icons/hi";
 
-export default function Sidebar() {
+export default function Sidebar({ isAdmin }) {
   const navItems = [
     { name: "Dashboard", href: "/userPanel", icon: HiOutlineHome },
     { name: "Orders", href: "/userPanel/orders", icon: HiOutlineShoppingCart },
@@ -21,34 +22,43 @@ export default function Sidebar() {
     { name: "Setting", href: "/userPanel/setting", icon: HiOutlineCog },
   ];
 
+  const adminItems = [
+    { name: "Dashboard", href: "/adminPanel", icon: HiOutlineHome },
+    { name: "Orders", href: "/adminPanel/orders", icon: HiOutlineShoppingCart },
+    { name: "Tickets", href: "/adminPanel/tickets", icon: HiOutlineTicket },
+    { name: "Comments", href: "/adminPanel/comments", icon: HiOutlineChat },
+    { name: "Favorites", href: "/adminPanel/wishlist", icon: HiOutlineHeart },
+    { name: "Setting", href: "/adminPanel/setting", icon: HiOutlineCog },
+  ];
+
   async function logoutUser() {
-    Swal.fire({
+    const result = await Swal.fire({
       title: "Are you sure you want to logout?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, logout!",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        const response = await fetch("/api/auth/signout", { method: "POST" });
-        if (response.ok) {
-          Swal.fire("Logged out!", "You have been logged out.", "success").then(
-            () => {
-              location.replace("/");
-            }
-          );
-        }
-      }
     });
+
+    if (result.isConfirmed) {
+      const response = await fetch("/api/auth/signout", { method: "POST" });
+      if (response.ok) {
+        await Swal.fire("Logged out!", "You have been logged out.", "success");
+        location.replace("/");
+      }
+    }
   }
+
+  const itemsToRender = isAdmin ? adminItems : navItems;
+
   return (
     <aside className="h-screen w-64 bg-black text-white flex flex-col shadow-lg">
       <div className="px-6 py-6 text-2xl font-bold tracking-wide border-b border-gray-800">
-        User Panel
+        {isAdmin ? "Admin Panel" : "User Panel"}
       </div>
       <nav className="flex-1 px-4 py-6 space-y-2">
-        {navItems.map((item) => {
+        {itemsToRender.map((item) => {
           const Icon = item.icon;
           return (
             <Link
