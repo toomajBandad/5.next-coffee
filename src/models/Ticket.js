@@ -11,6 +11,7 @@ const ticketSchema = new mongoose.Schema(
     title: { type: String, required: true },
     body: { type: String, required: true },
     priority: { type: Number, default: 1, enum: [1, 2, 3] },
+    isAnswered: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

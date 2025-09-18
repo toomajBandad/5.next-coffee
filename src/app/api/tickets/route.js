@@ -40,7 +40,7 @@ export async function GET() {
 export async function POST(req) {
   try {
     await connectToDB();
-    const user = authUser();
+    const user = await authUser();
     if (!user) {
       return NextResponse.json(
         {
