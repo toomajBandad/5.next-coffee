@@ -27,7 +27,7 @@ export default function Sidebar({ isAdmin }) {
     { name: "Orders", href: "/adminPanel/orders", icon: HiOutlineShoppingCart },
     { name: "Tickets", href: "/adminPanel/tickets", icon: HiOutlineTicket },
     { name: "Comments", href: "/adminPanel/comments", icon: HiOutlineChat },
-    { name: "Favorites", href: "/adminPanel/wishlist", icon: HiOutlineHeart },
+    { name: "Manage Users", href: "/adminPanel/manageUsers", icon: HiOutlineHeart },
     { name: "Setting", href: "/adminPanel/setting", icon: HiOutlineCog },
   ];
 
