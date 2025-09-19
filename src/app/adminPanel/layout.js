@@ -14,6 +14,9 @@ export default async function AdminLayout({ children }) {
   if (!user) {
     redirect("./login-register");
   }
+  if (user.role !== "ADMIN") {
+    redirect("/");
+  }
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
       <Topbar />
