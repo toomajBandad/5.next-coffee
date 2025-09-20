@@ -89,65 +89,52 @@ function AccountDetail() {
     fetchUserData();
   }, []);
 
-  return (
-    <div className="min-h-screen bg-white text-black flex items-center justify-center">
-      <div className="w-full max-w-md p-8 border border-black rounded-md shadow-md">
-        <h1 className="text-2xl font-bold mb-6 text-center">
-          Account Settings
-        </h1>
+return (
+  <div className=" bg-white text-black flex items-center justify-center px-4 py-10">
+    <div className="w-full max-w-lg bg-white border border-gray-200 rounded-xl shadow-lg p-8 space-y-6">
 
+      {/* Header */}
+      <div className="text-center">
+        <h1 className="text-3xl font-bold">Account Settings</h1>
+        <p className="text-gray-600 mt-2 text-sm">Update your personal information below</p>
+      </div>
+
+      {/* Form Fields */}
+      <div className="space-y-4">
         {[
-          {
-            label: "Username",
-            value: username,
-            setter: setUsername,
-            type: "text",
-            id: "username",
-          },
-          {
-            label: "Email",
-            value: email,
-            setter: setEmail,
-            type: "email",
-            id: "email",
-          },
-          {
-            label: "Phone",
-            value: phone,
-            setter: setPhone,
-            type: "tel",
-            id: "phone",
-          },
+          { label: "Username", value: username, setter: setUsername, type: "text", id: "username" },
+          { label: "Email", value: email, setter: setEmail, type: "email", id: "email" },
+          { label: "Phone", value: phone, setter: setPhone, type: "tel", id: "phone" },
         ].map(({ label, value, setter, type, id }) => (
-          <div className="mb-4" key={id}>
-            <label htmlFor={id} className="block mb-1 font-medium">
-              {label}
-            </label>
+          <div key={id}>
+            <label htmlFor={id} className="block text-sm font-medium mb-1">{label}</label>
             <input
               id={id}
               type={type}
               value={value}
               onChange={(e) => setter(e.target.value)}
               autoComplete="off"
-              className="w-full px-3 py-2 border border-black rounded bg-white text-black focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full px-4 py-2 border border-gray-300 rounded-md bg-white text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-black"
             />
           </div>
         ))}
-
-        <button
-          onClick={handleUpdateUser}
-          disabled={loading}
-          className={`w-full py-2 px-4 font-semibold rounded border border-black transition-colors duration-300 ${
-            loading
-              ? "bg-gray-400 text-white cursor-not-allowed"
-              : "bg-black text-white hover:bg-white hover:text-black"
-          }`}
-        >
-          {loading ? "Updating..." : "Update User"}
-        </button>
       </div>
+
+      {/* Submit Button */}
+      <button
+        onClick={handleUpdateUser}
+        disabled={loading}
+        className={`w-full py-2 px-4 font-semibold rounded-md transition-colors duration-300 ${
+          loading
+            ? "bg-gray-400 text-white cursor-not-allowed"
+            : "bg-black text-white hover:bg-white hover:text-black border border-black"
+        }`}
+      >
+        {loading ? "Updating..." : "Update User"}
+      </button>
     </div>
-  );
+  </div>
+);
 }
 
 export default AccountDetail;

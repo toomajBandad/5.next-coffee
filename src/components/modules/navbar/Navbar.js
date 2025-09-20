@@ -4,12 +4,11 @@ import { FaAngleDown } from "react-icons/fa";
 import { IoCartOutline } from "react-icons/io5";
 import { IoMdHeartEmpty } from "react-icons/io";
 
-export default function Navbar({ isLogin }) {
+export default function Navbar({ isLogin ,isAdmin}) {
   return (
     <nav className="w-full z-50 bg-white text-black border-b border-black sticky top-0">
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-center gap-60 items-center h-16">
-          {/* Logo */}
           <div className="text-2xl font-bold">
             <Link href="/">Next Coffee</Link>
           </div>
@@ -21,7 +20,7 @@ export default function Navbar({ isLogin }) {
             <li><Link href="/blogs">Weblog</Link></li>
             <li><Link href="/contact-us">Contact Us</Link></li>
             <li><Link href="/about-us">About Us</Link></li>
-            <li><Link href="/rules">Rules</Link></li>
+         
             {!isLogin ? (
               <li><Link href="/login-register">Login / Register</Link></li>
             ) : (
@@ -31,16 +30,18 @@ export default function Navbar({ isLogin }) {
                   Account <FaAngleDown />
                 </div>
                 <div className="absolute left-0 top-full bg-white border border-black shadow-lg flex-col gap-3 text-left p-5 w-40 z-10 hidden group-hover:flex transition-all duration-200 ease-in-out">
+                  <Link href="/userPanel" className="hover:underline">User Panel</Link>
                   <Link href="/userPanel/orders" className="hover:underline">Orders</Link>
                   <Link href="/userPanel/tickets" className="hover:underline">Tickets</Link>
                   <Link href="/userPanel/comments" className="hover:underline">Comments</Link>
-                  <Link href="/userPanel/favorites" className="hover:underline">Favorites</Link>
+                  <Link href="/userPanel/wishlist" className="hover:underline">Favorites</Link>
+                  <Link href="/userPanel/setting" className="hover:underline">Settings</Link>
                 </div>
               </li>
-
-
             )}
-
+              {isAdmin && (
+                 <li><Link href="/adminPanel">Admin Panel</Link></li>
+              )}
 
           </ul>
 

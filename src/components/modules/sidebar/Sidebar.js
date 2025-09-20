@@ -24,9 +24,9 @@ export default function Sidebar({ isAdmin }) {
 
   const adminItems = [
     { name: "Dashboard", href: "/adminPanel", icon: HiOutlineHome },
-    { name: "Orders", href: "/adminPanel/orders", icon: HiOutlineShoppingCart },
+    { name: "Manage Orders", href: "/adminPanel/manageOrders", icon: HiOutlineShoppingCart },
     { name: "Manage Tickets", href: "/adminPanel/manageTickets", icon: HiOutlineTicket },
-    { name: "Comments", href: "/adminPanel/comments", icon: HiOutlineChat },
+    { name: "Manage Comments", href: "/adminPanel/manageComments", icon: HiOutlineChat },
     { name: "Manage Users", href: "/adminPanel/manageUsers", icon: HiOutlineHeart },
     { name: "Setting", href: "/adminPanel/setting", icon: HiOutlineCog },
   ];

@@ -1,54 +1,36 @@
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { IoCartOutline } from "react-icons/io5";
-import { IoMdHeartEmpty } from "react-icons/io";
+import userImg from "@images/cards/4.jpg";
 
-function Topbar() {
+function Topbar({ username }) {
   return (
-    <nav className="w-full z-50 bg-white text-black border-b border-black sticky top-0">
-      <div className="mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-center gap-60 items-center h-16">
-          {/* Logo */}
-          <div className="text-2xl font-bold">
-            <Link href="/">Next - Admin Panel</Link>
+    <nav className="w-full bg-white text-black sticky top-0 z-50 border-b border-gray-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          <div className="text-xl font-bold tracking-wide">
+            <Link href="/">Next Coffee</Link>
           </div>
 
-          {/* Navigation Links */}
-          <ul className="hidden md:flex items-center gap-6 text-sm font-medium">
-            <li>
-              <Link href="/">Home</Link>
-            </li>
-            <li>
-              <Link href="/category">Store</Link>
-            </li>
-            <li>
-              <Link href="/blogs">Weblog</Link>
-            </li>
-            <li>
-              <Link href="/contact-us">Contact Us</Link>
-            </li>
-            <li>
-              <Link href="/about-us">About Us</Link>
-            </li>
-            <li>
-              <Link href="/rules">Rules</Link>
-            </li>
-          </ul>
+          {/* Search Input */}
+          <div className="flex-1 mx-6">
+            <input
+              type="text"
+              placeholder="Search..."
+              className="w-full px-4 py-2 rounded-md border border-gray-300 bg-white text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-black"
+            />
+          </div>
 
-          {/* Icons */}
-          <div className="flex items-center gap-4">
-            <Link href="/cart" className="relative">
-              <IoCartOutline className="text-2xl" />
-              <span className="absolute -top-2 -left-2 bg-black text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                1
-              </span>
-            </Link>
-            <Link href="/favorites" className="relative">
-              <IoMdHeartEmpty className="text-2xl" />
-              <span className="absolute -top-2 -left-2 bg-black text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                1
-              </span>
-            </Link>
+          {/* User Info */}
+          <div className="flex items-center gap-3">
+            <Image
+              src={userImg}
+              alt="User Photo"
+              width={32}
+              height={32}
+              className="rounded-full"
+            />
+            <span className="text-sm font-medium">{username}</span>
           </div>
         </div>
       </div>

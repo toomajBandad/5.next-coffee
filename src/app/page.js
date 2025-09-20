@@ -23,7 +23,10 @@ export default async function Home() {
 
   return (
     <>
-      <Navbar  isLogin = {user ? true : false}/>
+      <Navbar
+        isLogin={user ? true : false}
+        isAdmin={user?.role === "ADMIN" ? true : false}
+      />
       <Banner />
       <Latest />
       <Promote />
