@@ -6,7 +6,7 @@ import { authUser } from "@/utils/authUser";
 export async function GET() {
   try {
     await connectToDB();
-    const user = authUser();
+    const user = await authUser();
     if (!user) {
       return NextResponse.json(
         {

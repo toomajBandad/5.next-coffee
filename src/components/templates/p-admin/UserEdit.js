@@ -1,40 +1,33 @@
 "use client";
-
+import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 
-function UserEdit({ initialUsers = [] }) {
-  const [users, setUsers] = useState(initialUsers);
+function UserEdit({ users }) {
 
-  const fetchUsers = async () => {
-    const res = await fetch("/api/user");
-    const data = await res.json();
-    setUsers(Array.isArray(data) ? data : []);
-  };
+  const router = useRouter();
 
-const handleAction = async (action, user) => {
-  let result;
-
-  try {
-    if (action === "edit") {
-      result = await Swal.fire({
+  async function editUser(user) {
+    try {
+      const result = await Swal.fire({
         title: `Edit ${user.username}`,
         html:
           `<input id="swal-input1" class="swal2-input" placeholder="Username" value="${user.username}">` +
-          `<input id="swal-input2" class="swal2-input" placeholder="Email" value="${user.email}">`,
+          `<input id="swal-input2" class="swal2-input" placeholder="Email" value="${user.email}">` +
+          `<input id="swal-input3" class="swal2-input" placeholder="Phone" value="${user.phone}">`,
         focusConfirm: false,
         showCancelButton: true,
         confirmButtonText: "Save",
-        preConfirm: () => {
-          return {
-            username: document.getElementById("swal-input1").value,
-            email: document.getElementById("swal-input2").value,
-          };
-        },
+        preConfirm: () => ({
+          username: document.getElementById("swal-input1").value,
+          email: document.getElementById("swal-input2").value,
+          phone: document.getElementById("swal-input3").value,
+          role: user.role,
+        }),
       });
 
       if (result.isConfirmed) {
-        const res = await fetch(`/api/user/${user._id}`, {
+        const res = await fetch(`/api/user/editUsers/${user._id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(result.value),
@@ -42,15 +35,19 @@ const handleAction = async (action, user) => {
 
         if (res.ok) {
           await Swal.fire("Saved!", "User updated successfully.", "success");
-          fetchUsers();
+         router.refresh();
         } else {
           await Swal.fire("Error", "Failed to update user.", "error");
         }
       }
+    } catch (error) {
+      console.error("Error updating user:", error);
     }
+  }
 
-    if (action === "remove") {
-      result = await Swal.fire({
+  async function removeUser(user) {
+    try {
+      const result = await Swal.fire({
         title: `Remove ${user.username}?`,
         text: "This action cannot be undone.",
         icon: "warning",
@@ -59,19 +56,25 @@ const handleAction = async (action, user) => {
       });
 
       if (result.isConfirmed) {
-        const res = await fetch(`/api/user/${user._id}`, { method: "DELETE" });
+        const res = await fetch(`/api/user/editUsers/${user._id}`, {
+          method: "DELETE",
+        });
 
         if (res.ok) {
           await Swal.fire("Removed!", "User deleted successfully.", "success");
-          fetchUsers();
+          router.refresh();
         } else {
           await Swal.fire("Error", "Failed to delete user.", "error");
         }
       }
+    } catch (error) {
+      console.error("Error removing user:", error);
     }
+  }
 
-    if (action === "ban") {
-      result = await Swal.fire({
+  async function banUser(user) {
+    try {
+      const result = await Swal.fire({
         title: `Ban ${user.username}?`,
         text: "User will be restricted from access.",
         icon: "warning",
@@ -80,20 +83,21 @@ const handleAction = async (action, user) => {
       });
 
       if (result.isConfirmed) {
-        const res = await fetch(`/api/user/${user._id}/ban`, { method: "POST" });
+        const res = await fetch(`/api/user/editUsers/${user._id}`, {
+          method: "POST",
+        });
 
         if (res.ok) {
           await Swal.fire("Banned!", "User has been banned.", "success");
-          fetchUsers();
+          // fetchUsers();
         } else {
           await Swal.fire("Error", "Failed to ban user.", "error");
         }
       }
+    } catch (error) {
+      console.error("Error banning user:", error);
     }
-  } catch (error) {
-    await Swal.fire("Error", "Something went wrong.", "error");
   }
-};
 
   return (
     <div className="bg-white text-black p-6 rounded-xl shadow-md">
@@ -117,19 +121,19 @@ const handleAction = async (action, user) => {
                 <td className="px-4 py-2 space-x-2">
                   <button
                     className="bg-gray-800 text-white px-3 py-1 rounded hover:bg-gray-700"
-                    onClick={() => handleAction("edit", user)}
+                    onClick={() => editUser(user)}
                   >
                     Edit
                   </button>
                   <button
                     className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-500"
-                    onClick={() => handleAction("remove", user)}
+                    onClick={() => removeUser(user)}
                   >
                     Remove
                   </button>
                   <button
                     className="bg-yellow-500 text-black px-3 py-1 rounded hover:bg-yellow-400"
-                    onClick={() => handleAction("ban", user)}
+                    onClick={() => banUser(user)}
                   >
                     Ban
                   </button>

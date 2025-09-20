@@ -95,7 +95,7 @@ export default function AuthForm() {
       ) {
         Swal.fire({
           title: "Error",
-          text: "Please fill in valid data.",
+          text: "Please fill in valid data. Register failed.",
           icon: "error",
           confirmButtonText: "Try Again",
         });

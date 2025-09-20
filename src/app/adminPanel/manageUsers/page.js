@@ -6,7 +6,7 @@ async function ManageUsers() {
   const users = await userModel.find({}).lean();
   return (
     <div>
-      <UserEdit initialUsers={JSON.parse(JSON.stringify(users))} />
+      <UserEdit users={JSON.parse(JSON.stringify(users))} />
     </div>
   );
 }
