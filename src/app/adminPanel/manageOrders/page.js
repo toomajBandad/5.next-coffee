@@ -1,9 +1,9 @@
 import React from 'react'
 
-function manageOrders() {
+function ManageOrders() {
   return (
-    <div>manageOrders</div>
+    <div>ManageOrders</div>
   )
 }
 
-export default manageOrders
+export default ManageOrders

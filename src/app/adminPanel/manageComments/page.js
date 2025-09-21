@@ -1,9 +1,9 @@
 import React from 'react'
 
-function manageComments() {
+function ManageComments() {
   return (
-    <div>manageComments</div>
+    <div>ManageComments</div>
   )
 }
 
-export default manageComments
+export default ManageComments

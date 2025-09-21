@@ -10,7 +10,9 @@ import {
   HiOutlineChat,
   HiOutlineHeart,
   HiOutlineCog,
+  HiUserGroup 
 } from "react-icons/hi";
+import { RiDiscountPercentFill } from "react-icons/ri";
 
 export default function Sidebar({ isAdmin }) {
   const navItems = [
@@ -27,7 +29,8 @@ export default function Sidebar({ isAdmin }) {
     { name: "Manage Orders", href: "/adminPanel/manageOrders", icon: HiOutlineShoppingCart },
     { name: "Manage Tickets", href: "/adminPanel/manageTickets", icon: HiOutlineTicket },
     { name: "Manage Comments", href: "/adminPanel/manageComments", icon: HiOutlineChat },
-    { name: "Manage Users", href: "/adminPanel/manageUsers", icon: HiOutlineHeart },
+    { name: "Manage Users", href: "/adminPanel/manageUsers", icon: HiUserGroup },
+    { name: "Manage Discounts", href: "/adminPanel/manageDiscounts", icon: RiDiscountPercentFill },
     { name: "Setting", href: "/adminPanel/setting", icon: HiOutlineCog },
   ];
 
