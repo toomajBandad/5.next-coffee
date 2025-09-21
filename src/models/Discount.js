@@ -11,7 +11,7 @@ const discountSchema = new mongoose.Schema(
     code: { type: String, required: true },
     percent: { type: Number, required: true },
     maxUse: { type: Number, required: true },
-    useTimes: { type: Number, required: true },
+    useTimes: { type: Number, default: 0 },
   },
   { timestamps: true }
 );
