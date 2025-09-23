@@ -1,22 +1,19 @@
 import Card from "@/components/modules/card/Card";
 import TitleBar from "@/components/modules/titleBar/TitleBar";
+import connectToDB from "@/configs/db";
+import productModel from "@/models/Product";
 import React from "react";
 
-function Latest() {
-  const productArray = [
-    { id: 1, name: "name", img: "../../../../public/images/cards/1.jpg", price: 2000 },
-    { id: 2, name: "name", img: "../../../../public/images/cards/1.jpg", price: 2000 },
-    { id: 3, name: "name", img: "../../../../public/images/cards/1.jpg", price: 2000 },
-    { id: 4, name: "name", img: "../../../../public/images/cards/1.jpg", price: 2000 },
-    { id: 5, name: "name", img: "../../../../public/images/cards/1.jpg", price: 2000 },
-  ];
+async function Latest() {
+  await connectToDB()
+  const recentProducts = await productModel.find().limit(8).sort({ _id: -1 }).lean()
 
   return (
     <div className="">
       <TitleBar title="Latest Products" subtitle="See our best coffees" link="See All" />
       <div data-aos="fade-up" className="items-center grid grid-cols-1 px-4 md:px-10 lg:px-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6 max-w-7xl mx-auto">
-        {productArray.map((product) => (
-          <Card key={product.id} product={product} />
+        {recentProducts.map((product) => (
+          <Card key={product._id} product={product} />
         ))}
       </div>
     </div>

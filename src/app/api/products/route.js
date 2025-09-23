@@ -31,18 +31,40 @@ export async function POST(req) {
   try {
     await connectToDB();
 
-    const { name, price, shortDesc, desc, weight, suitable, smell, tags } =
-      await req.json();
-
-    const newProduct = await ProductModel.create({
+    const {
       name,
+      brand,
       price,
       shortDesc,
       desc,
       weight,
-      suitable,
+      type,
+      origin,
+      roastLevel,
       smell,
+      score,
+      stock,
       tags,
+      suitable,
+      image,
+    } = await req.json();
+
+    const newProduct = await ProductModel.create({
+      name,
+      brand,
+      price,
+      shortDesc,
+      desc,
+      weight,
+      type,
+      origin,
+      roastLevel,
+      smell,
+      score,
+      stock,
+      tags,
+      suitable,
+      image,
     });
 
     return NextResponse.json(
@@ -63,4 +85,3 @@ export async function POST(req) {
     );
   }
 }
-

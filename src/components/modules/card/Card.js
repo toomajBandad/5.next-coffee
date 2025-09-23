@@ -8,7 +8,7 @@ function Card({ product }) {
     <div className="bg-white shadow-md rounded-xl overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-lg cursor-pointer">
       <div className="relative w-full h-64 ">
         <Image
-          src={image}
+          src={product.image || image}
           alt="image-alt"
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

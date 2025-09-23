@@ -6,7 +6,7 @@ export async function PUT(req, { params }) {
   try {
     await connectToDB();
 
-    const { id } = await params;
+    const { id } =await params;
     if (!id) {
       return NextResponse.json(
         { message: "Product ID is required", success: false },
@@ -16,24 +16,33 @@ export async function PUT(req, { params }) {
 
     const {
       name,
+      brand,
       price,
       shortDesc,
       desc,
       weight,
-      suitable,
+      type,
+      origin,
+      roastLevel,
       smell,
-      tags,
       score,
+      stock,
+      tags,
+      image,
     } = await req.json();
 
     if (
       !name ||
+      !brand ||
       !price ||
       !shortDesc ||
       !desc ||
       !weight ||
-      !suitable ||
-      !smell
+      !type ||
+      !origin ||
+      !roastLevel ||
+      !smell ||
+      !image
     ) {
       return NextResponse.json(
         { message: "All required fields must be filled", success: false },
@@ -45,14 +54,19 @@ export async function PUT(req, { params }) {
       id,
       {
         name,
+        brand,
         price,
         shortDesc,
         desc,
         weight,
-        suitable,
+        type,
+        origin,
+        roastLevel,
         smell,
-        tags: Array.isArray(tags) ? tags.map((tag) => String(tag).trim()) : [],
         score: score ?? 5,
+        stock: stock ?? 0,
+        tags: Array.isArray(tags) ? tags.map((tag) => String(tag).trim()) : [],
+        image,
       },
       { new: true }
     );
@@ -87,7 +101,7 @@ export async function DELETE(req, { params }) {
   try {
     await connectToDB();
 
-    const { id } = await params;
+    const { id } =await params;
 
     const deletedProduct = await Product.findByIdAndDelete(id);
 
