@@ -42,7 +42,7 @@ function ProductEdit({ products }) {
       });
 
       if (result.isConfirmed) {
-        const res = await fetch("/api/product/create", {
+        const res = await fetch("/api/products", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(result.value),
@@ -98,7 +98,7 @@ function ProductEdit({ products }) {
       });
 
       if (result.isConfirmed) {
-        const res = await fetch(`/api/product/edit/${product._id}`, {
+        const res = await fetch(`/api/products/${product._id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(result.value),
@@ -130,7 +130,7 @@ function ProductEdit({ products }) {
       });
 
       if (result.isConfirmed) {
-        const res = await fetch(`/api/product/delete/${product._id}`, {
+        const res = await fetch(`/api/products/${product._id}`, {
           method: "DELETE",
         });
 
