@@ -1,9 +1,11 @@
 "use client";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
 
 function CartTable() {
   const [cart, setCart] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -26,7 +28,7 @@ function CartTable() {
   const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
-    <div className="max-w-5xl mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div className="max-w-5xl mx-auto my-5 p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-3xl font-bold mb-6 text-gray-800">🛒 Your Cart</h2>
 
       {cart.length === 0 ? (
@@ -97,7 +99,9 @@ function CartTable() {
 
       {cart.length > 0 && (
         <div className="mt-6 flex justify-end">
-          <button className="px-6 py-3 bg-black text-white rounded hover:bg-gray-900 transition font-semibold">
+          <button className="px-6 py-3 bg-black text-white rounded hover:bg-gray-900 transition font-semibold"
+          onClick={() => router.push('/checkout')}
+          >
             Proceed to Checkout
           </button>
         </div>

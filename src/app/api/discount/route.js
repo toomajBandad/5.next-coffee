@@ -29,7 +29,7 @@ export async function GET() {
 export async function POST(req) {
   try {
     await connectToDB();
-    const { productID, code, percent, maxUse, useTimes } = await req.json();
+    const { productID, code, percent, maxUse } = await req.json();
 
     const newDiscount = await discountModel.create({
       productID,
@@ -45,6 +45,52 @@ export async function POST(req) {
         success: true,
       },
       { status: 201 }
+    );
+  } catch (err) {
+    return NextResponse.json(
+      {
+        message: err.message || "Something went wrong",
+        success: false,
+      },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PUT(req) {
+  try {
+    await connectToDB();
+    const { code } = await req.json();
+
+    const discount = await discountModel.findOne({ code });
+    if (!discount) {
+      return NextResponse.json(
+        {
+          message: "Invalid discount code",
+          success: false,
+        },
+        { status: 404 }
+      );
+    }
+    if (discount.useTimes >= discount.maxUse) {
+      return NextResponse.json(
+        {
+          message: "Discount code usage limit reached",
+          success: false,
+        },
+        { status: 400 }
+      );
+    }
+    discount.useTimes += 1;
+    await discount.save();
+
+    return NextResponse.json(
+      {
+        message: "Discount applied successfully!",
+        data: discount,
+        success: true,
+      },
+      { status: 200 }
     );
   } catch (err) {
     return NextResponse.json(

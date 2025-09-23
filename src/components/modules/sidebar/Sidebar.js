@@ -13,6 +13,7 @@ import {
   HiUserGroup 
 } from "react-icons/hi";
 import { RiDiscountPercentFill } from "react-icons/ri";
+import { AiOutlineProduct } from "react-icons/ai";
 
 export default function Sidebar({ isAdmin }) {
   const navItems = [
@@ -27,6 +28,7 @@ export default function Sidebar({ isAdmin }) {
   const adminItems = [
     { name: "Dashboard", href: "/adminPanel", icon: HiOutlineHome },
     { name: "Manage Orders", href: "/adminPanel/manageOrders", icon: HiOutlineShoppingCart },
+    { name: "Manage Products", href: "/adminPanel/manageProducts", icon: AiOutlineProduct },
     { name: "Manage Tickets", href: "/adminPanel/manageTickets", icon: HiOutlineTicket },
     { name: "Manage Comments", href: "/adminPanel/manageComments", icon: HiOutlineChat },
     { name: "Manage Users", href: "/adminPanel/manageUsers", icon: HiUserGroup },
