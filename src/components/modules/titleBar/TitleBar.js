@@ -1,7 +1,7 @@
 import React from "react";
 import { FaAngleRight } from "react-icons/fa";
 
-function TitleBar({ title, subtitle, link }) {
+function TitleBar({ title, subtitle, link ,href}) {
   return (
     <div className="my-10 max-w-7xl mx-auto px-4 md:px-10 lg:px-5">
       <div className="flex items-center justify-between">
@@ -14,7 +14,7 @@ function TitleBar({ title, subtitle, link }) {
         {/* Link with Icon */}
         <div>
           <a
-            href={link}
+            href={href}
             className="flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors duration-200"
           >
             <span className="text-sm font-medium">{link}</span>

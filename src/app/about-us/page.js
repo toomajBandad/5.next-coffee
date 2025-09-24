@@ -11,10 +11,7 @@ async function About() {
   const user = await authUser();
   return (
     <div className="min-h-screen bg-black text-white">
-      <Navbar
-        isLogin={user ? true : false}
-        isAdmin={user?.role === "ADMIN" ? true : false}
-      />
+      <Navbar />
       <HeroTop route="about-us" bg="/images/about/about3.jpg" />
 
       {/* Image Gallery */}

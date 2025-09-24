@@ -10,7 +10,7 @@ async function Latest() {
 
   return (
     <div className="">
-      <TitleBar title="Latest Products" subtitle="See our best coffees" link="See All" />
+      <TitleBar title="Latest Products" subtitle="See our best coffees" link="See All" href="store"/>
       <div data-aos="fade-up" className="items-center grid grid-cols-1 px-4 md:px-10 lg:px-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6 max-w-7xl mx-auto">
         {recentProducts.map((product) => (
           <Card key={product._id} product={product} />

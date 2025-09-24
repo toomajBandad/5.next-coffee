@@ -9,8 +9,8 @@ export default async function ContactUsPage() {
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      <Navbar isLogin={!!user} isAdmin={user?.role === "ADMIN" ? true : false}/>
-      <HeroTop />
+      <Navbar />
+      <HeroTop route="contact-us" bg="/images/about/about3.jpg" />
       <ContactUsClient />
     </div>
   );

@@ -6,14 +6,17 @@ import { NextResponse } from "next/server";
 export async function DELETE(req, { params }) {
   try {
     await connectToDB();
-    const user = authUser();
+    const user = await authUser();
     if (!user) {
       return NextResponse.json(
         { message: "Unauthorized", success: false },
         { status: 401 }
       );
     }
-    const productId = params.id;
+    const { id } = await params;
+    const productId = await id;
+    console.log("productId", id);
+
     const userId = user._id;
 
     if (!productId) {
@@ -24,7 +27,8 @@ export async function DELETE(req, { params }) {
     }
 
     await WishlistModel.findOneAndDelete({
-      productId,
+      productId: productId,
+      userId: userId,
     });
 
     return NextResponse.json(

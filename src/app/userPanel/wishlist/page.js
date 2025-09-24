@@ -19,7 +19,7 @@ async function AdminWishList() {
       <main className="min-h-screen bg-gray-100 text-gray-900 p-8">
         <header>
           <h1 className="text-3xl font-bold mb-6 border-b border-gray-300 pb-2">
-            Admin Wish List
+            User Favorites
           </h1>
         </header>
 

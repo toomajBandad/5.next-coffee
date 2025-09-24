@@ -23,10 +23,7 @@ export default async function Product({ params }) {
 
   return (
     <div>
-      <Navbar
-        isLogin={user ? true : false}
-        isAdmin={user?.role === "ADMIN" ? true : false}
-      />
+      <Navbar />
       <Detail product={product} />
       <Tabs product={product} />
       <MoreSameProducts relatedProduct={relatedProduct} />
