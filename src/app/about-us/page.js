@@ -5,10 +5,8 @@ import image3 from "@images/about/about3.jpg";
 import Image from "next/image";
 import HeroTop from "@/components/modules/heroTop/HeroTop";
 import Navbar from "@/components/modules/navbar/Navbar";
-import { authUser } from "@/utils/authUser";
 
 async function About() {
-  const user = await authUser();
   return (
     <div className="min-h-screen bg-black text-white">
       <Navbar />

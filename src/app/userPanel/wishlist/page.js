@@ -8,7 +8,7 @@ async function AdminWishList() {
     await connectToDB();
     const user = await authUser();
     const wishlist = await wishListModel
-      .find({ userId: user._id })
+      .find({ userId: user?._id })
       .populate("productId")
       .lean();
 
