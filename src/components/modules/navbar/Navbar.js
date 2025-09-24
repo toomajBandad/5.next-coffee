@@ -16,7 +16,7 @@ export default function Navbar({ isLogin ,isAdmin}) {
           {/* Navigation Links */}
           <ul className="hidden md:flex items-center gap-6 text-sm font-medium">
             <li><Link href="/">Home</Link></li>
-            <li><Link href="/category">Store</Link></li>
+            <li><Link href="/store">Store</Link></li>
             <li><Link href="/blogs">Weblog</Link></li>
             <li><Link href="/contact-us">Contact Us</Link></li>
             <li><Link href="/about-us">About Us</Link></li>

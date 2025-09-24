@@ -18,7 +18,7 @@ function Detail({ product }) {
 
       {/* Right Column */}
       <div>
-        <Gallery />
+        <Gallery product={product}/>
       </div>
     </div>
   );

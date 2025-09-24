@@ -8,7 +8,7 @@ async function Checkout() {
     const user = await authUser();
   return (
     <div>
-        <Navbar isLogin={user ? true : false} />
+        <Navbar isLogin={user ? true : false} isAdmin={user?.role === "ADMIN" ? true : false}/>
         <HeroTop route="cart" bg="/images/about/about3.jpg" />
         <MainCheckout />
     </div>

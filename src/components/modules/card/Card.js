@@ -2,10 +2,14 @@ import React from "react";
 import Image from "next/image";
 import { FaStar } from "react-icons/fa";
 import image from "@images/cards/4.jpg";
+import Link from "next/link";
 
 function Card({ product }) {
   return (
-    <div className="bg-white shadow-md rounded-xl overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-lg cursor-pointer">
+    <Link
+      className="bg-white shadow-md rounded-xl overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-lg cursor-pointer"
+      href={`/products/${product._id}`}
+    >
       <div className="relative w-full h-64 ">
         <Image
           src={product.image || image}
@@ -24,7 +28,7 @@ function Card({ product }) {
         </div>
         <div className="text-md font-bold text-gray-900">€{product.price}</div>
       </div>
-    </div>
+    </Link>
   );
 }
 
