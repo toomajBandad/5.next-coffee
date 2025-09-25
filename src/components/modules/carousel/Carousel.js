@@ -6,7 +6,7 @@ import "swiper/css/pagination";
 import { Navigation, Autoplay, Pagination } from "swiper/modules";
 import ArticleCard from "@/components/modules/articleCard/ArticleCard";
 
-function Carousel() {
+function Carousel({ latestArticles }) {
   const productArray = [
     { id: 1, title: "title", img: "/images/cards/1.jpg", price: 2000 },
     { id: 2, title: "title", img: "/images/cards/1.jpg", price: 2000 },
@@ -37,9 +37,9 @@ function Carousel() {
         modules={[Navigation, Autoplay, Pagination]}
         className="mb-10"
       >
-        {productArray.map((product) => (
-          <SwiperSlide className="mb-10" key={product.id}>
-            <ArticleCard product={product} />
+        {latestArticles.map((article) => (
+          <SwiperSlide className="mb-10" key={article._id}>
+            <ArticleCard article={article} onEdit={null} onDelete={null} />
           </SwiperSlide>
         ))}
       </Swiper>

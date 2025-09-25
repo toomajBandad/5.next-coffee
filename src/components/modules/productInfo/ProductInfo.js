@@ -58,10 +58,10 @@ function ProductInfo({ product }) {
 
       {/* Rating */}
       <div className="flex items-center gap-2">
-        {[...Array(product.score)].map((_, i) => (
+        {[...Array(Math.round(product.score))].map((_, i) => (
           <FaStar key={i} className="text-amber-300 w-5 h-5" />
         ))}
-        {[...Array(5 - product.score)].map((_, i) => (
+        {[...Array(5 - Math.round(product.score))].map((_, i) => (
           <FaRegStar key={i} className="text-amber-300 w-5 h-5" />
         ))}
         <span className="text-sm text-gray-500 ml-2">

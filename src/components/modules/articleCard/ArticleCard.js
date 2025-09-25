@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React from "react";
 import Image from "next/image";
@@ -10,7 +10,7 @@ function ArticleCard({ article, onEdit, onDelete }) {
       {/* Image */}
       <div className="relative w-full h-48 sm:h-40 md:h-36 lg:h-32">
         <Image
-          src={fallbackImage}
+          src={article?.image || fallbackImage}
           alt={article?.title || "Article Image"}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
@@ -39,20 +39,22 @@ function ArticleCard({ article, onEdit, onDelete }) {
         )}
 
         {/* Action Buttons */}
-        <div className="flex justify-end gap-2 mt-3">
-          <button
-            className="bg-gray-800 text-white px-2 py-1 rounded text-xs hover:bg-gray-700"
-            onClick={() => onEdit?.(article)}
-          >
-            Edit
-          </button>
-          <button
-            className="bg-red-600 text-white px-2 py-1 rounded text-xs hover:bg-red-500"
-            onClick={() => onDelete?.(article)}
-          >
-            Delete
-          </button>
-        </div>
+        {onEdit && onDelete && (
+          <div className="flex justify-end gap-2 mt-3">
+            <button
+              className="bg-gray-800 text-white px-2 py-1 rounded text-xs hover:bg-gray-700"
+              onClick={() => onEdit?.(article)}
+            >
+              Edit
+            </button>
+            <button
+              className="bg-red-600 text-white px-2 py-1 rounded text-xs hover:bg-red-500"
+              onClick={() => onDelete?.(article)}
+            >
+              Delete
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

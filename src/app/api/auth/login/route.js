@@ -55,7 +55,7 @@ export const POST = async (req) => {
       { new: true }
     );
 
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
 
     cookieStore.set("token", accessToken, {
       httpOnly: true,
