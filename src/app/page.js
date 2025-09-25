@@ -1,7 +1,7 @@
 import Banner from "@/components/modules/banner/Banner";
 import Navbar from "@/components/modules/navbar/Navbar";
-import Articles from "@/components/templates/index/articles/Articles";
-import Latest from "@/components/templates/index/latest/Latest";
+import LatestArticles from "@/components/templates/index/latestArticles/LatestArticles";
+import LatestProducts from "@/components/templates/index/latestProducts/LatestProducts";
 import Promote from "@/components/templates/index/promote/Promote";
 import connectToDB from "@/configs/db";
 import userModel from "@/models/User";
@@ -28,9 +28,9 @@ export default async function Home() {
         isAdmin={user?.role === "ADMIN" ? true : false}
       />
       <Banner />
-      <Latest />
+      <LatestProducts />
       <Promote />
-      <Articles />
+      <LatestArticles />
     </>
   );
 }

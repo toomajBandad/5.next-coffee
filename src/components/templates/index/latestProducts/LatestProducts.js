@@ -4,7 +4,7 @@ import connectToDB from "@/configs/db";
 import productModel from "@/models/Product";
 import React from "react";
 
-async function Latest() {
+async function LatestProducts() {
   await connectToDB()
   const recentProducts = await productModel.find().limit(8).sort({ _id: -1 }).lean()
 
@@ -20,4 +20,4 @@ async function Latest() {
   );
 }
 
-export default Latest;
+export default LatestProducts;

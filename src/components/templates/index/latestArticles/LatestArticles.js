@@ -4,7 +4,7 @@ import connectToDB from "@/configs/db";
 import articleModel from "@/models/Article";
 import React from "react";
 
-async function Articles() {
+async function LatestArticles() {
   await connectToDB();
   const latestArticles = await articleModel
     .find({})
@@ -13,13 +13,14 @@ async function Articles() {
   return (
     <div>
       <TitleBar
-        title="Articles"
+        title="Latest Articles"
         subtitle="our latest articles"
         link="All Articles"
+        href="/articles"
       />
       <Carousel latestArticles={JSON.parse(JSON.stringify(latestArticles))} />
     </div>
   );
 }
 
-export default Articles;
+export default LatestArticles;
