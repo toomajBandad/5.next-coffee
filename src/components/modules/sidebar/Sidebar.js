@@ -33,6 +33,7 @@ export default function Sidebar({ isAdmin }) {
     { name: "Manage Comments", href: "/adminPanel/manageComments", icon: HiOutlineChat },
     { name: "Manage Users", href: "/adminPanel/manageUsers", icon: HiUserGroup },
     { name: "Manage Discounts", href: "/adminPanel/manageDiscounts", icon: RiDiscountPercentFill },
+    { name: "Manage Articles", href: "/adminPanel/manageArticles", icon: RiDiscountPercentFill },
     { name: "Setting", href: "/adminPanel/setting", icon: HiOutlineCog },
   ];
 
