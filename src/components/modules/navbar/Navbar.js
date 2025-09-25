@@ -2,9 +2,9 @@ import React from "react";
 import Link from "next/link";
 import wishListModel from "@/models/wishList";
 import { FaAngleDown } from "react-icons/fa";
-import { IoCartOutline } from "react-icons/io5";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { authUser } from "@/utils/authUser";
+import NavbarCartBtn from "../navbarCartBtn/NavbarCartBtn";
 
 export default async function Navbar() {
   const user = await authUser();
@@ -84,12 +84,8 @@ export default async function Navbar() {
 
           {/* Icons */}
           <div className="flex items-center gap-4">
-            <Link href="/cart" className="relative">
-              <IoCartOutline className="text-2xl" />
-              <span className="absolute -top-2 -left-2 bg-black text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                1
-              </span>
-            </Link>
+            <NavbarCartBtn />
+
             <Link href="/userPanel/wishlist" className="relative">
               {user && (
                 <>
