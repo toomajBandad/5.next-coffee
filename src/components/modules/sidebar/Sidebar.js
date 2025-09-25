@@ -58,7 +58,7 @@ export default function Sidebar({ isAdmin }) {
   const itemsToRender = isAdmin ? adminItems : navItems;
 
   return (
-    <aside className="h-screen w-64 bg-black text-white flex flex-col shadow-lg">
+    <aside className="flex flex-col w-64 bg-black text-white shadow-lg">
       <div className="px-6 py-6 text-2xl font-bold tracking-wide border-b border-gray-800">
         {isAdmin ? "Admin Panel" : "User Panel"}
       </div>
@@ -84,9 +84,6 @@ export default function Sidebar({ isAdmin }) {
           <span>Logout</span>
         </div>
       </nav>
-      <div className="px-6 py-4 border-t border-gray-800 text-sm text-gray-500">
-        &copy; 2025 Your Company
-      </div>
     </aside>
   );
 }

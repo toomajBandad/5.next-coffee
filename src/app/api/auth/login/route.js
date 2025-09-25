@@ -1,5 +1,7 @@
 import connectToDB from "@/configs/db";
 import UserModel from "@/models/User";
+import { cookies } from "next/headers";
+
 import {
   verifyPassword,
   generateAccessToken,
@@ -11,46 +13,36 @@ export const POST = async (req) => {
 
   const { email, password } = await req.json();
 
-  // Validate required fields
   if (!email || !password) {
-    return new Response(
-      JSON.stringify({ success: false, message: "Missing required fields" }),
-      {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      }
+    return Response.json(
+      { success: false, message: "Missing required fields" },
+      { status: 400 }
     );
   }
 
   const user = await UserModel.findOne({ email });
   if (!user) {
-    return new Response(
-      JSON.stringify({ success: false, message: "Invalid email or password" }),
-      {
-        status: 401,
-        headers: { "Content-Type": "application/json" },
-      }
+    return Response.json(
+      { success: false, message: "Invalid email or password" },
+      { status: 401 }
     );
   }
 
   const isPasswordValid = await verifyPassword(password, user.password);
   if (!isPasswordValid) {
-    return new Response(
-      JSON.stringify({ success: false, message: "Invalid email or password" }),
-      {
-        status: 401,
-        headers: { "Content-Type": "application/json" },
-      }
+    return Response.json(
+      { success: false, message: "Invalid email or password" },
+      { status: 401 }
     );
   }
 
   try {
-    // Generate access token
-    const accessToken = await generateAccessToken({
+    const accessToken = generateAccessToken({
       id: user._id,
       username: user.username,
       role: user.role,
     });
+
     const refreshToken = generateRefreshToken({
       id: user._id,
       username: user.username,
@@ -59,13 +51,30 @@ export const POST = async (req) => {
 
     await UserModel.findOneAndUpdate(
       { email },
-      { $set: { refreshToken: refreshToken } },
+      { $set: { refreshToken } },
       { new: true }
     );
 
-    // Return success response with secure cookie
-    return new Response(
-      JSON.stringify({
+    const cookieStore = cookies();
+
+    cookieStore.set("token", accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      path: "/",
+      maxAge: 60 * 24 * 60 * 60, // 60 days
+    });
+
+    cookieStore.set("refresh_token", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      path: "/",
+      maxAge: 15 * 24 * 60 * 60, // 15 days
+    });
+
+    return Response.json(
+      {
         success: true,
         message: "User login successfully",
         user: {
@@ -73,23 +82,14 @@ export const POST = async (req) => {
           role: user.role,
           email: user.email,
         },
-      }),
-      {
-        status: 201,
-        headers: {
-          "Set-Cookie": `token=${accessToken}; HttpOnly; Path=/;`,
-          "Content-Type": "application/json",
-        },
-      }
+      },
+      { status: 201 }
     );
   } catch (error) {
     console.error("Login error:", error);
-    return new Response(
-      JSON.stringify({ success: false, message: "Internal server error" }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      }
+    return Response.json(
+      { success: false, message: "Internal server error" },
+      { status: 500 }
     );
   }
 };

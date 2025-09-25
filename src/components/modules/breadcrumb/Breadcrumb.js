@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Link from "next/link";
 import useBreadcrumbItems from "@/hooks/breadCrumbItemHook";
 
@@ -6,12 +6,15 @@ export default function Breadcrumb() {
   const items = useBreadcrumbItems();
 
   return (
-    <nav className="text-sm text-gray-800" aria-label="Breadcrumb">
-      <ol className="flex space-x-2">
+    <nav className="text-sm text-black" aria-label="Breadcrumb">
+      <ol className="flex flex-wrap items-center gap-2">
         {items.map((item, index) => (
           <li key={index} className="flex items-center">
             {item.href ? (
-              <Link href={item.href} className="hover:underline text-black">
+              <Link
+                href={item.href}
+                className="text-black hover:underline transition duration-150"
+              >
                 {item.label}
               </Link>
             ) : (

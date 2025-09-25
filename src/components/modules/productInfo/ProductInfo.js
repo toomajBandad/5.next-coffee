@@ -39,19 +39,19 @@ function ProductInfo({ product }) {
   };
 
   return (
-    <section className="flex flex-col gap-3 p-6 bg-white rounded-lg">
-      {/* Product Title */}
-      <h1 className="text-4xl font-bold text-gray-900">{product.name}</h1>
+    <section className="flex flex-col gap-6 p-6">
+      {/* Title */}
+      <h1 className="text-3xl font-light text-black tracking-wide">{product.name}</h1>
 
       {/* Description */}
-      <p className="text-gray-700 text-lg leading-relaxed">{product.desc}</p>
+      <p className="text-gray-600 text-base leading-relaxed">{product.desc}</p>
 
       {/* Price & Stock */}
       <div className="flex items-center justify-between">
-        <div className="text-3xl font-semibold text-gray-800">
-          ${product.price.toLocaleString()}
+        <div className="text-2xl font-semibold text-black">
+          €{product.price.toFixed(2)}
         </div>
-        <span className="text-sm font-medium text-green-700 bg-green-100 px-3 py-1 rounded-full">
+        <span className="text-xs font-medium text-green-500 bg-gray-200 px-3 py-1 rounded-full border-2 border-green-300">
           In Stock
         </span>
       </div>
@@ -59,43 +59,40 @@ function ProductInfo({ product }) {
       {/* Rating */}
       <div className="flex items-center gap-2">
         {[...Array(product.score)].map((_, i) => (
-          <FaStar key={i} className="text-yellow-400 w-5 h-5" />
+          <FaStar key={i} className="text-amber-300 w-5 h-5" />
         ))}
         {[...Array(5 - product.score)].map((_, i) => (
-          <FaRegStar key={i} className="text-yellow-400 w-5 h-5" />
+          <FaRegStar key={i} className="text-amber-300 w-5 h-5" />
         ))}
-        <span className="text-sm text-gray-600 ml-2">
-          {product.score} Stars ({product.comments.length} reviews)
+        <span className="text-sm text-gray-500 ml-2">
+          {product.score} Stars ({product.comments?.length || 0} reviews)
         </span>
       </div>
 
       {/* Quantity Selector */}
       <div className="flex items-center gap-4">
         <button
-          aria-label="Decrease quantity"
           onClick={() => handleQuantityChange(-1)}
-          className="w-10 h-10 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+          className="w-10 h-10 bg-gray-100 text-black rounded border border-gray-300 hover:bg-gray-200 transition"
         >
           −
         </button>
-        <span className="text-lg font-medium">{count}</span>
+        <span className="text-lg font-medium text-black">{count}</span>
         <button
-          aria-label="Increase quantity"
           onClick={() => handleQuantityChange(1)}
-          className="w-10 h-10 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+          className="w-10 h-10 bg-gray-100 text-black rounded border border-gray-300 hover:bg-gray-200 transition"
         >
           +
         </button>
       </div>
 
-      <div>
-        <button
-          onClick={addToCart}
-          className="mt-4 p-3 bg-black text-white font-semibold rounded hover:bg-gray-900 transition w-30"
-        >
-          Add to Cart
-        </button>
-      </div>
+      {/* Add to Cart */}
+      <button
+        onClick={addToCart}
+        className="mt-4 px-6 py-3 bg-black text-white font-medium rounded hover:bg-gray-800 cursor-pointer transition"
+      >
+        Add to Cart
+      </button>
     </section>
   );
 }
