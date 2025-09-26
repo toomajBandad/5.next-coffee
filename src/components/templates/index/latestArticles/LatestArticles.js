@@ -11,7 +11,7 @@ async function LatestArticles() {
     .limit(10)
     .sort({ createdAt: -1 });
   return (
-    <div>
+    <div data-aos="fade-up">
       <TitleBar
         title="Latest Articles"
         subtitle="our latest articles"
