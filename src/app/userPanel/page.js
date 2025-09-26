@@ -37,7 +37,7 @@ export default async function userHome() {
         />
         <Box
           icon={<FaHeart />}
-          title="Wish List Count"
+          title="Favorites Count"
           number={wishes.length}
         />
         <Box

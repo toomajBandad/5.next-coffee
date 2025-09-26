@@ -12,7 +12,7 @@ export default async function ArticlesPage() {
   return (
     <div>
       <Navbar />
-      <HeroTop route="articles" bg="/images/about/about3.jpg" />
+      <HeroTop route="articles" bg="/images/webbanners/7.jpg" />
       {/* Header */}
       <div className="px-6 py-10 max-w-7xl mx-auto">
         <div className="mb-8 text-center">

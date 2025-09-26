@@ -62,8 +62,12 @@ export default function ProductCard({ product }) {
             </div>
 
             <div className="flex justify-between items-center pt-2">
-              <span className="text-lg font-semibold text-black">€{price.toFixed(2)}</span>
-              <span className="text-xs underline text-gray-500 hover:text-black">View →</span>
+              <span className="text-lg font-semibold text-black">
+                €{price.toFixed(2)}
+              </span>
+              <span className="text-xs underline text-gray-500 hover:text-black">
+                View →
+              </span>
             </div>
           </div>
         </div>

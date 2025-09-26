@@ -1,21 +1,20 @@
 "use client";
 import React from "react";
-// Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
-import banner1 from "../../../../public/images/carousel/banner1.jpg";
-import banner2 from "../../../../public/images/carousel/banner2.jpg";
-import banner3 from "../../../../public/images/carousel/banner3.jpg";
-import banner4 from "../../../../public/images/carousel/banner4.jpg";
-import banner5 from "../../../../public/images/carousel/banner5.jpg";
-import banner6 from "../../../../public/images/carousel/banner6.jpg";
-
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
-
-// import required modules
 import { Navigation, Autoplay } from "swiper/modules";
+
+// Banner images
+import banner1 from "../../../../public/images/webbanners/10.jpg";
+import banner2 from "../../../../public/images/webbanners/12.jpg";
+import banner3 from "../../../../public/images/webbanners/3.jpg";
+import banner4 from "../../../../public/images/webbanners/4.jpg";
+import banner5 from "../../../../public/images/webbanners/5.jpg";
+import banner6 from "../../../../public/images/webbanners/7.jpg";
+
+const banners = [banner1, banner2, banner3, banner4, banner5, banner6];
 
 function Banner() {
   return (
@@ -29,62 +28,37 @@ function Banner() {
         }}
         navigation={true}
         modules={[Navigation, Autoplay]}
-        className="mySwiper "
+        className="overflow-hidden shadow-lg"
       >
-        <SwiperSlide className="">
-          <Image
-            className="w-full"
-            src={banner1}
-            width={1200}
-            height={500}
-            alt="carouselImgs"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            className="w-full"
-            src={banner2}
-            width={1200}
-            height={500}
-            alt="carouselImgs"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            className="w-full"
-            src={banner3}
-            width={1200}
-            height={500}
-            alt="carouselImgs"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            className="w-full"
-            src={banner4}
-            width={1200}
-            height={500}
-            alt="carouselImgs"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            className="w-full"
-            src={banner5}
-            width={1200}
-            height={500}
-            alt="carouselImgs"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            className="w-full"
-            src={banner6}
-            width={1200}
-            height={500}
-            alt="carouselImgs"
-          />
-        </SwiperSlide>
+        {banners.map((banner, index) => (
+          <SwiperSlide key={index}>
+            <div className="relative w-full h-[250px] md:h-[400px] lg:h-[500px]">
+              {/* Banner Image */}
+              <Image
+                src={banner}
+                alt={`Banner ${index + 1}`}
+                fill
+                className="object-cover w-full h-full"
+                priority={index === 0}
+              />
+
+              {/* Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent z-10" />
+
+              {/* Overlay Text */}
+              <div className="absolute inset-0 flex items-center justify-center z-20 px-4 text-white text-center">
+                <div>
+                  <h2 className="text-2xl md:text-4xl font-bold drop-shadow-lg">
+                    Welcome to Next Coffee
+                  </h2>
+                  <p className="mt-2 text-sm md:text-lg drop-shadow-md">
+                    Brew better. Learn deeper. Shop smarter.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   );

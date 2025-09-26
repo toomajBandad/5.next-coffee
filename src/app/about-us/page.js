@@ -12,6 +12,28 @@ async function About() {
       <Navbar />
       <HeroTop route="about-us" bg="/images/about/about3.jpg" />
 
+      {/* Story Section */}
+      <section className="px-6 py-16 text-center">
+        <h2 className="text-3xl font-bold sm:text-4xl">Our Story</h2>
+        <p className="mt-4 max-w-3xl mx-auto text-gray-400 text-sm sm:text-base">
+          Born from a love of bold flavors and timeless design, Toomaj Coffee
+          began as a small roastery with a big dream: to bring ethically
+          sourced, expertly roasted coffee to every corner of the world. Today,
+          we offer a curated selection of beans, powders, and brewing tools —
+          all crafted to elevate your coffee ritual.
+        </p>
+      </section>
+
+      {/* CTA Section */}
+      <section className="flex flex-col items-center justify-center px-6 pb-16">
+        <a
+          href="/store"
+          className="mt-6 inline-block rounded border border-white px-6 py-2 text-sm font-medium transition duration-300 hover:bg-white hover:text-black"
+        >
+          Explore Our Coffee
+        </a>
+      </section>
+
       {/* Image Gallery */}
       <section className="grid grid-cols-1 gap-6 px-6 sm:grid-cols-2 md:grid-cols-3">
         <div className="overflow-hidden rounded-lg">
@@ -41,28 +63,6 @@ async function About() {
             className="w-full h-full object-cover"
           />
         </div>
-      </section>
-
-      {/* Story Section */}
-      <section className="px-6 py-16 text-center">
-        <h2 className="text-3xl font-bold sm:text-4xl">Our Story</h2>
-        <p className="mt-4 max-w-3xl mx-auto text-gray-400 text-sm sm:text-base">
-          Born from a love of bold flavors and timeless design, Toomaj Coffee
-          began as a small roastery with a big dream: to bring ethically
-          sourced, expertly roasted coffee to every corner of the world. Today,
-          we offer a curated selection of beans, powders, and brewing tools —
-          all crafted to elevate your coffee ritual.
-        </p>
-      </section>
-
-      {/* CTA Section */}
-      <section className="flex flex-col items-center justify-center px-6 pb-16">
-        <a
-          href="/shop"
-          className="mt-6 inline-block rounded border border-white px-6 py-2 text-sm font-medium transition duration-300 hover:bg-white hover:text-black"
-        >
-          Explore Our Coffee
-        </a>
       </section>
     </div>
   );
