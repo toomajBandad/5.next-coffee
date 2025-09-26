@@ -10,7 +10,7 @@ async function About() {
   return (
     <div className="min-h-screen bg-black text-white">
       <Navbar />
-      <HeroTop route="about-us" bg="/images/about/about3.jpg" />
+      <HeroTop route="about-us" bg="/images/webbanners/9.jpg" />
 
       {/* Story Section */}
       <section className="px-6 py-16 text-center">

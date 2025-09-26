@@ -8,7 +8,7 @@ export default async function ContactUsPage() {
   return (
     <div className="bg-gray-50 min-h-screen">
       <Navbar />
-      <HeroTop route="contact-us" bg="/images/about/about3.jpg" />
+      <HeroTop route="contact-us" bg="/images/webbanners/5.jpg" />
       <ContactUsClient />
     </div>
   );
