@@ -25,8 +25,6 @@ export default function WishListCard({ product }) {
       text: "Do you really want to remove this product from your wishlist?",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
       confirmButtonText: "Yes, remove it!",
       cancelButtonText: "Cancel",
     });

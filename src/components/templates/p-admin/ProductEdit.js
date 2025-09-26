@@ -52,8 +52,6 @@ function ProductEdit({ products }) {
     showCancelButton: true,
     confirmButtonText: "Yes, delete it",
     cancelButtonText: "Cancel",
-    confirmButtonColor: "#d33",
-    cancelButtonColor: "#3085d6",
   });
 
   if (!result.isConfirmed) return;

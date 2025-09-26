@@ -19,15 +19,15 @@ export default async function Navbar() {
     user && (await wishListModel.find({ userId: user._id }).lean());
 
   return (
-    <nav className="w-full z-50 bg-white text-black border-b border-black sticky top-0">
+    <nav className="w-full z-50 bg-white text-black border-b border-black sticky top-0 py-2">
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-center gap-60 items-center h-16">
-          <div className="text-2xl font-bold">
+          <div className="text-4xl font-bold">
             <Link href="/">Next Coffee</Link>
           </div>
 
           {/* Navigation Links */}
-          <ul className="hidden md:flex items-center gap-6 text-sm font-medium">
+          <ul className="hidden md:flex items-center gap-6 font-medium">
             <li>
               <Link href="/">Home</Link>
             </li>
@@ -89,7 +89,7 @@ export default async function Navbar() {
             <Link href="/userPanel/wishlist" className="relative">
               {user && (
                 <>
-                  <IoMdHeartEmpty className="text-2xl" />
+                  <IoMdHeartEmpty className="text-3xl" />
                   <span className="absolute -top-2 -left-2 bg-black text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                     {wishes?.length || 0}
                   </span>

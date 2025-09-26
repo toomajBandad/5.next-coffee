@@ -26,7 +26,7 @@ export default function ProductCard({ product }) {
           className={`relative bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm transition-all duration-300 ease-in-out ${
             isOutOfStock
               ? "grayscale opacity-70"
-              : "hover:shadow-2xl hover:-translate-y-1 hover:scale-[1.01]"
+              : "hover:shadow-xl hover:-translate-y-1 hover:scale-[1.01]"
           }`}
         >
           <div className="relative w-full h-64 bg-gray-100 overflow-hidden">

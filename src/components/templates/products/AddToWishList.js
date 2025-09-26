@@ -28,9 +28,6 @@ function AddToWishList({ productID }) {
         icon: "warning",
         title: "Login Required",
         text: "You must log in to add items to your wishlist.",
-        confirmButtonColor: "#000",
-        background: "#fff",
-        color: "#000",
       });
       return;
     }
@@ -54,18 +51,12 @@ function AddToWishList({ productID }) {
           icon: "success",
           title: "Added to Wishlist",
           text: "This item has been added to your favorites.",
-          confirmButtonColor: "#000",
-          background: "#fff",
-          color: "#000",
         });
       } else {
         Swal.fire({
           icon: "error",
           title: "Failed",
           text: "Could not add item to wishlist.",
-          confirmButtonColor: "#000",
-          background: "#fff",
-          color: "#000",
         });
         console.error("Request failed with status:", res.status);
       }
