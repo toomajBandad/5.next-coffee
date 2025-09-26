@@ -1,10 +1,9 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Swal from 'sweetalert2';
-import { useRouter } from 'next/navigation';
-import ArticleCard from '@/components/modules/articleCard/ArticleCard';
-
+import React from "react";
+import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
+import ArticleCard from "@/components/modules/articleCard/ArticleCard";
 
 function ArticleEdit({ articles }) {
   const router = useRouter();
@@ -35,7 +34,7 @@ function ArticleEdit({ articles }) {
           return;
         }
 
-        const tags = tagsRaw ? tagsRaw.split(",").map(tag => tag.trim()) : [];
+        const tags = tagsRaw ? tagsRaw.split(",").map((tag) => tag.trim()) : [];
         return { title, subtitle, author, image, content, tags };
       },
     });
@@ -52,21 +51,33 @@ function ArticleEdit({ articles }) {
         await Swal.fire("Added!", data.message, "success");
         router.refresh();
       } else {
-        await Swal.fire("Error", data.message || "Failed to create article.", "error");
+        await Swal.fire(
+          "Error",
+          data.message || "Failed to create article.",
+          "error"
+        );
       }
     }
   }
 
-  async function editArticle(article) {
+  async function editArticle(e, article) {
+    e.preventDefault();
+
     const result = await Swal.fire({
       title: `Edit "${article.title}"`,
       html:
         `<input id="swal-title" class="swal2-input" placeholder="Title" value="${article.title}">` +
-        `<input id="swal-subtitle" class="swal2-input" placeholder="Subtitle" value="${article.subtitle || ''}">` +
+        `<input id="swal-subtitle" class="swal2-input" placeholder="Subtitle" value="${
+          article.subtitle || ""
+        }">` +
         `<input id="swal-author" class="swal2-input" placeholder="Author" value="${article.author}">` +
-        `<input id="swal-image" class="swal2-input" placeholder="Image URL" value="${article.image || ''}">` +
+        `<input id="swal-image" class="swal2-input" placeholder="Image URL" value="${
+          article.image || ""
+        }">` +
         `<textarea id="swal-content" class="swal2-textarea" placeholder="Content">${article.content}</textarea>` +
-        `<input id="swal-tags" class="swal2-input" placeholder="Tags (comma-separated)" value="${article.tags?.join(', ') || ''}">`,
+        `<input id="swal-tags" class="swal2-input" placeholder="Tags (comma-separated)" value="${
+          article.tags?.join(", ") || ""
+        }">`,
       focusConfirm: false,
       showCancelButton: true,
       confirmButtonText: "Save",
@@ -83,7 +94,7 @@ function ArticleEdit({ articles }) {
           return;
         }
 
-        const tags = tagsRaw ? tagsRaw.split(",").map(tag => tag.trim()) : [];
+        const tags = tagsRaw ? tagsRaw.split(",").map((tag) => tag.trim()) : [];
         return { title, subtitle, author, image, content, tags };
       },
     });
@@ -104,7 +115,8 @@ function ArticleEdit({ articles }) {
     }
   }
 
-  async function deleteArticle(article) {
+  async function deleteArticle(e, article) {
+    e.preventDefault();
     const result = await Swal.fire({
       title: `Delete "${article.title}"?`,
       text: "This action cannot be undone.",
@@ -143,20 +155,21 @@ function ArticleEdit({ articles }) {
       {articles.length === 0 ? (
         <div className="text-center text-gray-500 py-10">
           <p>No articles available.</p>
-          <p className="mt-2">Click "Add Article" to publish your first post.</p>
+          <p className="mt-2">
+            Click "Add Article" to publish your first post.
+          </p>
         </div>
       ) : (
-<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-  {articles.map((article) => (
-    <ArticleCard
-      key={article._id}
-      article={article}
-      onEdit={editArticle}
-      onDelete={deleteArticle}
-    />
-  ))}
-</div>
-
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {articles.map((article) => (
+            <ArticleCard
+              key={article._id}
+              article={article}
+              onEdit={editArticle}
+              onDelete={deleteArticle}
+            />
+          ))}
+        </div>
       )}
     </div>
   );

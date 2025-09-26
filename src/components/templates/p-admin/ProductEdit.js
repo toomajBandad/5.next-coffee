@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import ProductFormModal from "./ProductFormModal";
+import Swal from "sweetalert2";
 
 function ProductEdit({ products }) {
   const router = useRouter();
@@ -44,25 +45,51 @@ function ProductEdit({ products }) {
   };
 
   const handleRemove = async (product) => {
-    const confirmed = confirm(`Remove ${product.name}?`);
-    if (!confirmed) return;
+  const result = await Swal.fire({
+    title: `Remove ${product.name}?`,
+    text: "This action cannot be undone.",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Yes, delete it",
+    cancelButtonText: "Cancel",
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+  });
 
-    try {
-      const res = await fetch(`/api/products/${product._id}`, {
-        method: "DELETE",
+  if (!result.isConfirmed) return;
+
+  try {
+    const res = await fetch(`/api/products/${product._id}`, {
+      method: "DELETE",
+    });
+
+    if (res.ok) {
+      await Swal.fire({
+        title: "Deleted!",
+        text: `${product.name} has been removed.`,
+        icon: "success",
+        timer: 2000,
+        showConfirmButton: false,
       });
-
-      if (res.ok) {
-        router.refresh();
-      } else {
-        const error = await res.json();
-        alert(error.message || "Failed to delete product.");
-      }
-    } catch (err) {
-      console.error("Error deleting product:", err);
-      alert("Something went wrong.");
+      router.refresh();
+    } else {
+      const error = await res.json();
+      Swal.fire({
+        title: "Error",
+        text: error.message || "Failed to delete product.",
+        icon: "error",
+      });
     }
-  };
+  } catch (err) {
+    console.error("Error deleting product:", err);
+    Swal.fire({
+      title: "Error",
+      text: "Something went wrong.",
+      icon: "error",
+    });
+  }
+};
+
 
   return (
     <div className="bg-white text-black p-6 rounded-xl shadow-md">

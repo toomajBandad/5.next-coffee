@@ -35,7 +35,7 @@ export default async function Navbar() {
               <Link href="/store">Store</Link>
             </li>
             <li>
-              <Link href="/blogs">Weblog</Link>
+              <Link href="/articles">Articles</Link>
             </li>
             <li>
               <Link href="/contact-us">Contact Us</Link>

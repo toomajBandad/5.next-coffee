@@ -1,14 +1,16 @@
 "use client";
-
 import React from "react";
 import Image from "next/image";
 import fallbackImage from "@images/cards/3.jpg";
+import Link from "next/link";
 
 function ArticleCard({ article, onEdit, onDelete }) {
   return (
-    <div className="bg-white shadow-md rounded-xl overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-lg">
-      {/* Image */}
-      <div className="relative w-full h-48 sm:h-40 md:h-36 lg:h-32">
+    <Link
+      href={`./articles/${article._id}`}
+      className="bg-white shadow-md rounded-xl overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-lg"
+    >
+      <div className="relative w-full h-52 sm:h-44 md:h-40 lg:h-36">
         <Image
           src={article?.image || fallbackImage}
           alt={article?.title || "Article Image"}
@@ -43,20 +45,20 @@ function ArticleCard({ article, onEdit, onDelete }) {
           <div className="flex justify-end gap-2 mt-3">
             <button
               className="bg-gray-800 text-white px-2 py-1 rounded text-xs hover:bg-gray-700"
-              onClick={() => onEdit?.(article)}
+              onClick={(e) => onEdit?.(e,article)}
             >
               Edit
             </button>
             <button
               className="bg-red-600 text-white px-2 py-1 rounded text-xs hover:bg-red-500"
-              onClick={() => onDelete?.(article)}
+              onClick={(e) => onDelete?.(e,article)}
             >
               Delete
             </button>
           </div>
         )}
       </div>
-    </div>
+    </Link>
   );
 }
 
