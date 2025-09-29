@@ -13,7 +13,7 @@ export default function Navbar({ user, wishes, isAdmin, isLogin }) {
 
   return (
     <nav className="w-full z-50 bg-white text-black border-b border-black sticky top-0 py-2">
-      <div className="mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto px-4 sm:px-6 lg:px-20">
         {/* Top Bar */}
         <div className="flex justify-between items-center h-16">
           {/* Logo */}

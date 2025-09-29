@@ -36,12 +36,16 @@ function ProductInfo({ product }) {
       position: "top-end",
       toast: true,
     });
+
+    window.dispatchEvent(new Event("cartUpdated"));
   };
 
   return (
     <section className="flex flex-col gap-6 p-6">
       {/* Title */}
-      <h1 className="text-3xl font-light text-black tracking-wide">{product.name}</h1>
+      <h1 className="text-3xl font-light text-black tracking-wide">
+        {product.name}
+      </h1>
 
       {/* Description */}
       <p className="text-gray-600 text-base leading-relaxed">{product.desc}</p>

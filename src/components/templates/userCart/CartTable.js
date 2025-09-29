@@ -14,7 +14,10 @@ function CartTable() {
 
   const updateQuantity = (index, delta) => {
     const updatedCart = [...cart];
-    updatedCart[index].quantity = Math.max(1, updatedCart[index].quantity + delta);
+    updatedCart[index].quantity = Math.max(
+      1,
+      updatedCart[index].quantity + delta
+    );
     setCart(updatedCart);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
   };
@@ -23,9 +26,13 @@ function CartTable() {
     const updatedCart = cart.filter((_, i) => i !== index);
     setCart(updatedCart);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
+    window.dispatchEvent(new Event("cartUpdated"));
   };
 
-  const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const totalPrice = cart.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
 
   return (
     <div className="max-w-5xl mx-auto my-5 p-6 bg-white rounded-lg shadow-md">
@@ -58,7 +65,9 @@ function CartTable() {
                       >
                         −
                       </button>
-                      <span className="min-w-[24px] text-center">{item.quantity}</span>
+                      <span className="min-w-[24px] text-center">
+                        {item.quantity}
+                      </span>
                       <button
                         onClick={() => updateQuantity(index, 1)}
                         className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
@@ -99,8 +108,9 @@ function CartTable() {
 
       {cart.length > 0 && (
         <div className="mt-6 flex justify-end">
-          <button className="px-6 py-3 bg-black text-white rounded hover:bg-gray-900 transition font-semibold"
-          onClick={() => router.push('/checkout')}
+          <button
+            className="px-6 py-3 bg-black text-white rounded hover:bg-gray-900 transition font-semibold"
+            onClick={() => router.push("/checkout")}
           >
             Proceed to Checkout
           </button>
