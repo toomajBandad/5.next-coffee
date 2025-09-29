@@ -4,7 +4,6 @@ import Tabs from "@/components/templates/products/Tabs";
 import productModel from "@/models/Product";
 import "@/models/Comment";
 import connectToDB from "@/configs/db";
-import Navbar from "@/components/modules/navbar/Navbar";
 import React from "react";
 
 export default async function Product({ params }) {
@@ -20,7 +19,6 @@ export default async function Product({ params }) {
 
   return (
     <div>
-      <Navbar />
       <Detail product={product} />
       <Tabs product={product} />
       <MoreSameProducts relatedProduct={relatedProduct} />

@@ -83,11 +83,11 @@ function Banner() {
               <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent z-10" />
 
               {/* Overlay Text - Bottom Left */}
-              <div className="absolute top-1/4 left-6 md:left-1/10 z-20 text-white max-w-xl">
-                <h2 className="text-xl md:text-5xl font-semibold leading-tight underline">
+              <div className="absolute top-1/4 left-6 md:left-20 z-20 text-white max-w-xl">
+                <h2 className="text-xl md:text-5xl font-semibold leading-tight underline px-3">
                   {banner.title}
                 </h2>
-                <p className="mt-5 text-sm md:text-xl leading-relaxed bg-black/50 px-3">
+                <p className="mt-3 md:mt-5 text-sm md:text-xl leading-relaxed bg-black/50 px-3">
                   {banner.text}
                 </p>
               </div>

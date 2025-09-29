@@ -12,22 +12,28 @@ body {
 
 .swiper-button-next,
 .swiper-button-prev {
+  display: none !important;
   color: white !important;
+}
+
+@media (min-width: 768px) {
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: block !important;
+  }
 }
 
 .swiper-button-next:hover,
 .swiper-button-prev:hover {
   color: gray !important;
 }
-.swiper-pagination-bullet-active{
+.swiper-pagination-bullet-active {
   background-color: black !important;
 }
 
-
-.swal2-confirm{
+.swal2-confirm {
   background-color: black !important;
 }
-.swal2-cancel{
+.swal2-cancel {
   background-color: gray !important;
 }
-
