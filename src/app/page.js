@@ -1,5 +1,4 @@
 import Banner from "@/components/modules/banner/Banner";
-import Navbar from "@/components/modules/navbar/Navbar";
 import LatestArticles from "@/components/templates/index/latestArticles/LatestArticles";
 import LatestProducts from "@/components/templates/index/latestProducts/LatestProducts";
 import Promote from "@/components/templates/index/promote/Promote";
@@ -23,10 +22,6 @@ export default async function Home() {
 
   return (
     <>
-      <Navbar
-        isLogin={user ? true : false}
-        isAdmin={user?.role === "ADMIN" ? true : false}
-      />
       <Banner />
       <LatestProducts />
       <Promote />

@@ -1,7 +1,6 @@
 import React from "react";
 import articleModel from "@/models/Article";
 import ArticlePage from "@/components/templates/articles/ArticlePage";
-import Navbar from "@/components/modules/navbar/Navbar";
 
 export default async function Page({ params }) {
   const { id } = await params;
@@ -15,7 +14,6 @@ export default async function Page({ params }) {
 
   return (
     <div>
-      <Navbar />
       <ArticlePage article={JSON.parse(JSON.stringify(article))} />
     </div>
   );

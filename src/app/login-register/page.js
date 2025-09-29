@@ -7,11 +7,8 @@ import {
 } from "@/utils/auth";
 import React, { useState } from "react";
 import Swal from "sweetalert2";
-import { useRouter } from "next/navigation";
 
 export default function AuthForm() {
-  const router = useRouter();
-
   const [isLogin, setIsLogin] = useState(true);
 
   const [username, setUsername] = useState("");
@@ -60,11 +57,12 @@ export default function AuthForm() {
             text: "Login successfully.",
             icon: "success",
             confirmButtonText: "OK",
+          }).then(() => {
+            setEmail("");
+            setPassword("");
+            setIsLogin(true);
+            location.replace("/");
           });
-          setEmail("");
-          setPassword("");
-          setIsLogin(true);
-          router.push("/");
         } else {
           Swal.fire({
             title: "Error",

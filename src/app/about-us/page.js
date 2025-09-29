@@ -4,12 +4,10 @@ import image2 from "@images/about/about2.jpg";
 import image3 from "@images/about/about3.jpg";
 import Image from "next/image";
 import HeroTop from "@/components/modules/heroTop/HeroTop";
-import Navbar from "@/components/modules/navbar/Navbar";
 
 async function About() {
   return (
     <div className="min-h-screen bg-black text-white">
-      <Navbar />
       <HeroTop route="about-us" bg="/images/webbanners/9.jpg" />
 
       {/* Story Section */}

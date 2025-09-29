@@ -3,7 +3,6 @@ import articleModel from "@/models/Article";
 import ArticleCard from "@/components/modules/articleCard/ArticleCard";
 import React from "react";
 import HeroTop from "@/components/modules/heroTop/HeroTop";
-import Navbar from "@/components/modules/navbar/Navbar";
 
 export default async function ArticlesPage() {
   await connectToDB();
@@ -11,7 +10,6 @@ export default async function ArticlesPage() {
 
   return (
     <div>
-      <Navbar />
       <HeroTop route="articles" bg="/images/webbanners/7.jpg" />
       {/* Header */}
       <div className="px-6 py-10 max-w-7xl mx-auto">

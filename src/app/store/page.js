@@ -1,5 +1,4 @@
 import React from "react";
-import Navbar from "@/components/modules/navbar/Navbar";
 import productModel from "@/models/Product";
 import Card from "@/components/modules/card/Card";
 import HeroTop from "@/components/modules/heroTop/HeroTop";
@@ -8,7 +7,6 @@ async function Store() {
   const products = await productModel.find({});
   return (
     <div>
-      <Navbar />
       <HeroTop route="store" bg="/images/webbanners/1.jpg" />
       <div className="lg:px-30 md:p-5 sm:p-3 p-2">
         <div className="mt-10 text-center px-4">
