@@ -1,15 +1,11 @@
+import PageTitle from "@/components/modules/pageTitle/PageTitle";
 import React from "react";
 
 function ArticlePage({ article }) {
   return (
     <section className="px-4 md:px-12 py-8">
       {/* Page Header */}
-      <div className="text-center mb-12">
-        <h2 className="text-5xl font-bold">Coffee Knowledge</h2>
-        <p className="text-gray-500 mt-2 text-lg">
-          Explore the story behind every bean
-        </p>
-      </div>
+      <PageTitle title="Coffee Knowledge" subtitle="Explore the story behind every bean"/>
 
       {/* Main Layout */}
       <div className="flex flex-col lg:flex-row gap-8 items-start lg:px-20 px-0">

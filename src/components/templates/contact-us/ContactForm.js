@@ -27,16 +27,8 @@ function ContactForm() {
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          contactNumber,
-          company,
-          body,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, contactNumber, company, body }),
       });
 
       const result = await response.json();
@@ -44,8 +36,8 @@ function ContactForm() {
       if (response.ok) {
         Swal.fire({
           icon: "success",
-          title: "Review Submitted",
-          text: "Thanks for sharing your thoughts!",
+          title: "Message Sent",
+          text: "Thanks for reaching out!",
         });
 
         setName("");
@@ -72,8 +64,7 @@ function ContactForm() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8">
-      {/* Title */}
+    <div className="max-w-7xl mx-auto px-4 py-8">
       <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
         Get in Touch
       </h2>
@@ -149,10 +140,10 @@ function ContactForm() {
           </div>
         </div>
 
-        {/* Row 3: Comment Body */}
+        {/* Row 3: Message Body */}
         <div>
           <label htmlFor="body" className="block text-sm font-medium text-gray-700 mb-1">
-            Comment
+            Message
           </label>
           <textarea
             value={body}
@@ -162,7 +153,7 @@ function ContactForm() {
             rows={4}
             required
             className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm resize-none focus:outline-none focus:ring-2 focus:ring-black"
-            placeholder="Write your thoughts here..."
+            placeholder="Write your message here..."
           ></textarea>
         </div>
 
