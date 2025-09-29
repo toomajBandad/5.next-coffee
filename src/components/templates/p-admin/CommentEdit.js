@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Swal from 'sweetalert2';
-import { useRouter } from 'next/navigation';
+import React from "react";
+import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
 
 function CommentEdit({ comments }) {
   const router = useRouter();
@@ -19,11 +19,15 @@ function CommentEdit({ comments }) {
 
       if (result.isConfirmed) {
         const res = await fetch(`/api/comments/${comment._id}`, {
-          method: 'DELETE',
+          method: "DELETE",
         });
 
         if (res.ok) {
-          await Swal.fire("Deleted!", "Comment removed successfully.", "success");
+          await Swal.fire(
+            "Deleted!",
+            "Comment removed successfully.",
+            "success"
+          );
           router.refresh();
         } else {
           await Swal.fire("Error", "Failed to delete comment.", "error");
@@ -33,6 +37,43 @@ function CommentEdit({ comments }) {
       console.error("Error deleting comment:", error);
     }
   }
+async function toggleIsAccept(comment) {
+  console.log("Toggling comment approval...");
+
+  try {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: comment.isAccept ? "Reject this comment?" : "Approve this comment?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: comment.isAccept ? "Reject" : "Approve",
+    });
+
+    if (result.isConfirmed) {
+      const res = await fetch(`/api/comments/${comment._id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ isAccept: !comment.isAccept }),
+      });
+
+      if (res.ok) {
+        await Swal.fire(
+          "Updated!",
+          `Comment ${!comment.isAccept ? "approved" : "rejected"} successfully.`,
+          "success"
+        );
+        router.refresh();
+      } else {
+        await Swal.fire("Error", "Failed to update comment.", "error");
+      }
+    }
+  } catch (error) {
+    console.error("Error updating comment:", error);
+    await Swal.fire("Error", "Something went wrong.", "error");
+  }
+}
 
   return (
     <div className="bg-white text-black p-6 rounded-xl shadow-md">
@@ -48,8 +89,8 @@ function CommentEdit({ comments }) {
           {comments.map((comment) => (
             <div
               key={comment._id}
-              className={`border rounded-lg p-4 shadow-sm ${
-                comment.isAccept ? 'border-green-300' : 'border-red-300'
+              className={`border-3 rounded-lg p-4 shadow-sm ${
+                comment.isAccept ? "border-green-300" : "border-red-300"
               }`}
             >
               <div className="flex justify-between items-center mb-2">
@@ -58,20 +99,30 @@ function CommentEdit({ comments }) {
                   <p className="text-sm text-gray-500">{comment.email}</p>
                 </div>
                 <span className="text-sm text-gray-500">
-                  {new Date(comment.date).toLocaleString()}
+                  {new Date(comment.createdAt).toLocaleString()}
                 </span>
               </div>
 
               <p className="text-gray-800 mb-2">{comment.body}</p>
 
               <div className="flex justify-between items-center">
-                <span className="text-yellow-600 font-bold">⭐ {comment.score}/5</span>
-                <button
-                  className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-500"
-                  onClick={() => removeComment(comment)}
-                >
-                  Delete
-                </button>
+                <span className="text-yellow-600 font-bold">
+                  ⭐ {comment.score}/5
+                </span>
+                <div className="flex gap-2">
+                  <button
+                    className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-500"
+                    onClick={() => removeComment(comment)}
+                  >
+                    Delete
+                  </button>
+                  <button
+                    className="bg-amber-500 text-white px-3 py-1 rounded hover:bg-amber-400"
+                    onClick={() => toggleIsAccept(comment)}
+                  >
+                    {comment.isAccept ? "reject" : "aprove"}
+                  </button>
+                </div>
               </div>
             </div>
           ))}

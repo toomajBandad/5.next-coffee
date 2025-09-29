@@ -5,11 +5,13 @@ import "./Product";
 const wishListSchema = new mongoose.Schema(
   {
     userId: { type: mongoose.Types.ObjectId, ref: "User", required: true },
-    productId: { type: mongoose.Types.ObjectId, ref: "Product", required: true },
+    productId: {
+      type: mongoose.Types.ObjectId,
+      ref: "Product",
+      required: true,
+    },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
 const WishList =

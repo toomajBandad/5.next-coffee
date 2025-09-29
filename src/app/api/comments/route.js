@@ -2,16 +2,20 @@ import connectToDB from "@/configs/db";
 import CommentModel from "@/models/Comment";
 import ProductModel from "@/models/Product";
 import { NextResponse } from "next/server";
-import "@/models/Product";
+import { authUser } from "@/utils/authUser";
 
+// GET: Fetch all comments with populated product info
 export async function GET() {
   try {
     await connectToDB();
-    const comments = await CommentModel.find({}, "-__v").populate("productID");
+
+    const comments = await CommentModel.find({}, "-__v")
+      .populate("productID", "title score") // limit populated fields
+      .lean();
 
     return NextResponse.json(
       {
-        message: "comments fetched successfully!",
+        message: "Comments fetched successfully!",
         data: comments,
         success: true,
       },
@@ -20,7 +24,7 @@ export async function GET() {
   } catch (err) {
     return NextResponse.json(
       {
-        message: err.message || "Failed to fetch products",
+        message: err.message || "Failed to fetch comments",
         success: false,
       },
       { status: 500 }
@@ -28,42 +32,50 @@ export async function GET() {
   }
 }
 
+// POST: Create a new comment
 export async function POST(req) {
   try {
     await connectToDB();
     const { productID, username, body, email, score } = await req.json();
+    const user = await authUser();
+
+    if (!user) {
+      return NextResponse.json(
+        { message: "You must login first!", success: false },
+        { status: 401 }
+      );
+    }
+
+    if (
+      !productID ||
+      !username ||
+      !body ||
+      !email ||
+      typeof score !== "number"
+    ) {
+      return NextResponse.json(
+        { message: "Missing or invalid fields", success: false },
+        { status: 400 }
+      );
+    }
 
     const newComment = await CommentModel.create({
+      userID: user._id,
       productID,
       username,
       body,
       email,
       score,
+      isApproved: false, // default to unapproved
     });
 
-    // Push the new comment ID to the product
     await ProductModel.findByIdAndUpdate(productID, {
       $push: { comments: newComment._id },
     });
 
-    // Update product score
-    const productComments = await CommentModel.find({ productID });
-    const totalScore = productComments.reduce(
-      (sum, comment) => sum + comment.score,
-      0
-    );
-    const averageScore =
-      productComments.length > 0
-        ? Math.round(totalScore / productComments.length)
-        : 0;
-
-    await ProductModel.findByIdAndUpdate(productID, {
-      $set: { score: averageScore },
-    });
-
     return NextResponse.json(
       {
-        message: "Comment created successfully!",
+        message: "Comment submitted and awaiting approval.",
         data: newComment,
         success: true,
       },
