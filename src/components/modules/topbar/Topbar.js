@@ -5,12 +5,9 @@ import userImg from "@images/cards/4.jpg";
 
 function Topbar({ username }) {
   return (
-    <nav className="w-full bg-white text-black sticky top-0 z-50 border-b border-gray-800">
+    <nav className="w-full bg-white text-black sticky top-0 z-2 border-b border-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <div className="text-xl font-bold tracking-wide">
-            <Link href="/">Next Coffee</Link>
-          </div>
 
           {/* Search Input */}
           <div className="flex-1 mx-6">

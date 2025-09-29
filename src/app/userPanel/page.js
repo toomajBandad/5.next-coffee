@@ -17,9 +17,14 @@ export default async function userHome() {
   await connectToDB();
   const user = await authUser();
 
-  const wishes = await wishlistModel.find({ userId: user._id });
-  const comments = await commentModel.find({ userID: user._id });
+  // ✅ Parallel count queries for performance
+  const [wishCount, commentCount, ticketCount] = await Promise.all([
+    wishlistModel.countDocuments({ userId: user._id }),
+    commentModel.countDocuments({ userID: user._id }),
+    ticketModel.countDocuments({ userID: user._id }),
+  ]);
 
+  // ✅ Fetch ticket details for rendering
   const tickets = await ticketModel
     .find({ userID: user._id })
     .populate("department")
@@ -28,25 +33,17 @@ export default async function userHome() {
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
-      <h1 className="text-2xl font-bold mb-6">Admin Dashboard</h1>
+      <h1 className="text-2xl font-bold mb-6">User Dashboard</h1>
+
+      {/* ✅ Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <Box
-          icon={<FaComment />}
-          title="Comments Count"
-          number={comments.length}
-        />
-        <Box
-          icon={<FaHeart />}
-          title="Favorites Count"
-          number={wishes.length}
-        />
-        <Box
-          icon={<FaTicketAlt />}
-          title="Tickets Count"
-          number={tickets.length}
-        />
+        <Box icon={<FaComment />} title="Comments Count" number={commentCount} />
+        <Box icon={<FaHeart />} title="Favorites Count" number={wishCount} />
+        <Box icon={<FaTicketAlt />} title="Tickets Count" number={ticketCount} />
         <Box icon={<FaShoppingCart />} title="Orders Count" number={7} />
       </div>
+
+      {/* ✅ Detailed Sections */}
       <div>
         <Tickets tickets={JSON.parse(JSON.stringify(tickets))} />
         <Orders />
