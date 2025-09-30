@@ -5,12 +5,12 @@ import MoreInfoes from "./MoreInfoes";
 import Comments from "./Comments";
 
 function Tabs({ product }) {
-  const [activeTab, setActiveTab] = useState("description");
+  const [activeTab, setActiveTab] = useState("comments");
 
   const tabList = [
+    { key: "comments", label: "Comments" },
     { key: "description", label: "Description" },
     { key: "moreInfoes", label: "More Info" },
-    { key: "comments", label: "Comments" },
   ];
 
   return (
@@ -34,8 +34,13 @@ function Tabs({ product }) {
 
       {/* Tab Content */}
       <div className="bg-white py-6 px-5 lg:px-30 rounded-lg shadow-sm w-full">
-        {activeTab === "description" && <Description />}
-        {activeTab === "moreInfoes" && <MoreInfoes />}
+        {activeTab === "description" && (
+          <Description
+            shortDesc={JSON.parse(JSON.stringify(product.shortDesc))}
+            desc={JSON.parse(JSON.stringify(product.desc))}
+          />
+        )}
+        {activeTab === "moreInfoes" && <MoreInfoes product={JSON.parse(JSON.stringify(product))}/>}
         {activeTab === "comments" && (
           <Comments
             comments={JSON.parse(JSON.stringify(product.comments))}

@@ -11,7 +11,7 @@ function HeroTop({ route, bg }) {
       <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-transparent z-0" />
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center text-center h-full px-4 max-w-screen-xl mx-auto">
+      <div className="relative z-9 flex flex-col items-center justify-center text-center h-full px-4 max-w-screen-xl mx-auto">
         <h1 className="text-white text-3xl md:text-4xl lg:text-5xl font-extrabold uppercase tracking-wide mb-4 drop-shadow-lg">
           {route}
         </h1>

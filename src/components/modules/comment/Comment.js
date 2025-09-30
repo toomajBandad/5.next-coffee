@@ -9,7 +9,7 @@ function Comment({ comment }) {
           {comment.username}
         </div>
         <div className="text-sm text-gray-500">
-          {new Date(comment.date).toLocaleDateString()}
+          {new Date(comment.createdAt).toLocaleDateString()}
         </div>
       </div>
 
