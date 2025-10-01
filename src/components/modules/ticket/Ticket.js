@@ -2,6 +2,7 @@
 import React from "react";
 import { FaUserCircle, FaClock, FaTag } from "react-icons/fa";
 import Swal from "sweetalert2";
+import BtnBlack from "../btnBlack/BtnBlack";
 
 function Ticket({ ticket }) {
   function showAnswer() {
@@ -55,18 +56,13 @@ function Ticket({ ticket }) {
 
       {/* Footer Tag */}
       <div className="mt-4 flex items-center justify-between space-x-2 text-sm text-gray-500">
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center gap-2">
           <FaTag />
           <span>Ticket ID: {ticket._id}</span>
         </div>
         <div>
           {ticket.isAnswered && (
-            <button
-              onClick={showAnswer}
-              className="bg-black text-white p-2 rounded-sm cursor-pointer hover:bg-gray-800"
-            >
-              See answer
-            </button>
+            <BtnBlack text="See answer" onClick={showAnswer} />
           )}
         </div>
       </div>
