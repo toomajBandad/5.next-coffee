@@ -1,8 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
 
-function AdminSendTicket() {
+function SendTicketForm() {
+  const router = useRouter();
+
   const [departments, setDepartments] = useState([]);
   const [subdepartments, setSubdepartments] = useState([]);
   const [filteredSubdepartments, setFilteredSubdepartments] = useState([]);
@@ -12,31 +15,51 @@ function AdminSendTicket() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [priority, setPriority] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const getDepartments = async () => {
-      const res = await fetch("/api/departments");
+    const fetchData = async (url) => {
+      const res = await fetch(url);
       const data = await res.json();
-      setDepartments(data.departments || []);
+      return data || [];
     };
-    const getSubDepartments = async () => {
-      const res = await fetch("/api/subDepartments");
-      const data = await res.json();
-      setSubdepartments(data.subDepartments || []);
-    };
-    getDepartments();
-    getSubDepartments();
+
+    (async () => {
+      const deptData = await fetchData("/api/departments");
+      const subDeptData = await fetchData("/api/subDepartments");
+      setDepartments(deptData.departments || []);
+      setSubdepartments(subDeptData.subDepartments || []);
+    })();
   }, []);
 
   useEffect(() => {
-    const selectedSubDeter = subdepartments.filter(
+    const filtered = subdepartments.filter(
       (sub) => sub.department === departmentId
     );
-    setFilteredSubdepartments(selectedSubDeter);
+    setFilteredSubdepartments(filtered);
   }, [departmentId, subdepartments]);
+
+  const validateForm = () => {
+    const errors = [];
+    if (!departmentId) errors.push("Department is required.");
+    if (!subdepartment) errors.push("Subdepartment is required.");
+    if (!title.trim()) errors.push("Title is required.");
+    if (!body.trim()) errors.push("Body is required.");
+    if (![1, 2, 3].includes(priority)) errors.push("Priority must be selected.");
+    return errors;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
+
+    const errors = validateForm();
+    if (errors.length > 0) {
+      Swal.fire("Validation Error", errors.join("<br>"), "error");
+      return;
+    }
+
+    setLoading(true);
     const ticketData = {
       department: departmentId,
       subDepartment: subdepartment,
@@ -44,43 +67,45 @@ function AdminSendTicket() {
       body,
       priority,
     };
-    const res = await fetch("/api/tickets", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(ticketData),
-    });
-    const result = await res.json();
-    if (result.success) {
-      Swal.fire("Success", "Ticket submitted successfully!", "success");
-      // Reset form
-      setDepartmentId("");
-      setSubdepartment("");
-      setTitle("");
-      setBody("");
-      setPriority(1);
-    } else {
-      Swal.fire("Error", result.message || "Failed to submit ticket", "error");
+
+    try {
+      const res = await fetch("/api/tickets", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(ticketData),
+      });
+      const result = await res.json();
+
+      if (result.success) {
+        Swal.fire("Success", "Ticket submitted successfully!", "success");
+        setDepartmentId("");
+        setSubdepartment("");
+        setTitle("");
+        setBody("");
+        setPriority(1);
+      } else {
+        Swal.fire("Error", result.message || "Failed to submit ticket", "error");
+      }
+    } catch (err) {
+      Swal.fire("Error", "Something went wrong", "error");
     }
-    console.log(ticketData);
-    
+
+    setLoading(false);
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-2xl mx-auto p-6 bg-white shadow rounded space-y-4"
+      className="max-w-2xl w-full mx-auto p-6 bg-white text-black shadow-md rounded space-y-6 sm:p-8 border border-gray-200"
     >
-      <h2 className="text-xl font-bold text-gray-800">Send Ticket to Host</h2>
+      <h2 className="text-2xl font-bold">Send Ticket to Host</h2>
 
-      {/* Department Select */}
       <div>
-        <label className="block text-sm font-medium text-gray-700">
-          Department
-        </label>
+        <label className="block text-sm font-medium mb-1">Department</label>
         <select
           value={departmentId}
           onChange={(e) => setDepartmentId(e.target.value)}
-          className="mt-1 w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 bg-white border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black"
         >
           <option value="">Select department</option>
           {departments.map((dept) => (
@@ -91,15 +116,12 @@ function AdminSendTicket() {
         </select>
       </div>
 
-      {/* Subdepartment Select */}
       <div>
-        <label className="block text-sm font-medium text-gray-700">
-          Subdepartment
-        </label>
+        <label className="block text-sm font-medium mb-1">Subdepartment</label>
         <select
           value={subdepartment}
           onChange={(e) => setSubdepartment(e.target.value)}
-          className="mt-1 w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 bg-white border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black"
         >
           <option value="">Select subdepartment</option>
           {filteredSubdepartments.map((sub) => (
@@ -110,37 +132,32 @@ function AdminSendTicket() {
         </select>
       </div>
 
-      {/* Title Input */}
       <div>
-        <label className="block text-sm font-medium text-gray-700">Title</label>
+        <label className="block text-sm font-medium mb-1">Title</label>
         <input
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="mt-1 w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 bg-white border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black"
         />
       </div>
 
-      {/* Body Textarea */}
       <div>
-        <label className="block text-sm font-medium text-gray-700">Body</label>
+        <label className="block text-sm font-medium mb-1">Body</label>
         <textarea
           value={body}
           onChange={(e) => setBody(e.target.value)}
           rows={5}
-          className="mt-1 w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 bg-white border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black"
         />
       </div>
 
-      {/* Priority Select */}
       <div>
-        <label className="block text-sm font-medium text-gray-700">
-          Priority
-        </label>
+        <label className="block text-sm font-medium mb-1">Priority</label>
         <select
           value={priority}
           onChange={(e) => setPriority(Number(e.target.value))}
-          className="mt-1 w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 bg-white border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black"
         >
           <option value={1}>Low</option>
           <option value={2}>Medium</option>
@@ -148,14 +165,27 @@ function AdminSendTicket() {
         </select>
       </div>
 
-      <button
-        type="submit"
-        className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
-      >
-        Submit Ticket
-      </button>
+      <div className="flex flex-col sm:flex-row justify-between gap-4 pt-4">
+        <button
+          type="submit"
+          disabled={loading}
+          className={`w-full sm:w-auto px-6 py-2 rounded border border-black text-black bg-white transition ${
+            loading ? "opacity-50 cursor-not-allowed" : "hover:bg-black hover:text-white"
+          }`}
+        >
+          {loading ? "Submitting..." : "Submit Ticket"}
+        </button>
+
+        <button
+          type="button"
+          onClick={() => router.back()}
+          className="w-full sm:w-auto px-6 py-2 rounded border border-black text-black bg-white hover:bg-gray-100 transition"
+        >
+          Cancel & Go Back
+        </button>
+      </div>
     </form>
   );
 }
 
-export default AdminSendTicket;
+export default SendTicketForm;

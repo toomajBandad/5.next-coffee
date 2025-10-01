@@ -1,4 +1,5 @@
 "use client";
+
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 
@@ -10,7 +11,6 @@ export default function ProductFormModal({ isOpen, onClose, onSubmit, initialDat
     register,
     handleSubmit,
     reset,
-    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -26,6 +26,7 @@ export default function ProductFormModal({ isOpen, onClose, onSubmit, initialDat
       smell: "",
       image: "",
       tags: "",
+      stock: "",
     },
   });
 
@@ -41,9 +42,9 @@ export default function ProductFormModal({ isOpen, onClose, onSubmit, initialDat
       ...data,
       price: parseFloat(data.price),
       weight: parseFloat(data.weight),
+      stock: parseInt(data.stock, 10),
       tags: data.tags.split(",").map((tag) => tag.trim()).filter(Boolean),
       score: initialData?.score ?? 5,
-      stock: initialData?.stock ?? 0,
     };
     onSubmit(formattedData);
     reset();
@@ -53,9 +54,20 @@ export default function ProductFormModal({ isOpen, onClose, onSubmit, initialDat
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white rounded-xl shadow-lg w-full max-w-4xl p-6">
-        <h2 className="text-xl font-semibold mb-6">
+    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md bg-white/30">
+      <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-4xl p-8">
+        <button
+          onClick={() => {
+            reset();
+            onClose();
+          }}
+          className="absolute top-4 right-4 text-gray-400 hover:text-black text-xl"
+          aria-label="Close"
+        >
+          &times;
+        </button>
+
+        <h2 className="text-2xl font-semibold mb-6">
           {initialData && initialData._id ? "Edit Product" : "Add New Product"}
         </h2>
 
@@ -70,6 +82,7 @@ export default function ProductFormModal({ isOpen, onClose, onSubmit, initialDat
             ["origin", "Origin"],
             ["smell", "Smell"],
             ["image", "Image URL"],
+            ["stock", "Stock", "number"],
           ].map(([key, label, type = "text"]) => (
             <div key={key}>
               <label className="block text-sm font-medium text-gray-700">{label}</label>
@@ -84,7 +97,6 @@ export default function ProductFormModal({ isOpen, onClose, onSubmit, initialDat
             </div>
           ))}
 
-          {/* Dropdown for Type */}
           <div>
             <label className="block text-sm font-medium text-gray-700">Type</label>
             <select
@@ -103,7 +115,6 @@ export default function ProductFormModal({ isOpen, onClose, onSubmit, initialDat
             )}
           </div>
 
-          {/* Dropdown for Roast Level */}
           <div>
             <label className="block text-sm font-medium text-gray-700">Roast Level</label>
             <select
@@ -122,7 +133,6 @@ export default function ProductFormModal({ isOpen, onClose, onSubmit, initialDat
             )}
           </div>
 
-          {/* Tags input */}
           <div className="md:col-span-2">
             <label className="block text-sm font-medium text-gray-700">Tags (comma-separated)</label>
             <input
@@ -136,7 +146,6 @@ export default function ProductFormModal({ isOpen, onClose, onSubmit, initialDat
             )}
           </div>
 
-          {/* Buttons */}
           <div className="md:col-span-2 mt-6 flex justify-end space-x-3">
             <button
               type="button"

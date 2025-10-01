@@ -3,10 +3,13 @@ import ticketModel from "@/models/Ticket";
 import { NextResponse } from "next/server";
 import { authUser } from "@/utils/authUser";
 
-export async function GET() {
+export async function PUT(req, { params }) {
   try {
     await connectToDB();
+    const { id } = params;
+    const { answer } = await req.json();
     const user = await authUser();
+
     if (!user) {
       return NextResponse.json(
         {
@@ -16,12 +19,25 @@ export async function GET() {
         { status: 401 }
       );
     }
-    const tickets = await ticketModel.find({}, "-__v").populate("userID");
+
+    const ticket = await ticketModel.findByIdAndUpdate(id, {
+      isAnswered: true,
+      answer,
+    });
+
+    if (!ticket) {
+      return NextResponse.json(
+        {
+          message: "Ticket not found",
+          success: false,
+        },
+        { status: 404 }
+      );
+    }
 
     return NextResponse.json(
       {
-        message: "tickets fetched successfully!",
-        data: tickets,
+        message: "Ticket answered successfully!",
         success: true,
       },
       { status: 200 }
@@ -29,7 +45,7 @@ export async function GET() {
   } catch (err) {
     return NextResponse.json(
       {
-        message: err.message || "Failed to fetch tickets",
+        message: err.message || "Failed to answer ticket",
         success: false,
       },
       { status: 500 }
@@ -37,10 +53,12 @@ export async function GET() {
   }
 }
 
-export async function POST(req) {
+export async function DELETE(req, { params }) {
   try {
     await connectToDB();
+    const { id } = await params;
     const user = await authUser();
+
     if (!user) {
       return NextResponse.json(
         {
@@ -51,30 +69,29 @@ export async function POST(req) {
       );
     }
 
-    const { department, subDepartment, title, body, priority } =
-      await req.json();
+    const ticket = await ticketModel.findByIdAndDelete(id);
 
-    const newTicket = await ticketModel.create({
-      userID: user._id,
-      department,
-      subDepartment,
-      title,
-      body,
-      priority,
-    });
+    if (!ticket) {
+      return NextResponse.json(
+        {
+          message: "Ticket not found or already deleted",
+          success: false,
+        },
+        { status: 404 }
+      );
+    }
 
     return NextResponse.json(
       {
-        message: "Ticket created successfully!",
-        data: newTicket,
+        message: "Ticket deleted successfully!",
         success: true,
       },
-      { status: 201 }
+      { status: 200 }
     );
   } catch (err) {
     return NextResponse.json(
       {
-        message: err.message || "Something went wrong",
+        message: err.message || "Failed to delete ticket",
         success: false,
       },
       { status: 500 }

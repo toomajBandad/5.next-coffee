@@ -7,7 +7,7 @@ import Link from "next/link";
 function ArticleCard({ article, onEdit, onDelete }) {
   return (
     <Link
-      href={`./articles/${article._id}`}
+      href={`../articles/${article._id}`}
       className="bg-white shadow-md rounded-xl overflow-hidden transition-transform duration-300 hover:scale-103 hover:shadow-lg"
     >
       <div className="relative w-full h-52 sm:h-44 md:h-40 lg:h-36">

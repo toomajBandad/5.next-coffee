@@ -1,27 +1,33 @@
 "use client";
 import React from "react";
 import { FaUserCircle, FaClock, FaTag } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 function Ticket({ ticket }) {
+  function showAnswer() {
+    Swal.fire({
+      title: "Admin answer:",
+      text: ticket.answer,
+    });
+  }
+
   return (
-    <div className="bg-gradient-to-br from-white to-gray-50 border border-gray-200 rounded-xl shadow-md p-6 mb-6 transition hover:shadow-lg">
+    <div
+      className={`bg-white border-2  rounded-xl shadow-md p-6 mb-6 transition hover:shadow-lg ${
+        ticket.isAnswered ? "border-green-200" : "border-gray-200"
+      }`}
+    >
       {/* Header */}
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold text-gray-800">{ticket.title}</h2>
         <span
           className={`text-xs font-semibold px-3 py-1 rounded-full ${
-            ticket.isAnswered === "true"
+            ticket.isAnswered === true
               ? "bg-green-100 text-green-700"
-              : ticket.isAnswered === "false"
-              ? "bg-gray-200 text-gray-600"
               : "bg-yellow-100 text-yellow-700"
           }`}
         >
-          {ticket.isAnswered === "true"
-            ? "Answered"
-            : ticket.isAnswered === "false"
-            ? "Pending"
-            : "In Progress"}
+          {ticket.isAnswered === true ? "Answered" : "In Progress"}
         </span>
       </div>
 
@@ -30,29 +36,39 @@ function Ticket({ ticket }) {
 
       {/* Metadata */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-600">
-        <div className="flex items-center space-x-2">
+        {/* <div className="flex items-center space-x-2">
           <FaUserCircle className="text-gray-500" />
           <span>{ticket.userID?.username}</span>
-        </div>
+        </div> */}
         <div className="flex items-center space-x-2">
           <FaClock className="text-gray-500" />
           <span>{new Date(ticket.createdAt).toLocaleString()}</span>
         </div>
-        <div>
+        {/* <div>
           <strong>Priority:</strong> {ticket.priority}
-        </div>
+        </div> */}
         <div>
-          <strong>Department:</strong> {ticket.department?.title}
-        </div>
-        <div>
-          <strong>Sub-Department:</strong> {ticket.subDepartment?.title}
+          <strong>Departments:</strong> {ticket.department?.title} /{" "}
+          {ticket.subDepartment?.title}
         </div>
       </div>
 
       {/* Footer Tag */}
-      <div className="mt-4 flex items-center space-x-2 text-sm text-gray-500">
-        <FaTag />
-        <span>Ticket ID: {ticket._id}</span>
+      <div className="mt-4 flex items-center justify-between space-x-2 text-sm text-gray-500">
+        <div className="flex justify-center items-center">
+          <FaTag />
+          <span>Ticket ID: {ticket._id}</span>
+        </div>
+        <div>
+          {ticket.isAnswered && (
+            <button
+              onClick={showAnswer}
+              className="bg-black text-white p-2 rounded-sm cursor-pointer hover:bg-gray-800"
+            >
+              See answer
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

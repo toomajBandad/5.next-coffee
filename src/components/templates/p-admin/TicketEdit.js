@@ -6,49 +6,50 @@ import Swal from "sweetalert2";
 function TicketEdit({ tickets }) {
   const router = useRouter();
 
-  async function editTicket(ticket) {
+  async function answerTicket(ticket) {
     try {
       const result = await Swal.fire({
-        title: `Edit ${ticket.username}`,
+        title: ` ${ticket.title}`,
         html: `
-          <input id="swal-username" class="swal2-input" placeholder="Username" value="${ticket.username}">
-          <input id="swal-email" class="swal2-input" placeholder="Email" value="${ticket.email}">
-          <input id="swal-phone" class="swal2-input" placeholder="Phone" value="${ticket.phone}">
-        `,
+        <p> ${ticket.body}</p>
+        <textarea id="swal-answer" class="swal2-textarea" placeholder="Answer" style="width:80%;height:150px;">${
+          ticket.answer || ""
+        }</textarea>
+      `,
         focusConfirm: false,
         showCancelButton: true,
-        confirmButtonText: "Save",
+        confirmButtonText: "Answer",
         preConfirm: () => {
-          const username = document.getElementById("swal-username").value.trim();
-          const email = document.getElementById("swal-email").value.trim();
-          const phone = document.getElementById("swal-phone").value.trim();
-
-          if (!username || !email || !phone) {
-            Swal.showValidationMessage("All fields are required");
+          const answer = document.getElementById("swal-answer").value.trim();
+          if (!answer) {
+            Swal.showValidationMessage("Answer cannot be empty");
             return false;
           }
-
-          return { username, email, phone };
+          return { answer };
         },
       });
 
       if (result.isConfirmed) {
-        const res = await fetch(`/api/ticket/editTickets/${ticket._id}`, {
+        const res = await fetch(`/api/tickets/${ticket._id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(result.value),
         });
 
         if (res.ok) {
-          await Swal.fire("Saved!", "Ticket updated successfully.", "success");
+          await Swal.fire("Saved!", "Ticket answered successfully.", "success");
           router.refresh();
         } else {
           const errorData = await res.json();
-          await Swal.fire("Error", errorData.message || "Failed to update ticket.", "error");
+          await Swal.fire(
+            "Error",
+            errorData.message || "Failed to answer ticket.",
+            "error"
+          );
         }
       }
     } catch (error) {
-      console.error("Error updating ticket:", error);
+      console.error("Error answering ticket:", error);
       await Swal.fire("Error", "Something went wrong.", "error");
     }
   }
@@ -56,7 +57,7 @@ function TicketEdit({ tickets }) {
   async function removeTicket(ticket) {
     try {
       const result = await Swal.fire({
-        title: `Remove ${ticket.username}?`,
+        title: `Remove this ticket?`,
         text: "This action cannot be undone.",
         icon: "warning",
         showCancelButton: true,
@@ -64,16 +65,24 @@ function TicketEdit({ tickets }) {
       });
 
       if (result.isConfirmed) {
-        const res = await fetch(`/api/ticket/editTickets/${ticket._id}`, {
+        const res = await fetch(`/api/tickets/${ticket._id}`, {
           method: "DELETE",
         });
 
         if (res.ok) {
-          await Swal.fire("Removed!", "Ticket deleted successfully.", "success");
+          await Swal.fire(
+            "Removed!",
+            "Ticket deleted successfully.",
+            "success"
+          );
           router.refresh();
         } else {
           const errorData = await res.json();
-          await Swal.fire("Error", errorData.message || "Failed to delete ticket.", "error");
+          await Swal.fire(
+            "Error",
+            errorData.message || "Failed to delete ticket.",
+            "error"
+          );
         }
       }
     } catch (error) {
@@ -97,16 +106,21 @@ function TicketEdit({ tickets }) {
           </thead>
           <tbody>
             {tickets.map((ticket) => (
-              <tr key={ticket._id} className="border-t border-gray-200">
+              <tr
+                key={ticket._id}
+                className={`border-t border-gray-200 ${
+                  ticket.isAnswered ? "bg-green-100" : ""
+                }`}
+              >
                 <td className="px-4 py-2">{ticket.title}</td>
                 <td className="px-4 py-2">{ticket.body}</td>
                 <td className="px-4 py-2">{ticket.priority}</td>
                 <td className="px-4 py-2 space-x-2">
                   <button
                     className="bg-gray-800 text-white px-3 py-1 rounded hover:bg-gray-700"
-                    onClick={() => editTicket(ticket)}
+                    onClick={() => answerTicket(ticket)}
                   >
-                    Edit
+                    Show & Answer
                   </button>
                   <button
                     className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-500"

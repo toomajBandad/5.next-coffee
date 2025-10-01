@@ -90,8 +90,8 @@ function AccountDetail() {
   }, []);
 
 return (
-  <div className=" bg-white text-black flex items-center justify-center px-4 py-10">
-    <div className="w-full max-w-lg bg-white border border-gray-200 rounded-xl shadow-lg p-8 space-y-6">
+  <div className=" flex items-center justify-center px-4 py-10">
+    <div className="w-full max-w-2xl bg-white border border-gray-200 rounded-xl shadow-lg p-8 space-y-6">
 
       {/* Header */}
       <div className="text-center">
@@ -124,10 +124,10 @@ return (
       <button
         onClick={handleUpdateUser}
         disabled={loading}
-        className={`w-full py-2 px-4 font-semibold rounded-md transition-colors duration-300 ${
+        className={`w-full cursor-pointer py-2 px-4 font-semibold rounded-md transition-colors duration-300 ${
           loading
             ? "bg-gray-400 text-white cursor-not-allowed"
-            : "bg-black text-white hover:bg-white hover:text-black border border-black"
+            : "bg-black text-white hover:bg-gray-800 border border-black"
         }`}
       >
         {loading ? "Updating..." : "Update User"}

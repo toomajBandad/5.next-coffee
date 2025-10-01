@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import ProductFormModal from "./ProductFormModal";
@@ -33,61 +34,83 @@ function ProductEdit({ products }) {
       });
 
       if (res.ok) {
+        Swal.fire({
+          toast: true,
+          position: "top-end",
+          icon: "success",
+          title: editingProduct ? "Product updated!" : "Product created!",
+          text: `${formData.name} saved successfully.`,
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+        });
+
         router.refresh();
       } else {
         const error = await res.json();
-        alert(error.message || "Failed to save product.");
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: error.message || "Failed to save product.",
+        });
       }
     } catch (err) {
       console.error("Error saving product:", err);
-      alert("Something went wrong.");
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Something went wrong.",
+      });
     }
   };
 
   const handleRemove = async (product) => {
-  const result = await Swal.fire({
-    title: `Remove ${product.name}?`,
-    text: "This action cannot be undone.",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonText: "Yes, delete it",
-    cancelButtonText: "Cancel",
-  });
-
-  if (!result.isConfirmed) return;
-
-  try {
-    const res = await fetch(`/api/products/${product._id}`, {
-      method: "DELETE",
+    const result = await Swal.fire({
+      title: `Remove ${product.name}?`,
+      text: "This action cannot be undone.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it",
+      cancelButtonText: "Cancel",
     });
 
-    if (res.ok) {
-      await Swal.fire({
-        title: "Deleted!",
-        text: `${product.name} has been removed.`,
-        icon: "success",
-        timer: 2000,
-        showConfirmButton: false,
+    if (!result.isConfirmed) return;
+
+    try {
+      const res = await fetch(`/api/products/${product._id}`, {
+        method: "DELETE",
       });
-      router.refresh();
-    } else {
-      const error = await res.json();
+
+      if (res.ok) {
+        Swal.fire({
+          toast: true,
+          position: "top-end",
+          icon: "success",
+          title: "Deleted!",
+          text: `${product.name} has been removed.`,
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+        });
+
+        router.refresh();
+      } else {
+        const error = await res.json();
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: error.message || "Failed to delete product.",
+        });
+      }
+    } catch (err) {
+      console.error("Error deleting product:", err);
       Swal.fire({
-        title: "Error",
-        text: error.message || "Failed to delete product.",
         icon: "error",
+        title: "Error",
+        text: "Something went wrong.",
       });
     }
-  } catch (err) {
-    console.error("Error deleting product:", err);
-    Swal.fire({
-      title: "Error",
-      text: "Something went wrong.",
-      icon: "error",
-    });
-  }
-};
-
+  };
 
   return (
     <div className="bg-white text-black p-6 rounded-xl shadow-md">
@@ -107,7 +130,7 @@ function ProductEdit({ products }) {
               <th className="px-4 py-2 text-left">Image</th>
               <th className="px-4 py-2 text-left">Name</th>
               <th className="px-4 py-2 text-left">Price</th>
-              <th className="px-4 py-2 text-left">Short Description</th>
+              <th className="px-4 py-2 text-left">Type</th>
               <th className="px-4 py-2 text-left">Actions</th>
             </tr>
           </thead>
@@ -123,7 +146,9 @@ function ProductEdit({ products }) {
                 </td>
                 <td className="px-4 py-2">{product.name}</td>
                 <td className="px-4 py-2">€{product.price}</td>
-                <td className="px-4 py-2">{product.shortDesc}</td>
+                <td className="px-4 py-2 max-w-xs truncate" title={product.type}>
+                  {product.type}
+                </td>
                 <td className="px-4 py-2 space-x-2">
                   <button
                     className="bg-gray-800 text-white px-3 py-1 rounded hover:bg-gray-700"
@@ -144,12 +169,26 @@ function ProductEdit({ products }) {
         </table>
       </div>
 
-      <ProductFormModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onSubmit={handleSubmit}
-        initialData={editingProduct}
-      />
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md bg-white/30">
+          <div className="relative bg-white p-8 rounded-xl shadow-2xl w-full max-w-2xl">
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-black text-xl"
+              aria-label="Close"
+            >
+              &times;
+            </button>
+
+            <ProductFormModal
+              isOpen={true}
+              onClose={() => setIsModalOpen(false)}
+              onSubmit={handleSubmit}
+              initialData={editingProduct}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
