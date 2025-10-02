@@ -10,35 +10,49 @@ function ProductInfo({ product }) {
     setCount((prev) => Math.max(1, prev + delta));
   };
 
-  const addToCart = () => {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const index = cart.findIndex((item) => item.productID === product._id);
+const addToCart = () => {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const index = cart.findIndex((item) => item.productID === product._id);
+  const existingQty = index !== -1 ? cart[index].quantity : 0;
+  const totalQty = existingQty + count;
 
-    if (index !== -1) {
-      cart[index].quantity += count;
-    } else {
-      cart.push({
-        productID: product._id,
-        name: product.name,
-        price: product.price,
-        quantity: count,
-      });
-    }
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-
+  if (totalQty > product.stock) {
     Swal.fire({
-      icon: "success",
-      title: "Added to Cart",
-      text: `${product.name} has been added to your cart.`,
-      timer: 2000,
+      icon: "warning",
+      title: "Stock Limit Reached",
+      text: `You can only add ${product.stock - existingQty} more of ${product.name}.`,
+      timer: 2500,
       showConfirmButton: false,
       position: "top-end",
       toast: true,
     });
+    return;
+  }
 
-    window.dispatchEvent(new Event("cartUpdated"));
-  };
+  if (index !== -1) {
+    cart[index].quantity = totalQty;
+  } else {
+    cart.push({
+      productID: product._id,
+      name: product.name,
+      price: product.price,
+      quantity: count,
+    });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  Swal.fire({
+    icon: "success",
+    title: "Added to Cart",
+    text: `${product.name} has been added to your cart.`,
+    timer: 2000,
+    showConfirmButton: false,
+    position: "top-end",
+    toast: true,
+  });
+
+  window.dispatchEvent(new Event("cartUpdated"));
+};
 
   return (
     <section className="flex flex-col gap-6 p-6">
@@ -55,8 +69,14 @@ function ProductInfo({ product }) {
         <div className="text-2xl font-semibold text-black">
           €{product.price.toFixed(2)}
         </div>
-        <span className="text-xs font-medium text-green-500 bg-gray-200 px-3 py-1 rounded-full border-2 border-green-300">
-          In Stock
+        <span
+          className={`text-xs font-medium bg-gray-100 px-3 py-1 rounded-full border-2  ${
+            product.stock > 0
+              ? "border-green-300  text-green-500"
+              : "border-red-300  text-red-500"
+          }`}
+        >
+          {product.stock > 0 ? "In Stock" : "not available"}
         </span>
       </div>
 
@@ -92,8 +112,11 @@ function ProductInfo({ product }) {
 
       {/* Add to Cart */}
       <button
+        disabled={product.stock < 1}
         onClick={addToCart}
-        className="mt-4 px-6 py-3 bg-black text-white font-medium rounded hover:bg-gray-800 cursor-pointer transition"
+        className={`mt-4 px-6 py-3  text-white font-medium rounded  cursor-pointer transition ${
+          product.stock > 0 ? "bg-black hover:bg-gray-800" : "bg-gray-300"
+        }`}
       >
         Add to Cart
       </button>
