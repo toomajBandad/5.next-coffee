@@ -1,26 +1,15 @@
 @import "tailwindcss";
 
-* {
-  /* margin: 0;
-  padding: 0; */
-  box-sizing: border-box;
-  font-family: "Times New Roman", Times, serif;
-}
 body {
   background-color: #f5f5f5;
+  font-family: "Times New Roman", Times, serif;
+  box-sizing: border-box;
 }
-
+/* Swiper JS -- start */
 .swiper-button-next,
 .swiper-button-prev {
   display: none !important;
   color: white !important;
-}
-
-@media (min-width: 768px) {
-  .swiper-button-next,
-  .swiper-button-prev {
-    display: block !important;
-  }
 }
 
 .swiper-button-next:hover,
@@ -30,10 +19,37 @@ body {
 .swiper-pagination-bullet-active {
   background-color: black !important;
 }
+/* Swiper JS -- end */
 
+/* Sweet Alert -- start */
+.swal2-popup {
+  background-color: white;
+}
 .swal2-confirm {
   background-color: black !important;
 }
 .swal2-cancel {
   background-color: gray !important;
+}
+.swal2-title {
+  font-size: x-large !important;
+  font-weight: 500 !important;
+  color: black;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif !important;
+}
+.swal2-html-container {
+  font-size: large !important;
+}
+.swal2-textarea {
+  margin: 0;
+  width: 100%;
+  margin-top: 20px;
+}
+/* Sweet Alert  -- end */
+
+@media (min-width: 768px) {
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: block !important;
+  }
 }

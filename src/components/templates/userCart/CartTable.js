@@ -1,4 +1,5 @@
 "use client";
+import BtnBlack from "@/components/modules/btnBlack/BtnBlack";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FaTrashAlt } from "react-icons/fa";
@@ -15,7 +16,10 @@ function CartTable() {
 
   const updateQuantity = (index, delta) => {
     const updatedCart = [...cart];
-    updatedCart[index].quantity = Math.max(1, updatedCart[index].quantity + delta);
+    updatedCart[index].quantity = Math.max(
+      1,
+      updatedCart[index].quantity + delta
+    );
     setCart(updatedCart);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
     window.dispatchEvent(new Event("cartUpdated"));
@@ -49,13 +53,17 @@ function CartTable() {
     }
   };
 
-  const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const totalPrice = cart.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
 
   return (
     <div className="max-w-5xl mx-auto my-5 p-6 bg-white rounded-lg shadow-md overflow-x-auto">
-
       {cart.length === 0 ? (
-        <p className="text-gray-600 text-2xl text-center h-50 flex items-center justify-center">Your cart is empty.🛒</p>
+        <p className="text-gray-600 text-2xl text-center h-50 flex items-center justify-center">
+          Your cart is empty.🛒
+        </p>
       ) : (
         <table className="min-w-[600px] w-full border-collapse text-center">
           <thead className="bg-gray-100 sticky top-0">
@@ -69,7 +77,10 @@ function CartTable() {
           </thead>
           <tbody>
             {cart.map((item, index) => (
-              <tr key={item.productID || `${item.name}-${index}`} className="border-b hover:bg-gray-50">
+              <tr
+                key={item.productID || `${item.name}-${index}`}
+                className="border-b hover:bg-gray-50"
+              >
                 <td className="p-3 font-medium">{item.name}</td>
                 <td className="p-3">${item.price.toLocaleString()}</td>
                 <td className="p-3">
@@ -80,7 +91,9 @@ function CartTable() {
                     >
                       −
                     </button>
-                    <span className="min-w-[24px] text-center">{item.quantity}</span>
+                    <span className="min-w-[24px] text-center">
+                      {item.quantity}
+                    </span>
                     <button
                       onClick={() => updateQuantity(index, 1)}
                       className="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300 cursor-pointer"
@@ -121,12 +134,10 @@ function CartTable() {
 
       {cart.length > 0 && (
         <div className="mt-6 flex justify-end">
-          <button
-            className="px-6 py-3 bg-black text-white rounded hover:bg-gray-800 cursor-pointer transition font-semibold"
+          <BtnBlack
+            text="Proceed to Checkout"
             onClick={() => router.push("/checkout")}
-          >
-            Proceed to Checkout
-          </button>
+          />
         </div>
       )}
     </div>

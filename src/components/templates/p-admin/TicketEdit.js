@@ -12,7 +12,7 @@ function TicketEdit({ tickets }) {
         title: ` ${ticket.title}`,
         html: `
         <p> ${ticket.body}</p>
-        <textarea id="swal-answer" class="swal2-textarea" placeholder="Answer" style="width:80%;height:150px;">${
+        <textarea id="swal-answer" class="swal2-textarea" placeholder="Answer">${
           ticket.answer || ""
         }</textarea>
       `,
