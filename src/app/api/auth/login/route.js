@@ -1,6 +1,7 @@
 import connectToDB from "@/configs/db";
 import UserModel from "@/models/User";
 import { cookies } from "next/headers";
+import { NextResponse } from "next/server";
 
 import {
   verifyPassword,
@@ -10,11 +11,12 @@ import {
 
 export const POST = async (req) => {
   await connectToDB();
+  const cookieStore = await cookies();
 
   const { email, password } = await req.json();
 
   if (!email || !password) {
-    return Response.json(
+    return NextResponse.json(
       { success: false, message: "Missing required fields" },
       { status: 400 }
     );
@@ -22,7 +24,7 @@ export const POST = async (req) => {
 
   const user = await UserModel.findOne({ email });
   if (!user) {
-    return Response.json(
+    return NextResponse.json(
       { success: false, message: "Invalid email or password" },
       { status: 401 }
     );
@@ -30,7 +32,7 @@ export const POST = async (req) => {
 
   const isPasswordValid = await verifyPassword(password, user.password);
   if (!isPasswordValid) {
-    return Response.json(
+    return NextResponse.json(
       { success: false, message: "Invalid email or password" },
       { status: 401 }
     );
@@ -55,25 +57,19 @@ export const POST = async (req) => {
       { new: true }
     );
 
-    const cookieStore = await cookies();
-
     cookieStore.set("token", accessToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
       path: "/",
-      maxAge: 60 * 24 * 60 * 60, // 60 days
+      maxAge: 60 * 24 * 60 * 60,
     });
 
     cookieStore.set("refresh_token", refreshToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
       path: "/",
-      maxAge: 15 * 24 * 60 * 60, // 15 days
+      maxAge: 15 * 24 * 60 * 60,
     });
 
-    return Response.json(
+    return NextResponse.json(
       {
         success: true,
         message: "User login successfully",
@@ -87,7 +83,7 @@ export const POST = async (req) => {
     );
   } catch (error) {
     console.error("Login error:", error);
-    return Response.json(
+    return NextResponse.json(
       { success: false, message: "Internal server error" },
       { status: 500 }
     );

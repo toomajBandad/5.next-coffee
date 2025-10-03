@@ -5,7 +5,7 @@ import { verifyAccessToken } from "./auth";
 
 const authUser = async () => {
   await connectToDB();
-  const cookieStore = await cookies(); // ✅ await cookies()
+  const cookieStore = await cookies();
   const token = cookieStore.get("token");
 
   let user;

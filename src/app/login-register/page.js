@@ -42,6 +42,7 @@ export default function AuthForm() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ email, password }),
+          credentials: "include",
         });
 
         let data;

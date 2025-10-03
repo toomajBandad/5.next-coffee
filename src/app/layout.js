@@ -5,6 +5,7 @@ import ScrollToTop from "@/utils/scrollToTop";
 import wishListModel from "@/models/wishList";
 import { authUser } from "@/utils/authUser";
 import Navbar from "@/components/modules/navbar/Navbar";
+import { useAuthUser } from "@/utils/useAuthUser";
 
 export const metadata = {
   title: "Main Page | Coffee Shop",

@@ -6,6 +6,7 @@ export const POST = async () => {
     // Await the cookies API before using it
     const cookieStore = await cookies();
     cookieStore.delete("token", { path: "/" });
+    cookieStore.delete("refresh_token", { path: "/" });
 
     return NextResponse.json(
       { message: "Sign-out successful", success: true },

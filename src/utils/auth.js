@@ -22,6 +22,10 @@ const verifyAccessToken = (token) => {
   const jwtPayload = verify(token, process.env.Access_Token_key);
   return jwtPayload;
 };
+const verifyRefreshToken = (token) => {
+  const jwtPayload = verify(token, process.env.Refresh_Token_key);
+  return jwtPayload;
+};
 
 const generateRefreshToken = (data) => {
   const token = sign({ ...data }, process.env.Refresh_Token_key, {
@@ -56,6 +60,7 @@ export {
   verifyPassword,
   generateAccessToken,
   verifyAccessToken,
+  verifyRefreshToken,
   generateRefreshToken,
   validateEmail,
   validatePhone,
