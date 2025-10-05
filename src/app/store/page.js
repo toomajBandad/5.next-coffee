@@ -3,9 +3,18 @@ import productModel from "@/models/Product";
 import Card from "@/components/modules/card/Card";
 import HeroTop from "@/components/modules/heroTop/HeroTop";
 import PageTitle from "@/components/modules/pageTitle/PageTitle";
+import connectToDB from "@/configs/db";
 
 async function Store() {
-  const products = await productModel.find({});
+  let products = [];
+
+  try {
+    await connectToDB();
+    products = await productModel.find({}).lean();
+  } catch (err) {
+    console.error("Error loading products:", err);
+  }
+
   return (
     <div>
       <HeroTop route="store" bg="/images/webbanners/1.jpg" />
