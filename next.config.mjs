@@ -9,9 +9,9 @@ const nextConfig = {
   images: {
     domains: ["images.unsplash.com", "plus.unsplash.com"],
   },
-  turbopack: {
-    root: "C:/Users/Toomaj/Desktop/Proyectos/5.next-coffee", // absolute path
-  },
+  // turbopack: {                   //comment for deploy
+  //   root: "C:/Users/Toomaj/Desktop/Proyectos/5.next-coffee", // absolute path
+  // },
 
   // experimental: {
   //     appDir: true,
