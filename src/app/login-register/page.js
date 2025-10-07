@@ -142,68 +142,80 @@ export default function AuthForm() {
           {isLogin ? "Login" : "Register"}
         </h2>
 
-        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+        <form
+          className="space-y-4 flex flex-col gap-3"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           {!isLogin && (
             <>
-              <input
-                {...register("username", { required: true })}
-                type="text"
-                placeholder="Username"
-                className="w-full px-4 py-2 border border-black rounded focus:outline-none focus:ring-2 focus:ring-black"
-              />
-              {errors.username && (
-                <p className="text-red-500 text-sm">Username is required</p>
-              )}
+              <div>
+                <input
+                  {...register("username", { required: true })}
+                  type="text"
+                  placeholder="Username"
+                  className="w-full px-4 py-2 border border-black rounded focus:outline-none focus:ring-2 focus:ring-black mb-0"
+                />
+                {errors.username && (
+                  <p className="text-red-500 text-sm">Username is required</p>
+                )}
+              </div>
 
-              <input
-                {...register("phone", { required: true })}
-                type="tel"
-                placeholder="Phone"
-                className="w-full px-4 py-2 border border-black rounded focus:outline-none focus:ring-2 focus:ring-black"
-              />
-              {errors.phone && (
-                <p className="text-red-500 text-sm">Phone is required</p>
-              )}
+              <div>
+                {" "}
+                <input
+                  {...register("phone", { required: true })}
+                  type="tel"
+                  placeholder="Phone"
+                  className="w-full px-4 py-2 border border-black rounded focus:outline-none focus:ring-2 focus:ring-black mb-0"
+                />
+                {errors.phone && (
+                  <p className="text-red-500 text-sm">Phone is required</p>
+                )}
+              </div>
             </>
           )}
 
-          <input
-            {...register("email", { required: true })}
-            type="email"
-            placeholder="Email"
-            className="w-full px-4 py-2 border border-black rounded focus:outline-none focus:ring-2 focus:ring-black"
-          />
-          {errors.email && (
-            <p className="text-red-500 text-sm">Email is required</p>
-          )}
-
-          <div className="relative">
+          <div>
             <input
-              {...register("password", { required: true })}
-              type={showPassword ? "text" : "password"}
-              placeholder="Password"
-              className="w-full px-4 py-2 pr-10 border border-black rounded focus:outline-none focus:ring-2 focus:ring-black"
+              {...register("email", { required: true })}
+              type="email"
+              placeholder="Email"
+              className="w-full px-4 py-2 border border-black rounded focus:outline-none focus:ring-2 focus:ring-black"
             />
-            <button
-              type="button"
-              onClick={() => setShowPassword((prev) => !prev)}
-              className="absolute right-3 top-2 text-gray-600 hover:text-black cursor-pointer"
-            >
-              {showPassword ? (
-                <FaRegEyeSlash className="h-5 w-5" />
-              ) : (
-                <FaRegEye className="h-5 w-5" />
-              )}
-            </button>
+            {errors.email && (
+              <p className="text-red-500 text-sm">Email is required</p>
+            )}
           </div>
-          {errors.password && (
-            <p className="text-red-500 text-sm">Password is required</p>
-          )}
+
+          <div>
+            <div className="relative">
+              <input
+                {...register("password", { required: true })}
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                className="w-full px-4 py-2 pr-10 border border-black rounded focus:outline-none focus:ring-2 focus:ring-black"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute right-3 top-2 text-gray-600 hover:text-black cursor-pointer"
+              >
+                {showPassword ? (
+                  <FaRegEyeSlash className="h-5 w-5" />
+                ) : (
+                  <FaRegEye className="h-5 w-5" />
+                )}
+              </button>
+            </div>
+            {errors.password && (
+              <p className="text-red-500 text-sm">Password is required</p>
+            )}
+          </div>
 
           <button
             type="submit"
             disabled={loading}
-            className={`w-full py-2 rounded transition ${
+            className={`w-full py-2 rounded transition mb-0 ${
               loading
                 ? "bg-gray-700 cursor-not-allowed"
                 : "bg-black hover:bg-gray-900 cursor-pointer"
@@ -213,7 +225,7 @@ export default function AuthForm() {
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm">
+        <p className="mt-2 text-center text-sm">
           {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
           <button
             onClick={toggleForm}
