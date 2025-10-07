@@ -1,56 +1,54 @@
 "use client";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 import {
   validateEmail,
   validatePassword,
   validatePhone,
   validateUsername,
 } from "@/utils/auth";
-import React, { useState } from "react";
-import Swal from "sweetalert2";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 export default function AuthForm() {
   const [isLogin, setIsLogin] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const [username, setUsername] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-  const toggleForm = () => setIsLogin(!isLogin);
+  const toggleForm = () => setIsLogin((prev) => !prev);
 
-  async function loginRegisterHandler(event) {
-    event.preventDefault();
+  const onSubmit = async (data) => {
+    const { email, password, username, phone } = data;
+    setLoading(true);
 
     if (isLogin) {
-      const isValidEmail = validateEmail(email);
-      const isValidPassword = validatePassword(password);
-
-      if (!isValidEmail || !isValidPassword) {
+      if (!validateEmail(email) || !validatePassword(password)) {
         Swal.fire({
           title: "Error",
           text: "Please fill in valid data.",
           icon: "error",
           confirmButtonText: "Try Again",
         });
+        setLoading(false);
         return;
       }
 
       try {
         const response = await fetch("/api/auth/login", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password }),
           credentials: "include",
         });
 
-        let data;
-        try {
-          data = await response.json();
-        } catch {
-          data = { message: "Unexpected server response." };
-        }
+        const result = await response.json();
 
         if (response.ok) {
           Swal.fire({
@@ -59,38 +57,34 @@ export default function AuthForm() {
             icon: "success",
             confirmButtonText: "OK",
           }).then(() => {
-            setEmail("");
-            setPassword("");
+            reset();
             setIsLogin(true);
             location.replace("/");
           });
         } else {
           Swal.fire({
             title: "Error",
-            text: data.message || "Login failed.",
+            text: result.message || "Login failed.",
             icon: "error",
             confirmButtonText: "Try Again",
           });
         }
-      } catch (error) {
+      } catch {
         Swal.fire({
           title: "Network Error",
           text: "Unable to connect to the server.",
           icon: "error",
           confirmButtonText: "Retry",
         });
+      } finally {
+        setLoading(false);
       }
     } else {
-      const isValidUsername = validateUsername(username);
-      const isValidPhone = validatePhone(phone);
-      const isValidEmail = validateEmail(email);
-      const isValidPassword = validatePassword(password);
-
       if (
-        !isValidUsername ||
-        !isValidPhone ||
-        !isValidEmail ||
-        !isValidPassword
+        !validateUsername(username) ||
+        !validatePhone(phone) ||
+        !validateEmail(email) ||
+        !validatePassword(password)
       ) {
         Swal.fire({
           title: "Error",
@@ -98,26 +92,18 @@ export default function AuthForm() {
           icon: "error",
           confirmButtonText: "Try Again",
         });
+        setLoading(false);
         return;
       }
-
-      const newUser = { username, phone, email, password };
 
       try {
         const response = await fetch("/api/auth/signup", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newUser),
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, phone, email, password }),
         });
 
-        let data;
-        try {
-          data = await response.json();
-        } catch {
-          data = { message: "Unexpected server response." };
-        }
+        const result = await response.json();
 
         if (response.ok) {
           Swal.fire({
@@ -126,77 +112,104 @@ export default function AuthForm() {
             icon: "success",
             confirmButtonText: "OK",
           });
-          setUsername("");
-          setPhone("");
-          setEmail("");
-          setPassword("");
+          reset();
           setIsLogin(true);
         } else {
           Swal.fire({
             title: "Error",
-            text: data.message || "Registration failed.",
+            text: result.message || "Registration failed.",
             icon: "error",
             confirmButtonText: "Try Again",
           });
         }
-      } catch (error) {
+      } catch {
         Swal.fire({
           title: "Network Error",
           text: "Unable to connect to the server.",
           icon: "error",
           confirmButtonText: "Retry",
         });
+      } finally {
+        setLoading(false);
       }
     }
-  }
+  };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black text-white px-4">
-      <div className="w-full max-w-md bg-white text-black rounded-lg shadow-lg p-8">
+    <div className=" flex items-center justify-center bg-black text-white px-4">
+      <div className="w-full max-w-md bg-white text-black rounded-lg shadow-lg px-8 py-10 my-30 md:my-50">
         <h2 className="text-2xl font-bold mb-6 text-center">
           {isLogin ? "Login" : "Register"}
         </h2>
 
-        <form className="space-y-4" onSubmit={loginRegisterHandler}>
+        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
           {!isLogin && (
             <>
               <input
-                onChange={(e) => setUsername(e.target.value)}
-                value={username}
+                {...register("username", { required: true })}
                 type="text"
                 placeholder="Username"
                 className="w-full px-4 py-2 border border-black rounded focus:outline-none focus:ring-2 focus:ring-black"
               />
+              {errors.username && (
+                <p className="text-red-500 text-sm">Username is required</p>
+              )}
+
               <input
-                onChange={(e) => setPhone(e.target.value)}
-                value={phone}
+                {...register("phone", { required: true })}
                 type="tel"
                 placeholder="Phone"
                 className="w-full px-4 py-2 border border-black rounded focus:outline-none focus:ring-2 focus:ring-black"
               />
+              {errors.phone && (
+                <p className="text-red-500 text-sm">Phone is required</p>
+              )}
             </>
           )}
+
           <input
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
+            {...register("email", { required: true })}
             type="email"
             placeholder="Email"
             className="w-full px-4 py-2 border border-black rounded focus:outline-none focus:ring-2 focus:ring-black"
           />
+          {errors.email && (
+            <p className="text-red-500 text-sm">Email is required</p>
+          )}
 
-          <input
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-            type="password"
-            placeholder="Password"
-            className="w-full px-4 py-2 border border-black rounded focus:outline-none focus:ring-2 focus:ring-black"
-          />
+          <div className="relative">
+            <input
+              {...register("password", { required: true })}
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              className="w-full px-4 py-2 pr-10 border border-black rounded focus:outline-none focus:ring-2 focus:ring-black"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="absolute right-3 top-2 text-gray-600 hover:text-black cursor-pointer"
+            >
+              {showPassword ? (
+                <FaRegEyeSlash className="h-5 w-5" />
+              ) : (
+                <FaRegEye className="h-5 w-5" />
+              )}
+            </button>
+          </div>
+          {errors.password && (
+            <p className="text-red-500 text-sm">Password is required</p>
+          )}
 
           <button
             type="submit"
-            className="w-full bg-black text-white py-2 rounded hover:bg-gray-900 transition"
+            disabled={loading}
+            className={`w-full py-2 rounded transition ${
+              loading
+                ? "bg-gray-700 cursor-not-allowed"
+                : "bg-black hover:bg-gray-900 cursor-pointer"
+            } text-white`}
           >
-            {isLogin ? "Login" : "Register"}
+            {loading ? "Processing..." : isLogin ? "Login" : "Register"}
           </button>
         </form>
 
@@ -204,7 +217,7 @@ export default function AuthForm() {
           {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
           <button
             onClick={toggleForm}
-            className="text-black underline hover:text-gray-700 transition"
+            className="text-black underline hover:text-gray-700 transition cursor-pointer"
           >
             {isLogin ? "Register" : "Login"}
           </button>
