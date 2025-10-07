@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 
 export default function ProductCard({ product }) {
   const {
@@ -15,6 +16,7 @@ export default function ProductCard({ product }) {
     smell,
     stock,
     image,
+    score
   } = product;
 
   const isOutOfStock = stock <= 0;
@@ -47,12 +49,31 @@ export default function ProductCard({ product }) {
           <div className="p-5 space-y-3 text-gray-900">
             <div className="flex justify-between items-center">
               <h3 className="text-xl font-light tracking-wide">{name}</h3>
-              <span className="text-sm font-medium text-gray-500">{brand}</span>
+              <span className="text-sm font-medium text-gray-500 underline">
+                {brand}
+              </span>
+            </div>
+
+            <div className="flex items-center gap-1 text-yellow-500 text-sm">
+              {Array.from({ length: 5 }).map((_, i) => {
+                const filled = i + 1 <= Math.floor(score);
+                const half = i + 1 > Math.floor(score) && i + 0.5 <= score;
+                return filled ? (
+                  <FaStar key={i} />
+                ) : half ? (
+                  <FaStarHalfAlt key={i} />
+                ) : (
+                  <FaRegStar key={i} />
+                );
+              })}
+              <span className="text-xs text-gray-500 ml-1">
+                ({score.toFixed(1)})
+              </span>
             </div>
 
             <p className="text-sm text-gray-600 italic">
               {shortDesc.length > 20
-                ? shortDesc.slice(0, 40) + "..."
+                ? shortDesc.slice(0, 30) + "..."
                 : shortDesc}
             </p>
 
@@ -62,7 +83,6 @@ export default function ProductCard({ product }) {
               <span>Type: {type}</span>
               <span>Smell: {smell}</span>
               <span>Weight: {weight}g</span>
-              <span>Stock: {isOutOfStock ? "Unavailable" : "Available"}</span>
             </div>
 
             <div className="flex justify-between items-center pt-2">

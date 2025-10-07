@@ -26,7 +26,7 @@ async function Store() {
 
         <div
           data-aos="fade-up"
-          className="items-center grid grid-cols-1 px-4 md:px-10 lg:px-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mt-6 mx-auto"
+          className="items-center grid grid-cols-1 px-4 md:px-6 lg:px-8 xl:px-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-6 mx-auto"
         >
           {products.map((product) => (
             <Card key={product._id} product={JSON.parse(JSON.stringify(product))} />
