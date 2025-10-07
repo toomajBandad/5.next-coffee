@@ -50,7 +50,11 @@ export default function ProductCard({ product }) {
               <span className="text-sm font-medium text-gray-500">{brand}</span>
             </div>
 
-            <p className="text-sm text-gray-600 italic">{shortDesc}</p>
+            <p className="text-sm text-gray-600 italic">
+              {shortDesc.length > 20
+                ? shortDesc.slice(0, 40) + "..."
+                : shortDesc}
+            </p>
 
             <div className="grid grid-cols-2 gap-2 text-xs text-gray-700">
               <span>Origin: {origin}</span>
@@ -65,9 +69,9 @@ export default function ProductCard({ product }) {
               <span className="text-lg font-semibold text-black">
                 €{price.toFixed(2)}
               </span>
-              <span className="text-xs underline text-gray-500 hover:text-black">
-                View →
-              </span>
+              <button className="text-xs border-1 text-gray-500 hover:bg-black hover:text-white cursor-pointer px-3 py-2 rounded-lg">
+                View more
+              </button>
             </div>
           </div>
         </div>

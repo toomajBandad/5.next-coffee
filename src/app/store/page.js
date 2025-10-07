@@ -29,7 +29,7 @@ async function Store() {
           className="items-center grid grid-cols-1 px-4 md:px-10 lg:px-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mt-6 mx-auto"
         >
           {products.map((product) => (
-            <Card key={product._id} product={product} />
+            <Card key={product._id} product={JSON.parse(JSON.stringify(product))} />
           ))}
         </div>
       </div>
