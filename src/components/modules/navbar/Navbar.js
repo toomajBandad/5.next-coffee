@@ -38,31 +38,60 @@ export default function Navbar({ user, wishes, isAdmin, isLogin }) {
           </Link>
 
           {/* Desktop Nav */}
-          <ul className="hidden lg:flex items-center gap-6 font-medium">
-            <li>
-              <Link href="/">Home</Link>
+          <ul className="hidden lg:flex items-center gap-6">
+            <li className="relative group">
+              <Link className="block hover:text-gray-500" href="/">
+                <span className="relative after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-gray-400 after:transition-all after:duration-300 group-hover:after:w-full">
+                  Home
+                </span>
+              </Link>
             </li>
-            <li>
-              <Link href="/store">Store</Link>
+            <li className="relative group">
+              <Link className="block hover:text-gray-500" href="/store">
+                <span className="relative after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-gray-400 after:transition-all after:duration-300 group-hover:after:w-full">
+                  Store
+                </span>
+              </Link>
             </li>
-            <li>
-              <Link href="/articles">Articles</Link>
+            <li className="relative group">
+              <Link className="block hover:text-gray-500" href="/articles">
+                <span className="relative after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-gray-400 after:transition-all after:duration-300 group-hover:after:w-full">
+                  Article
+                </span>
+              </Link>
             </li>
-            <li>
-              <Link href="/contact-us">Contact Us</Link>
+            <li className="relative group">
+              <Link className="block hover:text-gray-500" href="/contact-us">
+                <span className="relative after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-gray-400 after:transition-all after:duration-300 group-hover:after:w-full">
+                  Contact us
+                </span>
+              </Link>
             </li>
-            <li>
-              <Link href="/about-us">About Us</Link>
+            <li className="relative group">
+              <Link className="block hover:text-gray-500" href="/about-us">
+                <span className="relative after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-gray-400 after:transition-all after:duration-300 group-hover:after:w-full">
+                  About us
+                </span>
+              </Link>
             </li>
 
             {!isLogin ? (
-              <li>
-                <Link href="/login-register">Login / Register</Link>
+              <li className="relative group">
+                <Link
+                  className="block hover:text-gray-500"
+                  href="/login-register"
+                >
+                  <span className="relative after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-gray-400 after:transition-all after:duration-300 group-hover:after:w-full">
+                    Login / Register
+                  </span>
+                </Link>
               </li>
             ) : (
               <li className="relative group">
-                <div className="flex items-center gap-1 cursor-pointer">
-                  Account <FaAngleDown />
+                <div className="flex items-center gap-1 cursor-pointer hover:text-gray-500">
+                   <span className="relative after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-gray-400 after:transition-all after:duration-300 group-hover:after:w-full">
+                    Account
+                  </span> <FaAngleDown />
                 </div>
                 <div className="absolute left-0 top-full bg-white border border-black shadow-lg flex-col gap-3 text-left p-5 w-40 z-10 hidden group-hover:flex transition-all duration-200 ease-in-out">
                   <Link href="/userPanel" className="hover:underline">
@@ -87,8 +116,12 @@ export default function Navbar({ user, wishes, isAdmin, isLogin }) {
               </li>
             )}
             {isAdmin && (
-              <li>
-                <Link href="/adminPanel">Admin Panel</Link>
+              <li className="relative group">
+                <Link className="block hover:text-gray-500" href="/adminPanel">
+                  <span className="relative after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-gray-400 after:transition-all after:duration-300 group-hover:after:w-full">
+                    Admin Panel
+                  </span>
+                </Link>
               </li>
             )}
           </ul>
