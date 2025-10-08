@@ -1,38 +1,20 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import markerIconPng from "leaflet/dist/images/marker-icon.png";
-import markerShadow from "leaflet/dist/images/marker-shadow.png";
+import L from "leaflet";
+import markerIconPng from "@images/leaflet/marker-icon.png";
+import markerShadow from "@images/leaflet/marker-shadow.png";
 
 export default function LeafletMap({ center, position, children }) {
-  const [icon, setIcon] = useState(null);
-
-  useEffect(() => {
-    const L = require("leaflet");
-    const customIcon = new L.Icon({
-      iconUrl: markerIconPng,
-      shadowUrl: markerShadow,
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowSize: [41, 41],
-    });
-
-    setIcon(customIcon);
-  }, []);
-
-  if (!icon) {
-    return (
-      <>
-        <div
-          className="w-full h-[400px] rounded-lg overflow-hidden shadow-md"
-          aria-label="Map loading"
-        />
-        <div className="mt-4">{children}</div>
-      </>
-    );
-  }
+  const defaultIcon = new L.Icon({
+    iconUrl: markerIconPng,
+    shadowUrl: markerShadow,
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41],
+  });
 
   return (
     <div>
@@ -47,8 +29,7 @@ export default function LeafletMap({ center, position, children }) {
             attribution="&copy; CartoDB"
             url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
           />
-
-          <Marker position={position} icon={icon}>
+          <Marker position={position} icon={defaultIcon}>
             <Popup>Next Coffee</Popup>
           </Marker>
         </MapContainer>
