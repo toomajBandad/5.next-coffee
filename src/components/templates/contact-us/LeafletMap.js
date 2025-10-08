@@ -1,20 +1,29 @@
 "use client";
-import React from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import React, { useEffect, useState } from "react";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import markerIconPng from "@images/leaflet/marker-icon.png";
-import markerShadow from "@images/leaflet/marker-shadow.png";
+import markerIconPng from "leaflet/dist/images/marker-icon.png";
 
 export default function LeafletMap({ center, position, children }) {
-  const defaultIcon = new L.Icon({
-    iconUrl: markerIconPng,
-    shadowUrl: markerShadow,
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41],
-  });
+  const [marker, setmarker] = useState(position);
+  const [icon, setIcon] = useState(markerIconPng);
+
+  useEffect(() => {
+    setmarker(position);
+
+    const customIcon = new L.Icon({
+      iconUrl: markerIconPng,
+      iconSize: [18, 30],
+    });
+
+    setIcon(customIcon);
+  }, []);
 
   return (
     <div>
@@ -26,10 +35,10 @@ export default function LeafletMap({ center, position, children }) {
           className="h-full w-full"
         >
           <TileLayer
-            attribution="&copy; CartoDB"
-            url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <Marker position={position} icon={defaultIcon}>
+          <Marker position={marker} icon={icon}>
             <Popup>Next Coffee</Popup>
           </Marker>
         </MapContainer>
