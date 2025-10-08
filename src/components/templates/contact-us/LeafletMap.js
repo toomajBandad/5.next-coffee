@@ -1,29 +1,25 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Popup,
-} from "react-leaflet";
+import { useEffect, useState } from "react";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import markerIconPng from "leaflet/dist/images/marker-icon.png";
+
+// 🔧 Patch Leaflet's default icon paths using public assets
+delete L.Icon.Default.prototype._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+  iconUrl: "/leafletImg/marker-icon.png",         // Standard icon
+  iconRetinaUrl: "/leafletImg/marker-icon-2x.png", // High-res icon
+  shadowUrl: "/leafletImg/marker-shadow.png",
+});
+
 
 export default function LeafletMap({ center, position, children }) {
-  const [marker, setmarker] = useState(position);
-  const [icon, setIcon] = useState(markerIconPng);
+  const [marker, setMarker] = useState(position);
 
   useEffect(() => {
-    setmarker(position);
-
-    const customIcon = new L.Icon({
-      iconUrl: markerIconPng,
-      iconSize: [18, 30],
-    });
-
-    setIcon(customIcon);
-  }, []);
+    setMarker(position);
+  }, [position]);
 
   return (
     <div>
@@ -38,8 +34,8 @@ export default function LeafletMap({ center, position, children }) {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <Marker position={marker} icon={icon}>
-            <Popup>Next Coffee</Popup>
+          <Marker position={marker}>
+            <Popup>Next</Popup>
           </Marker>
         </MapContainer>
       </div>
