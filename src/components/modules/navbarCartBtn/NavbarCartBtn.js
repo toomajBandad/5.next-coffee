@@ -2,6 +2,7 @@
 import { IoCartOutline } from "react-icons/io5";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { RiShoppingCartLine } from "react-icons/ri";
 
 function NavbarCartBtn() {
   const [cart, setCart] = useState([]);
@@ -25,8 +26,8 @@ function NavbarCartBtn() {
 
   return (
     <Link href="/cart" className="relative">
-      <IoCartOutline className="text-3xl" />
-      <span className="absolute -top-2 -left-2 bg-black text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+      <RiShoppingCartLine className="text-2xl text-gray-700 hover:text-black" />
+      <span className="absolute -top-2 -left-2 bg-gray-800 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
         {cart.length || 0}
       </span>
     </Link>

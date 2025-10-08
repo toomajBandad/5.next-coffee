@@ -38,38 +38,38 @@ export default function Navbar({ user, wishes, isAdmin, isLogin }) {
           </Link>
 
           {/* Desktop Nav */}
-          <ul className="hidden lg:flex items-center gap-6">
+          <ul className="hidden lg:flex items-center gap-6 font-extralight">
             <li className="relative group">
-              <Link className="block hover:text-gray-500" href="/">
-                <span className="relative after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-gray-400 after:transition-all after:duration-300 group-hover:after:w-full">
+              <Link className="block text-gray-700 hover:text-black " href="/">
+                <span className="relative after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-black after:transition-all after:duration-300 group-hover:after:w-full">
                   Home
                 </span>
               </Link>
             </li>
             <li className="relative group">
-              <Link className="block hover:text-gray-500" href="/store">
-                <span className="relative after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-gray-400 after:transition-all after:duration-300 group-hover:after:w-full">
+              <Link className="block text-gray-700 hover:text-black" href="/store">
+                <span className="relative after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-black after:transition-all after:duration-300 group-hover:after:w-full">
                   Store
                 </span>
               </Link>
             </li>
             <li className="relative group">
-              <Link className="block hover:text-gray-500" href="/articles">
-                <span className="relative after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-gray-400 after:transition-all after:duration-300 group-hover:after:w-full">
+              <Link className="block text-gray-700 hover:text-black" href="/articles">
+                <span className="relative after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-black after:transition-all after:duration-300 group-hover:after:w-full">
                   Article
                 </span>
               </Link>
             </li>
             <li className="relative group">
-              <Link className="block hover:text-gray-500" href="/contact-us">
-                <span className="relative after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-gray-400 after:transition-all after:duration-300 group-hover:after:w-full">
+              <Link className="block text-gray-700 hover:text-black" href="/contact-us">
+                <span className="relative after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-black after:transition-all after:duration-300 group-hover:after:w-full">
                   Contact us
                 </span>
               </Link>
             </li>
             <li className="relative group">
-              <Link className="block hover:text-gray-500" href="/about-us">
-                <span className="relative after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-gray-400 after:transition-all after:duration-300 group-hover:after:w-full">
+              <Link className="block text-gray-700 hover:text-black" href="/about-us">
+                <span className="relative after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-black after:transition-all after:duration-300 group-hover:after:w-full">
                   About us
                 </span>
               </Link>
@@ -78,18 +78,18 @@ export default function Navbar({ user, wishes, isAdmin, isLogin }) {
             {!isLogin ? (
               <li className="relative group">
                 <Link
-                  className="block hover:text-gray-500"
+                  className="block text-gray-700 hover:text-black"
                   href="/login-register"
                 >
-                  <span className="relative after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-gray-400 after:transition-all after:duration-300 group-hover:after:w-full">
+                  <span className="relative after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-black after:transition-all after:duration-300 group-hover:after:w-full">
                     Login / Register
                   </span>
                 </Link>
               </li>
             ) : (
               <li className="relative group">
-                <div className="flex items-center gap-1 cursor-pointer hover:text-gray-500">
-                   <span className="relative after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-gray-400 after:transition-all after:duration-300 group-hover:after:w-full">
+                <div className="flex items-center gap-1 cursor-pointer text-gray-700 hover:text-black">
+                   <span className="relative after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-black after:transition-all after:duration-300 group-hover:after:w-full">
                     Account
                   </span> <FaAngleDown />
                 </div>
@@ -117,8 +117,8 @@ export default function Navbar({ user, wishes, isAdmin, isLogin }) {
             )}
             {isAdmin && (
               <li className="relative group">
-                <Link className="block hover:text-gray-500" href="/adminPanel">
-                  <span className="relative after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-gray-400 after:transition-all after:duration-300 group-hover:after:w-full">
+                <Link className="block text-gray-700 hover:text-black" href="/adminPanel">
+                  <span className="relative after:absolute after:left-0 after:-bottom-2 after:h-[2px] after:w-0 after:bg-black after:transition-all after:duration-300 group-hover:after:w-full">
                     Admin Panel
                   </span>
                 </Link>
@@ -133,8 +133,8 @@ export default function Navbar({ user, wishes, isAdmin, isLogin }) {
               href={user ? "/userPanel/wishlist" : "/login-register"}
               className="relative"
             >
-              <IoMdHeartEmpty className="text-3xl" />
-              <span className="absolute -top-2 -left-2 bg-black text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+              <IoMdHeartEmpty className="text-2xl text-gray-700 hover:text-black" />
+              <span className="absolute -top-2 -left-2 bg-gray-800 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                 {wishes?.length || 0}
               </span>
             </Link>
