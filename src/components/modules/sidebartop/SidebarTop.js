@@ -65,7 +65,7 @@ export default function SidebarTop({ isAdmin }) {
   }, [pathname]);
 
   return (
-    <div className="relative z-10 bg-gray-50 px-4 py-4 lg:hidden">
+    <div className="relative z-5 bg-gray-50 px-4 py-4 lg:hidden">
       <label
         htmlFor="sidebar-top-select"
         className="block mb-2 text-sm text-gray-400"
