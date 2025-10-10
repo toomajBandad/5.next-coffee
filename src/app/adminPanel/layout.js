@@ -34,7 +34,7 @@ export default async function AdminLayout({ children }) {
           <Sidebar isAdmin={isAdmin} />
         </div>
 
-        <main className="flex-1 p-6 overflow-y-auto">{children}</main>
+        <main className="flex-1 px-2 md:p-6 overflow-y-auto">{children}</main>
       </div>
     </div>
   );

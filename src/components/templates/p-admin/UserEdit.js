@@ -100,7 +100,7 @@ function UserEdit({ users }) {
   }
 
   return (
-    <div className="bg-white text-black p-6 rounded-xl shadow-md">
+    <>
       <h2 className="text-2xl font-semibold mb-6">👥 Manage Users</h2>
       <div className="overflow-x-auto">
         <table className="min-w-full table-auto border border-gray-300">
@@ -143,7 +143,7 @@ function UserEdit({ users }) {
           </tbody>
         </table>
       </div>
-    </div>
+    </>
   );
 }
 

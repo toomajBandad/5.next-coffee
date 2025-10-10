@@ -5,7 +5,7 @@ function AdminSetting() {
   return (
     <>
       {/* Page Header */}
-      <div className="min-h-screen bg-gray-100 text-gray-900 p-8">
+      <>
         <h1 className="text-3xl font-bold mb-6 border-b border-gray-300 pb-2">
           User Settings
         </h1>
@@ -13,7 +13,7 @@ function AdminSetting() {
           Manage your account details and preferences.
         </p>
         <AcountDetail />
-      </div>
+      </>
     </>
   );
 }

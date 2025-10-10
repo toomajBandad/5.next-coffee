@@ -183,7 +183,7 @@ function DiscountsEdit({ discounts }) {
   }
 
   return (
-    <div className="bg-white text-black p-6 rounded-xl shadow-md">
+    <>
       <h2 className="text-2xl font-semibold mb-6">🏷️ Manage Discounts</h2>
 
       <div className="mb-4">
@@ -204,41 +204,41 @@ function DiscountsEdit({ discounts }) {
         </div>
       ) : (
         <div className="overflow-x-auto">
-          <table className="min-w-full table-auto border border-gray-300">
-            <thead className="bg-gray-100">
+          <table className="min-w-full table-auto border border-gray-300 text-center text-sm">
+            <thead className="bg-gray-100 ">
               <tr>
-                <th className="px-4 py-2 text-left">Code</th>
-                <th className="px-4 py-2 text-left">Percent (%)</th>
-                <th className="px-4 py-2 text-left">Max Use</th>
-                <th className="px-4 py-2 text-left">used time</th>
-                <th className="px-4 py-2 text-left">Actions</th>
+                <th className="px-2 py-2 ">Code</th>
+                <th className="px-2 py-2">Percent</th>
+                <th className="px-2 py-2">Max Use</th>
+                <th className="px-2 py-2">used time</th>
+                <th className="px-2 py-2">Actions</th>
               </tr>
             </thead>
             <tbody>
               {discounts.map((discount) => (
                 <tr key={discount._id} className="border-t border-gray-200">
-                  <td className="px-4 py-2">{discount.code}</td>
-                  <td className="px-4 py-2">{discount.percent}</td>
-                  <td className="px-4 py-2">{discount.maxUse}</td>
-                  <td className="px-4 py-2">{discount.useTimes}</td>
-                  <td className="px-4 py-2 space-x-2">
+                  <td className="px-2 py-2">{discount.code}</td>
+                  <td className="px-2 py-2">{discount.percent}</td>
+                  <td className="px-2 py-2">{discount.maxUse}</td>
+                  <td className="px-2 py-2">{discount.useTimes}</td>
+                  <td className="px-2 py-2 space-x-2">
                     <button
-                      className="bg-gray-800 text-white px-3 py-1 rounded hover:bg-gray-700"
+                      className="bg-gray-800 text-white text-sm px-2 py-0.5 rounded hover:bg-gray-700 w-18"
                       onClick={() => editDiscount(discount)}
                     >
                       Edit
                     </button>
                     <button
-                      className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-500"
+                      className="bg-red-600 text-white text-sm px-2 py-0.5 rounded hover:bg-red-500 w-18"
                       onClick={() => removeDiscount(discount)}
                     >
                       Remove
                     </button>
                     <button
-                      className="bg-yellow-500 text-black px-3 py-1 rounded hover:bg-yellow-400"
+                      className="bg-yellow-500 text-black text-sm px-2 py-0.5  rounded hover:bg-yellow-400 w-18"
                       onClick={() => deactivateDiscount(discount)}
                     >
-                      Deactivate
+                      Disable
                     </button>
                   </td>
                 </tr>
@@ -247,7 +247,7 @@ function DiscountsEdit({ discounts }) {
           </table>
         </div>
       )}
-    </div>
+    </>
   );
 }
 

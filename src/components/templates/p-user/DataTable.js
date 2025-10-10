@@ -12,7 +12,7 @@ export default function CommentTable({ comments }) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-900 p-8">
+    <>
       <h1 className="text-3xl font-bold mb-6 border-b border-gray-300 pb-2">Your Comments</h1>
       <div className="overflow-x-auto">
         <table className="min-w-full border border-gray-300 shadow-sm">
@@ -68,6 +68,6 @@ export default function CommentTable({ comments }) {
           </tbody>
         </table>
       </div>
-    </div>
+    </>
   );
 }

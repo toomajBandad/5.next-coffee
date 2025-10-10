@@ -16,7 +16,7 @@ async function AdminWishList() {
     const sanitizedWishlist = JSON.parse(JSON.stringify(wishlist));
 
     return (
-      <main className="min-h-screen bg-gray-100 text-gray-900 p-8">
+      <>
         <header>
           <h1 className="text-3xl font-bold mb-6 border-b border-gray-300 pb-2">
             Your Favorites
@@ -38,7 +38,7 @@ async function AdminWishList() {
             </ul>
           </section>
         )}
-      </main>
+      </>
     );
   } catch (error) {
     console.error("Failed to load wishlist:", error);

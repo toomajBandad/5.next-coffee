@@ -73,9 +73,8 @@ function ArticleEdit({ articles }) {
     }
   }
 
-
   return (
-    <div className="bg-white text-black p-6 rounded-xl shadow-md">
+    <>
       <h2 className="text-2xl font-semibold mb-6">📝 Manage Articles</h2>
 
       <div className="mb-4">
@@ -95,7 +94,7 @@ function ArticleEdit({ articles }) {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {articles.map((article) => (
             <ArticleCard
               key={article._id}
@@ -109,7 +108,6 @@ function ArticleEdit({ articles }) {
 
       {showEditForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-white/10">
-          <div className="bg-white p-8 rounded-xl shadow-2xl w-full max-w-2xl">
             <ArticleEditForm
               selectedArticle={selectedArticle}
               onSubmit={onSubmit}
@@ -119,10 +117,9 @@ function ArticleEdit({ articles }) {
                 setIsAdding(false);
               }}
             />
-          </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 

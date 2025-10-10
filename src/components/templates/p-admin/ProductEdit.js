@@ -113,7 +113,7 @@ function ProductEdit({ products }) {
   };
 
   return (
-    <div className="bg-white text-black p-6 rounded-xl shadow-md">
+    <>
       <h2 className="text-2xl font-semibold mb-6">🛍️ Manage Products</h2>
 
       <button
@@ -189,7 +189,7 @@ function ProductEdit({ products }) {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 

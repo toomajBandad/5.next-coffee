@@ -3,8 +3,7 @@ import AcountDetail from "@/components/templates/p-user/AcountDetail";
 
 function AdminSetting() {
   return (
-    <div className="min-h-screen bg-white text-black px-6 py-10">
-      <div className="max-w-4xl mx-auto space-y-8">
+    <>
 
         {/* Page Header */}
         <div className="border-b border-gray-300 pb-4">
@@ -15,11 +14,11 @@ function AdminSetting() {
         </div>
 
         {/* Account Detail Section */}
-        <div className="bg-gray-50 p-6 rounded-lg shadow-sm border border-gray-200">
+        <div className="bg-gray-50 p-6 ">
           <AcountDetail />
         </div>
-      </div>
-    </div>
+
+    </>
   );
 }
 

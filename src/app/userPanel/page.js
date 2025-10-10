@@ -32,7 +32,7 @@ export default async function userHome() {
     .populate("userID");
 
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-900 p-8">
+    <>
       <h1 className="text-3xl font-bold mb-6 border-b border-gray-300 pb-2">Your Dashboard</h1>
 
       {/* ✅ Stats Grid */}
@@ -48,6 +48,6 @@ export default async function userHome() {
         <Tickets tickets={JSON.parse(JSON.stringify(tickets))} />
         <Orders />
       </div>
-    </div>
+    </>
   );
 }

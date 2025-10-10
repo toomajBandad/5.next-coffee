@@ -33,7 +33,7 @@ async function TicketsPage() {
   }
 
   return (
-    <section className="min-h-screen bg-gray-100 text-gray-900 p-8 ">
+    <>
       <div className="">
         <h2 className="text-3xl font-bold mb-6 border-b border-gray-300 pb-2">Your Tickets</h2>
         <Link
@@ -45,7 +45,7 @@ async function TicketsPage() {
       </div>
 
       <Tickets tickets={JSON.parse(JSON.stringify(tickets))} />
-    </section>
+    </>
   );
 }
 
