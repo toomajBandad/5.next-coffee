@@ -8,6 +8,7 @@ export default function SidebarTop({ isAdmin }) {
   const pathname = usePathname();
   const router = useRouter();
   const [selected, setSelected] = useState(pathname);
+  const [loading, setLoading] = useState(false);
 
   const navItems = [
     { name: "Dashboard", href: "/userPanel" },
@@ -41,6 +42,7 @@ export default function SidebarTop({ isAdmin }) {
     });
 
     if (result.isConfirmed) {
+      setLoading(true);
       const response = await fetch("/api/auth/signout", { method: "POST" });
       if (response.ok) {
         await Swal.fire("Logged out!", "You have been logged out.", "success");
@@ -53,12 +55,17 @@ export default function SidebarTop({ isAdmin }) {
     if (selected === "logout") {
       logoutUser();
     } else if (selected && selected !== pathname) {
+      setLoading(true);
       router.push(selected);
     }
   }, [selected]);
 
+  useEffect(() => {
+    setLoading(false);
+  }, [pathname]);
+
   return (
-    <div className="z-5 bg-gray-50 px-4 py-4 lg:hidden">
+    <div className="relative z-10 bg-gray-50 px-4 py-4 lg:hidden">
       <label
         htmlFor="sidebar-top-select"
         className="block mb-2 text-sm text-gray-400"
@@ -67,7 +74,7 @@ export default function SidebarTop({ isAdmin }) {
       </label>
       <select
         id="sidebar-top-select"
-        className="w-full border border-gray-400 focus:outline-black rounded-md px-3 py-2"
+        className="w-full border border-gray-400 rounded-md px-3 py-2 text-gray-700 focus:outline-none focus:border-gray-500 focus:ring-2 focus:ring-gray-300"
         value={selected}
         onChange={(e) => setSelected(e.target.value)}
       >
@@ -78,6 +85,12 @@ export default function SidebarTop({ isAdmin }) {
         ))}
         <option value="logout">Logout</option>
       </select>
+
+      {loading && (
+        <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-70">
+          <div className="animate-spin rounded-full h-6 w-6 border-t-2 border-gray-600"></div>
+        </div>
+      )}
     </div>
   );
 }
