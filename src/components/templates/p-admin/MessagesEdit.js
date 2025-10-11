@@ -2,46 +2,43 @@
 import React from "react";
 import Swal from "sweetalert2";
 import { FaEnvelopeOpenText } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 function MessagesEdit({ messages, refreshMessages }) {
+  const router = useRouter();
+
   async function showMessage(message) {
     Swal.fire({
       title: `Message from ${message.name}`,
       html: `
         <p><strong>Email:</strong> ${message.email}</p>
         <p><strong>Message:</strong></p>
-        <p style="text-align:left; white-space:pre-wrap;">${message.content || "No content available."}</p>
+        <p style="text-align:left; white-space:pre-wrap;">${
+          message.body || "No content available."
+        }</p>
       `,
-      icon: "info",
       confirmButtonText: "Close",
     });
   }
 
-
-  async function removeMessage(id) {
-    const message = messages.find((msg) => msg._id === id);
-    if (!message) return;
-
+  async function removeMessage(message) {
     const result = await Swal.fire({
       title: "Are you sure?",
       text: `Do you want to delete the message from ${message.name}?`,
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
       confirmButtonText: "Yes, delete it",
     });
 
     if (result.isConfirmed) {
       try {
-        const res = await fetch(`/api/messages/${id}`, {
+        const res = await fetch(`/api/contact/${message._id}`, {
           method: "DELETE",
         });
         if (!res.ok) throw new Error("Failed to delete");
 
         Swal.fire("Deleted!", "The message has been removed.", "success");
-
-        // Optional: refresh message list
+        router.refresh();
         if (typeof refreshMessages === "function") {
           refreshMessages();
         }
@@ -82,7 +79,7 @@ function MessagesEdit({ messages, refreshMessages }) {
                     </button>
                     <button
                       className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-500 transition-colors"
-                      onClick={() => removeMessage(message._id)}
+                      onClick={() => removeMessage(message)}
                       aria-label={`Remove message from ${message.name}`}
                     >
                       Remove
