@@ -28,7 +28,7 @@ export default function LeafletMap({ center, position, children }) {
           center={center}
           zoom={16}
           scrollWheelZoom={false}
-          className="h-full w-full"
+          className="h-full w-full z-2"
         >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

@@ -65,7 +65,7 @@ function ContactForm() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
+      <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">
         Get in Touch
       </h2>
 
@@ -161,8 +161,8 @@ function ContactForm() {
         <button
           type="submit"
           disabled={loading}
-          className={`w-full bg-black text-white py-2 rounded-md transition duration-200 ${
-            loading ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-900"
+          className={`w-full bg-black text-white py-2 rounded-md transition duration-200 hover:cursor-pointer ${
+            loading ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-800"
           }`}
         >
           {loading ? "Submitting..." : "Submit"}

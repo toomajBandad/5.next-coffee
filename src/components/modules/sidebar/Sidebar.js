@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { MdLogout } from "react-icons/md";
 import Swal from "sweetalert2";
+import { MdLogout, MdArticle } from "react-icons/md";
 import {
   HiOutlineHome,
   HiOutlineShoppingCart,
@@ -10,11 +10,11 @@ import {
   HiOutlineChat,
   HiOutlineHeart,
   HiOutlineCog,
-  HiUserGroup 
+  HiUserGroup,
 } from "react-icons/hi";
 import { RiDiscountPercentFill } from "react-icons/ri";
 import { AiOutlineProduct } from "react-icons/ai";
-import { MdArticle } from "react-icons/md";
+import { FaEnvelopeOpenText } from "react-icons/fa";
 
 export default function Sidebar({ isAdmin }) {
   const navItems = [
@@ -28,13 +28,46 @@ export default function Sidebar({ isAdmin }) {
 
   const adminItems = [
     { name: "Dashboard", href: "/adminPanel", icon: HiOutlineHome },
-    { name: "Manage Orders", href: "/adminPanel/manageOrders", icon: HiOutlineShoppingCart },
-    { name: "Manage Products", href: "/adminPanel/manageProducts", icon: AiOutlineProduct },
-    { name: "Manage Tickets", href: "/adminPanel/manageTickets", icon: HiOutlineTicket },
-    { name: "Manage Comments", href: "/adminPanel/manageComments", icon: HiOutlineChat },
-    { name: "Manage Users", href: "/adminPanel/manageUsers", icon: HiUserGroup },
-    { name: "Manage Discounts", href: "/adminPanel/manageDiscounts", icon: RiDiscountPercentFill },
-    { name: "Manage Articles", href: "/adminPanel/manageArticles", icon: MdArticle },
+    {
+      name: "Manage Orders",
+      href: "/adminPanel/manageOrders",
+      icon: HiOutlineShoppingCart,
+    },
+    {
+      name: "Manage Products",
+      href: "/adminPanel/manageProducts",
+      icon: AiOutlineProduct,
+    },
+    {
+      name: "Manage Tickets",
+      href: "/adminPanel/manageTickets",
+      icon: HiOutlineTicket,
+    },
+    {
+      name: "Manage Comments",
+      href: "/adminPanel/manageComments",
+      icon: HiOutlineChat,
+    },
+    {
+      name: "Manage Users",
+      href: "/adminPanel/manageUsers",
+      icon: HiUserGroup,
+    },
+    {
+      name: "Manage Discounts",
+      href: "/adminPanel/manageDiscounts",
+      icon: RiDiscountPercentFill,
+    },
+    {
+      name: "Manage Articles",
+      href: "/adminPanel/manageArticles",
+      icon: MdArticle,
+    },
+    {
+      name: "Customer Messages",
+      href: "/adminPanel/customerMessages",
+      icon: FaEnvelopeOpenText,
+    },
     { name: "Setting", href: "/adminPanel/setting", icon: HiOutlineCog },
   ];
 
