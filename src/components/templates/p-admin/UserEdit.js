@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 
 function UserEdit({ users }) {
-
   const router = useRouter();
 
   async function editUser(user) {
@@ -35,7 +34,7 @@ function UserEdit({ users }) {
 
         if (res.ok) {
           await Swal.fire("Saved!", "User updated successfully.", "success");
-         router.refresh();
+          router.refresh();
         } else {
           await Swal.fire("Error", "Failed to update user.", "error");
         }
@@ -72,70 +71,37 @@ function UserEdit({ users }) {
     }
   }
 
-  async function banUser(user) {
-    try {
-      const result = await Swal.fire({
-        title: `Ban ${user.username}?`,
-        text: "User will be restricted from access.",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Ban",
-      });
-
-      if (result.isConfirmed) {
-        const res = await fetch(`/api/user/editUsers/${user._id}`, {
-          method: "POST",
-        });
-
-        if (res.ok) {
-          await Swal.fire("Banned!", "User has been banned.", "success");
-          // fetchUsers();
-        } else {
-          await Swal.fire("Error", "Failed to ban user.", "error");
-        }
-      }
-    } catch (error) {
-      console.error("Error banning user:", error);
-    }
-  }
-
   return (
     <>
       <h2 className="text-2xl font-semibold mb-6">👥 Manage Users</h2>
       <div className="overflow-x-auto">
-        <table className="min-w-full table-auto border border-gray-300">
+        <table className="min-w-full table-auto border border-gray-300 text-center text-sm">
           <thead className="bg-gray-100">
             <tr>
-              <th className="px-4 py-2 text-left">Username</th>
-              <th className="px-4 py-2 text-left">Email</th>
-              <th className="px-4 py-2 text-left">Role</th>
-              <th className="px-4 py-2 text-left">Actions</th>
+              <th className="px-0.5 py-2">Username</th>
+              <th className="px-0.5 py-2">Email</th>
+              <th className="px-0.5 py-2">Role</th>
+              <th className="px-0.5 py-2">Actions</th>
             </tr>
           </thead>
           <tbody>
             {users.map((user) => (
               <tr key={user._id} className="border-t border-gray-200">
-                <td className="px-4 py-2">{user.username}</td>
-                <td className="px-4 py-2">{user.email}</td>
-                <td className="px-4 py-2">{user.role}</td>
-                <td className="px-4 py-2 space-x-2">
+                <td className="px-0.5 py-2">{user.username}</td>
+                <td className="px-0.5 py-2">{user.email}</td>
+                <td className="px-0.5 py-2">{user.role}</td>
+                <td className="px-0.5 py-2 flex justify-center items-center flex-col gap-0.5 sm:flex-row sm:gap:2">
                   <button
-                    className="bg-gray-800 text-white px-3 py-1 rounded hover:bg-gray-700"
+                    className="bg-gray-800 text-white px-2 py-0.5 rounded hover:bg-gray-700"
                     onClick={() => editUser(user)}
                   >
                     Edit
                   </button>
                   <button
-                    className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-500"
+                    className="bg-red-600 text-white px-2 py-0.5 rounded hover:bg-red-500"
                     onClick={() => removeUser(user)}
                   >
-                    Remove
-                  </button>
-                  <button
-                    className="bg-yellow-500 text-black px-3 py-1 rounded hover:bg-yellow-400"
-                    onClick={() => banUser(user)}
-                  >
-                    Ban
+                    Delete
                   </button>
                 </td>
               </tr>

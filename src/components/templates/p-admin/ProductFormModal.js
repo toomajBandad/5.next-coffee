@@ -89,7 +89,7 @@ export default function ProductFormModal({ isOpen, onClose, onSubmit, initialDat
               <input
                 type={type}
                 {...register(key, { required: true })}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
               />
               {errors[key] && (
                 <span className="text-red-500 text-sm">This field is required</span>
@@ -101,7 +101,7 @@ export default function ProductFormModal({ isOpen, onClose, onSubmit, initialDat
             <label className="block text-sm font-medium text-gray-700">Type</label>
             <select
               {...register("type", { required: true })}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
             >
               <option value="">Select type</option>
               {typeOptions.map((opt) => (
@@ -119,7 +119,7 @@ export default function ProductFormModal({ isOpen, onClose, onSubmit, initialDat
             <label className="block text-sm font-medium text-gray-700">Roast Level</label>
             <select
               {...register("roastLevel", { required: true })}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
             >
               <option value="">Select roast level</option>
               {roastOptions.map((opt) => (
@@ -139,7 +139,7 @@ export default function ProductFormModal({ isOpen, onClose, onSubmit, initialDat
               type="text"
               {...register("tags", { required: true })}
               placeholder="e.g. fruity, bold, organic"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
             />
             {errors.tags && (
               <span className="text-red-500 text-sm">Tags are required</span>
@@ -159,7 +159,7 @@ export default function ProductFormModal({ isOpen, onClose, onSubmit, initialDat
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-500"
+              className="px-4 py-2 bg-black text-white rounded hover:bg-blue-500"
             >
               {initialData && initialData._id ? "Save Changes" : "Create Product"}
             </button>

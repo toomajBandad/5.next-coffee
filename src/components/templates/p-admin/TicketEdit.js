@@ -95,13 +95,12 @@ function TicketEdit({ tickets }) {
     <>
       <h2 className="text-2xl font-semibold mb-6">👥 Manage Tickets</h2>
       <div className="overflow-x-auto">
-        <table className="min-w-full table-auto border border-gray-300">
+        <table className="min-w-full table-auto border border-gray-300 text-sm text-center">
           <thead className="bg-gray-100">
             <tr>
-              <th className="px-4 py-2 text-left">Title</th>
-              <th className="px-4 py-2 text-left">Text</th>
-              <th className="px-4 py-2 text-left">Priority</th>
-              <th className="px-4 py-2 text-left">Actions</th>
+              <th className="px-2 py-2">Title</th>
+              <th className="px-2 py-2">Priority</th>
+              <th className="px-2 py-2">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -112,15 +111,14 @@ function TicketEdit({ tickets }) {
                   ticket.isAnswered ? "bg-green-100" : ""
                 }`}
               >
-                <td className="px-4 py-2">{ticket.title}</td>
-                <td className="px-4 py-2">{ticket.body}</td>
-                <td className="px-4 py-2">{ticket.priority}</td>
-                <td className="px-4 py-2 space-x-2">
+                <td className="px-2 py-2">{ticket.title}</td>
+                <td className="px-2 py-2">{ticket.priority}</td>
+                <td className="px-2 py-2 flex flex-col gap-0.5 sm:flex-row sm:gap-2 justify-center items-center">
                   <button
                     className="bg-gray-800 text-white px-3 py-1 rounded hover:bg-gray-700"
                     onClick={() => answerTicket(ticket)}
                   >
-                    Show & Answer
+                    Answer
                   </button>
                   <button
                     className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-500"

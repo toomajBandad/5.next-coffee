@@ -124,40 +124,40 @@ function ProductEdit({ products }) {
       </button>
 
       <div className="overflow-x-auto">
-        <table className="min-w-full table-auto border border-gray-300">
+        <table className="min-w-full table-auto border border-gray-300 text-center text-sm">
           <thead className="bg-gray-100">
             <tr>
-              <th className="px-4 py-2 text-left">Image</th>
-              <th className="px-4 py-2 text-left">Name</th>
-              <th className="px-4 py-2 text-left">Price</th>
-              <th className="px-4 py-2 text-left">Type</th>
-              <th className="px-4 py-2 text-left">Actions</th>
+              <th className="px-1 py-2">Image</th>
+              <th className="px-1 py-2">Name</th>
+              <th className="px-1 py-2">Price</th>
+              <th className="px-1 py-2">Type</th>
+              <th className="px-1 py-2">Actions</th>
             </tr>
           </thead>
           <tbody>
             {products.map((product) => (
               <tr key={product._id} className="border-t border-gray-200">
-                <td className="px-4 py-2">
+                <td className="p-0">
                   <img
                     src={product.image}
                     alt={product.name}
                     className="w-16 h-16 object-cover rounded"
                   />
                 </td>
-                <td className="px-4 py-2">{product.name}</td>
-                <td className="px-4 py-2">€{product.price}</td>
-                <td className="px-4 py-2 max-w-xs truncate" title={product.type}>
+                <td className="px-1 py-2">{product.name}</td>
+                <td className="px-1 py-2">€{product.price}</td>
+                <td className="px-1 py-2 max-w-xs truncate" title={product.type}>
                   {product.type}
                 </td>
-                <td className="px-4 py-2 space-x-2">
+                <td className="px-1 py-2 space-x-2">
                   <button
-                    className="bg-gray-800 text-white px-3 py-1 rounded hover:bg-gray-700"
+                    className="bg-gray-800 text-white px-2 py-0.5 text-sm rounded hover:bg-gray-700 w-16"
                     onClick={() => handleEdit(product)}
                   >
                     Edit
                   </button>
                   <button
-                    className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-500"
+                    className="bg-red-600 text-white px-2 py-0.5 text-sm rounded hover:bg-red-500 w-16"
                     onClick={() => handleRemove(product)}
                   >
                     Remove
