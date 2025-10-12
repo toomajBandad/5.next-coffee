@@ -35,12 +35,12 @@ const generateRefreshToken = (data) => {
 };
 
 const validateEmail = (email) => {
-  const pattern = /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/g;
+  const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return pattern.test(email);
 };
 
 const validatePhone = (phone) => {
-  const pattern = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/g;
+  const pattern = /^[0-9]{6,20}$/;
   return pattern.test(phone);
 };
 
@@ -51,9 +51,10 @@ const validatePassword = (password) => {
 };
 
 const validateUsername = (username) => {
-  const pattern = /^[a-z0-9_-]{3,15}$/g;
+  const pattern = /^[a-zA-Z0-9 _-]{3,15}$/;
   return pattern.test(username);
 };
+
 
 export {
   hashPassword,
