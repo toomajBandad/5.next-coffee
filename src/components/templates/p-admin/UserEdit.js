@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Swal from "sweetalert2";
 
 function UserEdit({ users }) {
@@ -9,20 +9,54 @@ function UserEdit({ users }) {
   async function editUser(user) {
     try {
       const result = await Swal.fire({
-        title: `Edit ${user.username}`,
-        html:
-          `<input id="swal-input1" class="swal2-input" placeholder="Username" value="${user.username}">` +
-          `<input id="swal-input2" class="swal2-input" placeholder="Email" value="${user.email}">` +
-          `<input id="swal-input3" class="swal2-input" placeholder="Phone" value="${user.phone}">`,
-        focusConfirm: false,
+        title: `<span class="text-gray-800 text-xl font-semibold">Edit User</span>`,
+        html: `
+        <div class="flex flex-col gap-1 text-sm text-start">
+          <div>
+            <label for="swal-input1" class="font-bold">Username:</label>
+            <input id="swal-input1" class="swal2-input w-full rounded border border-gray-300 my-0" value="${
+              user.username
+            }">
+          </div>
+          <div>
+            <label for="swal-input2" class="font-bold">Email:</label>
+            <input id="swal-input2" class="swal2-input w-full rounded border border-gray-300 my-0" value="${
+              user.email
+            }">
+          </div>
+          <div>
+            <label for="swal-input4" class="font-bold">Role:</label>
+            <select id="swal-input4" class="swal2-input rounded border border-gray-300 my-0">
+              <option value="USER" ${
+                user.role === "USER" ? "selected" : ""
+              }>USER</option>
+              <option value="ADMIN" ${
+                user.role === "ADMIN" ? "selected" : ""
+              }>ADMIN</option>
+            </select>
+          </div>
+          <div>
+            <label for="swal-input5" class="font-bold">Phone:</label>
+            <input id="swal-input5" class="swal2-input w-full rounded border border-gray-300 my-0" value="${
+              user.phone
+            }">
+          </div>
+        </div>
+      `,
+        customClass: {
+          popup: "bg-white rounded-lg shadow-md p-6",
+        },
         showCancelButton: true,
         confirmButtonText: "Save",
-        preConfirm: () => ({
-          username: document.getElementById("swal-input1").value,
-          email: document.getElementById("swal-input2").value,
-          phone: document.getElementById("swal-input3").value,
-          role: user.role,
-        }),
+        focusConfirm: false,
+        preConfirm: () => {
+          return {
+            username: document.getElementById("swal-input1").value,
+            email: document.getElementById("swal-input2").value,
+            role: document.getElementById("swal-input4").value,
+            phone: document.getElementById("swal-input5").value,
+          };
+        },
       });
 
       if (result.isConfirmed) {
@@ -41,6 +75,7 @@ function UserEdit({ users }) {
       }
     } catch (error) {
       console.error("Error updating user:", error);
+      await Swal.fire("Error", "Something went wrong.", "error");
     }
   }
 

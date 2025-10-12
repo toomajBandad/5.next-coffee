@@ -19,9 +19,8 @@ export async function PUT(req, { params }) {
         { status: 401 }
       );
     }
-
-    const userID = params.id;
-    const selectedUser = await userModel.findById(userID);
+    const { id } = await params;
+    const selectedUser = await userModel.findById(id);
     if (!selectedUser) {
       return NextResponse.json(
         {
@@ -32,9 +31,9 @@ export async function PUT(req, { params }) {
       );
     }
 
-    const { username, email, phone, role } = await req.json();
+    const { username, email, role, phone } = await req.json();
 
-    if (!username || !email || !phone || !role) {
+    if (!username || !email || !role || !phone) {
       return NextResponse.json(
         {
           message: "Missing required fields",
@@ -45,7 +44,7 @@ export async function PUT(req, { params }) {
     }
 
     const updatedUser = await userModel.findByIdAndUpdate(
-      userID,
+      id,
       { username, email, phone, role },
       { new: true }
     );
@@ -83,8 +82,8 @@ export async function DELETE(req, { params }) {
       );
     }
 
-    const userID = params.id;
-    const selectedUser = await userModel.findById(userID);
+    const { id } = await params;
+    const selectedUser = await userModel.findById(id);
     if (!selectedUser) {
       return NextResponse.json(
         {
@@ -95,7 +94,7 @@ export async function DELETE(req, { params }) {
       );
     }
 
-    await userModel.findByIdAndDelete(userID);
+    await userModel.findByIdAndDelete(id);
 
     return NextResponse.json(
       {
