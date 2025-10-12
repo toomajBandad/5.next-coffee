@@ -1,9 +1,9 @@
 import React from "react";
 import productModel from "@/models/Product";
-import Card from "@/components/modules/card/Card";
 import HeroTop from "@/components/modules/heroTop/HeroTop";
 import PageTitle from "@/components/modules/pageTitle/PageTitle";
 import connectToDB from "@/configs/db";
+import StoreMain from "@/components/templates/store/storeMain";
 
 async function Store() {
   let products = [];
@@ -24,14 +24,7 @@ async function Store() {
           subtitle="Handpicked, roasted, and curated for every kind of coffee lover."
         />
 
-        <div
-          data-aos="fade-up"
-          className="items-center grid grid-cols-1 px-4 md:px-6 lg:px-8 xl:px-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-6 mx-auto"
-        >
-          {products.map((product) => (
-            <Card key={product._id} product={JSON.parse(JSON.stringify(product))} />
-          ))}
-        </div>
+        <StoreMain products={JSON.parse(JSON.stringify(products))} />
       </div>
     </div>
   );
