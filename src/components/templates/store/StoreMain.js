@@ -5,12 +5,10 @@ import Pagination from "@/components/modules/pagination/Pagination";
 import Card from "@/components/modules/card/Card";
 
 function StoreMain({ products }) {
-  const itemsPerPage = 4;
+  const itemsPerPage = 8;
   const totalItems = products.length;
   const [currentPage, setCurrentPage] = useState(1);
-  //   const [currentProducts, setCurrentProducts] = useState(null);
 
-  // ✅ Define the missing function
   const onPageChange = (page) => {
     setCurrentPage(page);
 
@@ -20,10 +18,8 @@ function StoreMain({ products }) {
     window.scrollTo({ top: scrollTop, behavior: "smooth" });
   };
 
-  // ✅ Slice products for current page
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  // setCurrentProducts(products.slice(indexOfFirstItem, indexOfLastItem));
   let currentProducts = products.slice(indexOfFirstItem, indexOfLastItem);
 
   return (

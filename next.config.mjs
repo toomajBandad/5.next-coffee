@@ -7,7 +7,7 @@ const nextConfig = {
     MONGODB_URI: process.env.MONGODB_URI,
   },
   images: {
-    domains: ["images.unsplash.com", "plus.unsplash.com"],
+    domains: ["images.unsplash.com", "plus.unsplash.com", "res.cloudinary.com"],
   },
   // turbopack: {                   //comment for deploy
   //   root: "C:/Users/Toomaj/Desktop/Proyectos/5.next-coffee", // absolute path

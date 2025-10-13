@@ -1,12 +1,20 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import FotoUploader from "@/components/modules/fotoUploader/FotoUploader";
 
 const typeOptions = ["whole bean", "ground", "capsule", "instant"];
 const roastOptions = ["light", "medium", "dark"];
 
-export default function ProductFormModal({ isOpen, onClose, onSubmit, initialData = {} }) {
+export default function ProductFormModal({
+  isOpen,
+  onClose,
+  onSubmit,
+  initialData = {},
+}) {
+  const [imageUrl, setImageUrl] = useState("");
+
   const {
     register,
     handleSubmit,
@@ -43,7 +51,11 @@ export default function ProductFormModal({ isOpen, onClose, onSubmit, initialDat
       price: parseFloat(data.price),
       weight: parseFloat(data.weight),
       stock: parseInt(data.stock, 10),
-      tags: data.tags.split(",").map((tag) => tag.trim()).filter(Boolean),
+      image: imageUrl,
+      tags: data.tags
+        .split(",")
+        .map((tag) => tag.trim())
+        .filter(Boolean),
       score: initialData?.score ?? 5,
     };
     onSubmit(formattedData);
@@ -71,7 +83,10 @@ export default function ProductFormModal({ isOpen, onClose, onSubmit, initialDat
           {initialData && initialData._id ? "Edit Product" : "Add New Product"}
         </h2>
 
-        <form onSubmit={handleSubmit(submitHandler)} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <form
+          onSubmit={handleSubmit(submitHandler)}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        >
           {[
             ["name", "Name"],
             ["brand", "Brand"],
@@ -81,24 +96,29 @@ export default function ProductFormModal({ isOpen, onClose, onSubmit, initialDat
             ["weight", "Weight (g)", "number"],
             ["origin", "Origin"],
             ["smell", "Smell"],
-            ["image", "Image URL"],
             ["stock", "Stock", "number"],
           ].map(([key, label, type = "text"]) => (
             <div key={key}>
-              <label className="block text-sm font-medium text-gray-700">{label}</label>
+              <label className="block text-sm font-medium text-gray-700">
+                {label}
+              </label>
               <input
                 type={type}
                 {...register(key, { required: true })}
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
               />
               {errors[key] && (
-                <span className="text-red-500 text-sm">This field is required</span>
+                <span className="text-red-500 text-sm">
+                  This field is required
+                </span>
               )}
             </div>
           ))}
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Type</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Type
+            </label>
             <select
               {...register("type", { required: true })}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
@@ -116,7 +136,9 @@ export default function ProductFormModal({ isOpen, onClose, onSubmit, initialDat
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Roast Level</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Roast Level
+            </label>
             <select
               {...register("roastLevel", { required: true })}
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm sm:text-sm"
@@ -129,12 +151,16 @@ export default function ProductFormModal({ isOpen, onClose, onSubmit, initialDat
               ))}
             </select>
             {errors.roastLevel && (
-              <span className="text-red-500 text-sm">Roast level is required</span>
+              <span className="text-red-500 text-sm">
+                Roast level is required
+              </span>
             )}
           </div>
 
-          <div className="md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700">Tags (comma-separated)</label>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Tags (comma-separated)
+            </label>
             <input
               type="text"
               {...register("tags", { required: true })}
@@ -144,6 +170,11 @@ export default function ProductFormModal({ isOpen, onClose, onSubmit, initialDat
             {errors.tags && (
               <span className="text-red-500 text-sm">Tags are required</span>
             )}
+          </div>
+
+          {/* fotouploader */}
+          <div >
+            <FotoUploader onUpload={(url) => setImageUrl(url)} />
           </div>
 
           <div className="md:col-span-2 mt-6 flex justify-end space-x-3">
@@ -161,7 +192,9 @@ export default function ProductFormModal({ isOpen, onClose, onSubmit, initialDat
               type="submit"
               className="px-4 py-2 bg-black text-white rounded hover:bg-blue-500"
             >
-              {initialData && initialData._id ? "Save Changes" : "Create Product"}
+              {initialData && initialData._id
+                ? "Save Changes"
+                : "Create Product"}
             </button>
           </div>
         </form>

@@ -146,7 +146,10 @@ function ProductEdit({ products }) {
                 </td>
                 <td className="px-1 py-2">{product.name}</td>
                 <td className="px-1 py-2">€{product.price}</td>
-                <td className="px-1 py-2 max-w-xs truncate" title={product.type}>
+                <td
+                  className="px-1 py-2 max-w-xs truncate"
+                  title={product.type}
+                >
                   {product.type}
                 </td>
                 <td className="px-1 py-2 space-x-2">
@@ -169,26 +172,12 @@ function ProductEdit({ products }) {
         </table>
       </div>
 
-      {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md bg-white/30">
-          <div className="relative bg-white p-8 rounded-xl shadow-2xl w-full max-w-2xl">
-            <button
-              onClick={() => setIsModalOpen(false)}
-              className="absolute top-4 right-4 text-gray-400 hover:text-black text-xl"
-              aria-label="Close"
-            >
-              &times;
-            </button>
-
-            <ProductFormModal
-              isOpen={true}
-              onClose={() => setIsModalOpen(false)}
-              onSubmit={handleSubmit}
-              initialData={editingProduct}
-            />
-          </div>
-        </div>
-      )}
+      <ProductFormModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleSubmit}
+        initialData={editingProduct}
+      />
     </>
   );
 }
