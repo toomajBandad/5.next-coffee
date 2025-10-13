@@ -3,7 +3,7 @@ import productModel from "@/models/Product";
 import HeroTop from "@/components/modules/heroTop/HeroTop";
 import PageTitle from "@/components/modules/pageTitle/PageTitle";
 import connectToDB from "@/configs/db";
-import StoreMain from "@/components/templates/store/storeMain";
+import StoreMain from "@/components/templates/store/StoreMain";
 
 async function Store() {
   let products = [];
@@ -23,7 +23,6 @@ async function Store() {
           title="Discover Our Coffee Collection"
           subtitle="Handpicked, roasted, and curated for every kind of coffee lover."
         />
-
         <StoreMain products={JSON.parse(JSON.stringify(products))} />
       </div>
     </div>
