@@ -108,16 +108,13 @@ export default function Navbar({ user, wishes, isAdmin, isLogin }) {
           </ul>
 
           <div className="flex items-center gap-4">
-            <NavbarCartBtn />
             <Link
               href={user ? "/userPanel/wishlist" : "/login-register"}
               className="relative"
             >
               <IoMdHeartEmpty className="text-2xl text-gray-700 hover:text-black" />
-              <span className="absolute -top-2 -left-2 bg-gray-800 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                {wishes?.length || 0}
-              </span>
             </Link>
+            <NavbarCartBtn />
             <button onClick={toggleMenu} className="lg:hidden">
               {menuOpen ? (
                 <FaTimes className="text-2xl" />

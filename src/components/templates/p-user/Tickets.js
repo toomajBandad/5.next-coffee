@@ -11,7 +11,7 @@ export default function Tickets({ tickets }) {
             <p className="text-sm">You're all caught up! 🎉</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4">
             {tickets.map((ticket) => (
               <Ticket key={ticket._id} ticket={ticket} />
             ))}

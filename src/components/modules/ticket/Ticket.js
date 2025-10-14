@@ -1,6 +1,7 @@
 "use client";
+
 import React from "react";
-import { FaUserCircle, FaClock, FaTag } from "react-icons/fa";
+import { FaClock, FaTag } from "react-icons/fa";
 import Swal from "sweetalert2";
 import BtnBlack from "../btnBlack/BtnBlack";
 
@@ -14,58 +15,66 @@ function Ticket({ ticket }) {
 
   return (
     <div
-      className={`bg-white border-2  rounded-xl shadow-md p-6 mb-6 transition hover:shadow-lg ${
+      className={`bg-white border rounded-lg shadow-sm p-4 mb-4 transition hover:shadow-md ${
         ticket.isAnswered ? "border-green-200" : "border-gray-200"
       }`}
     >
       {/* Header */}
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold text-gray-800">{ticket.title}</h2>
+      <div className="flex justify-between items-center mb-2">
+        <h2 className="text-base font-semibold text-gray-800">
+          {ticket.title}
+        </h2>
         <span
-          className={`text-xs font-semibold px-3 py-1 rounded-full ${
-            ticket.isAnswered === true
-              ? "bg-green-100 text-green-700"
-              : "bg-yellow-100 text-yellow-700"
+          className={`text-[10px] font-medium px-2 py-[2px] rounded-full transition ${
+            ticket.isAnswered
+              ? "bg-green-100 text-green-700 hover:bg-green-200"
+              : "bg-yellow-100 text-yellow-700 hover:bg-yellow-200"
           }`}
         >
-          {ticket.isAnswered === true ? "Answered" : "In Progress"}
+          {ticket.isAnswered ? "Answered" : "In Progress"}
         </span>
       </div>
 
       {/* Body */}
-      <p className="text-gray-700 mb-4">{ticket.body}</p>
+      <p className="text-sm text-gray-700 mb-3">{ticket.body}</p>
 
       {/* Metadata */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-600">
-        {/* <div className="flex items-center space-x-2">
-          <FaUserCircle className="text-gray-500" />
-          <span>{ticket.userID?.username}</span>
-        </div> */}
-        <div className="flex items-center space-x-2">
-          <FaClock className="text-gray-500" />
-          <span>{new Date(ticket.createdAt).toLocaleString()}</span>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-gray-600">
+        <div className="flex items-center gap-1">
+          <FaClock className="text-gray-500 text-[11px]" />
+          <span>
+            {new Date(ticket.createdAt).toLocaleString("en-GB", {
+              day: "2-digit",
+              month: "short",
+              year: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </span>
         </div>
-        {/* <div>
-          <strong>Priority:</strong> {ticket.priority}
-        </div> */}
+
         <div>
           <strong>Departments:</strong> {ticket.department?.title} /{" "}
           {ticket.subDepartment?.title}
         </div>
-      </div>
 
-      {/* Footer Tag */}
-      <div className="mt-4 flex items-center justify-between space-x-2 text-sm text-gray-500">
-        <div className="flex justify-center items-center gap-2">
-          <FaTag />
-          <span>Ticket ID: {ticket._id}</span>
-        </div>
-        <div>
+        {ticket.priority && (
+          <div>
+            <strong>Priority:</strong> {ticket.priority}
+          </div>
+        )}
+        <div className="flex justify-end mt-2">
           {ticket.isAnswered && (
-            <BtnBlack text="See answer" onClick={showAnswer} />
+            <BtnBlack
+              text="See answer"
+              onClick={showAnswer}
+              title="View admin response"
+            />
           )}
         </div>
       </div>
+
+      {/* Footer */}
     </div>
   );
 }

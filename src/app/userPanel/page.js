@@ -33,20 +33,52 @@ export default async function userHome() {
 
   return (
     <>
-      <h1 className="text-3xl font-bold mb-6 border-b border-gray-300 pb-2">Your Dashboard</h1>
+      <h1 className="text-3xl font-bold mb-6 border-b border-gray-300 pb-2">
+        Your Dashboard
+      </h1>
 
       {/* ✅ Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <Box icon={<FaComment />} title="Comments Count" number={commentCount} />
+        <Box
+          icon={<FaComment />}
+          title="Comments Count"
+          number={commentCount}
+        />
         <Box icon={<FaHeart />} title="Favorites Count" number={wishCount} />
-        <Box icon={<FaTicketAlt />} title="Tickets Count" number={ticketCount} />
+        <Box
+          icon={<FaTicketAlt />}
+          title="Tickets Count"
+          number={ticketCount}
+        />
         <Box icon={<FaShoppingCart />} title="Orders Count" number={7} />
       </div>
 
-      {/* ✅ Detailed Sections */}
-      <div>
-        <Tickets tickets={JSON.parse(JSON.stringify(tickets))} />
-        <Orders />
+      <div className="mt-10 space-y-10">
+        <hr className="border-t border-gray-300" />
+
+        <section>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-2xl font-bold text-gray-800">
+              🎫 Recent Tickets
+            </h2>
+            <span className="text-sm text-gray-500">
+              Last updated: {new Date().toLocaleDateString("en-GB")}
+            </span>
+          </div>
+          <div className="space-y-4">
+            <Tickets
+              tickets={JSON.parse(JSON.stringify(tickets)).slice(0, 6)}
+            />
+          </div>
+        </section>
+
+        {/* Orders Section */}
+        <section>
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">
+            🛒 Your Orders
+          </h2>
+          <Orders />
+        </section>
       </div>
     </>
   );
