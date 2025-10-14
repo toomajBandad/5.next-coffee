@@ -29,7 +29,7 @@ export default async function UserLayout({ children }) {
         <div className="hidden lg:flex">
           <Sidebar isAdmin={false} />
         </div>
-        <main className="flex-1 p-6 overflow-y-auto">{children}</main>
+        <main className="flex-1 p-2 md:p-6 overflow-y-auto">{children}</main>
       </div>
     </div>
   );

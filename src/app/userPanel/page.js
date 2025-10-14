@@ -38,47 +38,40 @@ export default async function userHome() {
       </h1>
 
       {/* ✅ Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-4">
         <Box
           icon={<FaComment />}
-          title="Comments Count"
+          title="Comments"
           number={commentCount}
         />
-        <Box icon={<FaHeart />} title="Favorites Count" number={wishCount} />
+        <Box icon={<FaHeart />} title="Favorites" number={wishCount} />
         <Box
           icon={<FaTicketAlt />}
-          title="Tickets Count"
+          title="Tickets "
           number={ticketCount}
         />
-        <Box icon={<FaShoppingCart />} title="Orders Count" number={7} />
+        <Box icon={<FaShoppingCart />} title="Orders " number={7} />
       </div>
 
       <div className="mt-10 space-y-10">
         <hr className="border-t border-gray-300" />
 
-        <section>
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-2xl font-bold text-gray-800">
-              🎫 Recent Tickets
-            </h2>
-            <span className="text-sm text-gray-500">
-              Last updated: {new Date().toLocaleDateString("en-GB")}
-            </span>
-          </div>
-          <div className="space-y-4">
-            <Tickets
-              tickets={JSON.parse(JSON.stringify(tickets)).slice(0, 6)}
-            />
-          </div>
-        </section>
-
-        {/* Orders Section */}
-        <section>
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">
-            🛒 Your Orders
+        <div className="flex items-center justify-between mb-0">
+          <h2 className="text-2xl font-bold text-gray-800">
+            🎫 Recent Tickets
           </h2>
+        </div>
+        <div className="space-y-4">
+          <Tickets tickets={JSON.parse(JSON.stringify(tickets)).slice(0, 6)} />
+        </div>
+
+        <hr className="border-t border-gray-300" />
+        <div className="flex items-center justify-between mb-0">
+          <h2 className="text-2xl font-bold text-gray-800">🎫 Recent Orders</h2>
+        </div>
+        <div className="space-y-4">
           <Orders />
-        </section>
+        </div>
       </div>
     </>
   );

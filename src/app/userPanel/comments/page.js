@@ -1,7 +1,7 @@
-import DataTable from "@/components/templates/p-user/DataTable";
 import connectToDB from "@/configs/db";
 import { authUser } from "@/utils/authUser";
 import commentModel from "@/models/Comment";
+import CommentTable from "@/components/templates/p-user/CommentTable";
 
 async function AdminComments() {
   await connectToDB();
@@ -12,7 +12,7 @@ async function AdminComments() {
   return (
     <div>
       <div>
-        <DataTable comments={JSON.parse(JSON.stringify(comments))} />
+        <CommentTable comments={JSON.parse(JSON.stringify(comments))} />
       </div>
     </div>
   );
