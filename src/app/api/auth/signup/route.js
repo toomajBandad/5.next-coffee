@@ -1,6 +1,7 @@
 import connectToDB from "@/configs/db";
 import UserModel from "@/models/User";
 import { generateAccessToken, hashPassword } from "@/utils/auth";
+import { sendWelcomeEmail } from "@/utils/sendEmailBrevo";
 
 export const POST = async (req) => {
   await connectToDB();
@@ -50,6 +51,11 @@ export const POST = async (req) => {
       id: newUser._id,
       username: newUser.username,
       role: newUser.role,
+    });
+
+    await sendWelcomeEmail({
+      email: newUser.email,
+      username: newUser.username,
     });
 
     // Return success response with secure cookie
