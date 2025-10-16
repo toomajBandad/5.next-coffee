@@ -7,7 +7,7 @@ async function OrdersPage() {
   await connectToDB();
   const user = await authUser();
 
-  const orders = await orderModel.find({ userId: user._id }).populate("userId");
+  const orders = await orderModel.find({ userId: user._id }).populate("userId").populate("items.productId").sort({ createdAt: -1 });
 
   return (
     <div>

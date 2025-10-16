@@ -1,17 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
+import DiscountCodeInput from "@/components/modules/discountCodeInput/DiscountCodeInput";
 
-function MainCheckout() {
+function MainCheckout({ user }) {
   const [cart, setCart] = useState([]);
-  const [userInfo, setUserInfo] = useState({
-    name: "",
-    email: "",
-    address: "",
-  });
+  const [userAddress, setUserAddress] = useState("");
 
   const [discountCode, setDiscountCode] = useState("");
   const [discountPercent, setDiscountPercent] = useState(0);
-  const [discountMessage, setDiscountMessage] = useState("");
   const [discountApplied, setDiscountApplied] = useState(false);
 
   useEffect(() => {
@@ -19,139 +16,164 @@ function MainCheckout() {
     setCart(storedCart);
   }, []);
 
-  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  useEffect(() => {
+    if (user) {
+      setUserAddress(user.address || "");
+    }
+  }, [user]);
+
+  const subtotal = cart.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  );
   const discountAmount = subtotal * (discountPercent / 100);
   const totalPrice = Math.max(0, subtotal - discountAmount);
 
-  const handleInputChange = (e) => {
-    setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
-  };
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-const handleDiscountApply = async () => {
-  if (discountApplied) {
-    setDiscountMessage("⚠️ Discount already applied");
-    return;
-  }
+  const result = await Swal.fire({
+    title: "🧾 Confirm Your Order",
+    html: `
+      <div style="text-align:left; font-size:14px;">
+        <p><strong>Name:</strong> ${user.username}</p>
+        <p><strong>Email:</strong> ${user.email}</p>
+        <p><strong>Address:</strong> ${userAddress}</p>
+        <p><strong>Total:</strong> $${totalPrice.toLocaleString()}</p>
+      </div>
+    `,
+    icon: "question",
+    showCancelButton: true,
+    confirmButtonText: "Place Order",
+    cancelButtonText: "Cancel",
+  });
+
+  if (!result.isConfirmed) return;
+
+  // ✅ Transform cart to match required format
+  const items = cart.map((item) => ({
+    productId: item.productID,
+    quantity: item.quantity,
+  }));
 
   try {
-    const res = await fetch("/api/discount", {
-      method: "PUT",
+    const res = await fetch("/api/order", {
+      method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ code: discountCode }),
+      body: JSON.stringify({
+        userId: user._id,
+        items,
+        total: totalPrice,
+        status: "Pending",
+      }),
     });
 
-    const result = await res.json();
-    if (result.success) {
-      setDiscountPercent(result.data.percent);
-      setDiscountMessage(`✅ ${result.message} (${result.data.percent}% off)`);
-      setDiscountApplied(true); // ✅ prevent future clicks
+    const data = await res.json();
+
+    if (data.success) {
+      Swal.fire({
+        title: "🎉 Order Placed!",
+        text: "Thank you for your purchase.",
+        icon: "success",
+        confirmButtonColor: "#10b981",
+      });
+      localStorage.removeItem("cart");
+      setCart([]);
     } else {
-      setDiscountPercent(0);
-      setDiscountMessage(`❌ ${result.message}`);
+      Swal.fire("❌ Error", data.message || "Something went wrong.", "error");
     }
   } catch (err) {
-    setDiscountMessage("❌ Server error");
+    Swal.fire("❌ Server Error", "Please try again later.", "error");
   }
 };
 
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Order submitted:", {
-      userInfo,
-      cart,
-      discountCode,
-      discountPercent,
-      totalPrice,
-    });
-    alert("Order placed successfully!");
-  };
-
   return (
-    <div className="max-w-4xl mx-auto my-10 p-6 bg-white rounded shadow">
-      <h2 className="text-3xl font-bold mb-6 text-gray-800">🧾 Checkout</h2>
+    <div className="max-w-4xl mx-auto my-10 p-6 bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-lg">
+      <h2 className="text-4xl font-extrabold mb-6 text-gray-800 tracking-tight">
+        🛒 Secure Checkout
+      </h2>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="text"
-          name="name"
-          placeholder="Full Name"
-          value={userInfo.name}
-          onChange={handleInputChange}
-          className="w-full p-3 border rounded"
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email Address"
-          value={userInfo.email}
-          onChange={handleInputChange}
-          className="w-full p-3 border rounded"
-          required
-        />
-        <textarea
-          name="address"
-          placeholder="Shipping Address"
-          value={userInfo.address}
-          onChange={handleInputChange}
-          className="w-full p-3 border rounded"
-          required
-        />
+      <div className="mb-6 p-5 bg-white border border-gray-200 rounded-lg shadow-sm text-sm text-gray-700">
+        <p className="mb-1">
+          <span className="font-semibold text-gray-600">👤 Name:</span>{" "}
+          {user.username}
+        </p>
+        <p>
+          <span className="font-semibold text-gray-600">📧 Email:</span>{" "}
+          {user.email}
+        </p>
+      </div>
 
-        {/* Discount Ticket */}
-        <div className="my-4">
-          <label className="block mb-2 font-medium">Discount Code</label>
-          <div className="flex gap-2">
-            <input
-              type="text"
-              value={discountCode}
-              onChange={(e) => setDiscountCode(e.target.value)}
-              placeholder="Enter code"
-              className="flex-1 p-2 border rounded"
-            />
-            <button
-              type="button"
-              onClick={handleDiscountApply}
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-            >
-              Apply
-            </button>
-          </div>
-          {discountMessage && (
-            <p className="mt-2 text-sm text-gray-700">{discountMessage}</p>
-          )}
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div>
+          <label className="block mb-2 font-medium text-gray-700">
+            📦 Shipping Address
+          </label>
+          <textarea
+            name="address"
+            placeholder="Enter your full delivery address"
+            value={userAddress}
+            onChange={(e) => setUserAddress(e.target.value)}
+            className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500"
+            required
+          />
         </div>
 
+        <DiscountCodeInput
+          onApply={(percent, code) => {
+            setDiscountPercent(percent);
+            setDiscountCode(code);
+            setDiscountApplied(true);
+          }}
+          disabled={discountApplied}
+        />
+
         {/* Order Summary */}
-        <div className="mt-6">
-          <h3 className="text-xl font-semibold mb-2">Order Summary</h3>
-          <ul className="divide-y">
-            {cart.map((item) => (
-              <li key={item.productID} className="py-2 flex justify-between">
-                <span>{item.name} × {item.quantity}</span>
-                <span>${(item.price * item.quantity).toLocaleString()}</span>
-              </li>
-            ))}
-          </ul>
-          <div className="text-right font-bold text-lg mt-4">
-            Subtotal: ${subtotal.toLocaleString()}
-          </div>
-          {discountPercent > 0 && (
-            <div className="text-right text-green-600 font-semibold">
-              Discount ({discountPercent}%): −${discountAmount.toLocaleString()}
-            </div>
+        <div className="mt-8 bg-white p-6 rounded-lg shadow-md">
+          <h3 className="text-2xl font-semibold mb-4 text-gray-800">
+            🧾 Order Summary
+          </h3>
+          {cart.length === 0 ? (
+            <p className="text-center text-gray-500">Your cart is empty 🛒</p>
+          ) : (
+            <>
+              <ul className="divide-y divide-gray-200">
+                {cart.map((item) => (
+                  <li
+                    key={item.productID}
+                    className="py-3 flex justify-between items-center transition hover:bg-gray-50"
+                  >
+                    <span className="text-gray-700">
+                      {item.name} × {item.quantity}
+                    </span>
+                    <span className="text-gray-900 font-medium">
+                      ${(item.price * item.quantity).toLocaleString()}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              <div className="text-right font-semibold text-lg mt-6">
+                Subtotal: ${subtotal.toLocaleString()}
+              </div>
+              {discountPercent > 0 && (
+                <div className="text-right text-green-600 font-semibold">
+                  Discount ({discountPercent}%): −$
+                  {discountAmount.toLocaleString()}
+                </div>
+              )}
+              <div className="text-right font-bold text-2xl mt-2 text-gray-800">
+                Total: ${totalPrice.toLocaleString()}
+              </div>
+            </>
           )}
-          <div className="text-right font-bold text-xl mt-2">
-            Total: ${totalPrice.toLocaleString()}
-          </div>
         </div>
 
         <button
           type="submit"
-          className="mt-6 px-6 py-3 bg-green-600 text-white rounded hover:bg-green-700 transition font-semibold"
+          className="w-full mt-6 py-4 bg-green-600 text-white text-lg rounded-lg hover:bg-green-700 transition font-semibold shadow-md"
         >
-          Confirm & Pay
+          ✅ Confirm & Pay
         </button>
       </form>
     </div>
