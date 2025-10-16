@@ -1,9 +1,19 @@
-import React from 'react'
+import connectToDB from "@/configs/db";
+import { authUser } from "@/utils/authUser";
+import orderModel from "@/models/Order";
+import Orders from "@/components/templates/p-user/Orders";
 
-function Orders() {
+async function OrdersPage() {
+  await connectToDB();
+  const user = await authUser();
+
+  const orders = await orderModel.find({ userId: user._id }).populate("userId");
+
   return (
-    <div>Orders</div>
-  )
+    <div>
+      <Orders orders={JSON.parse(JSON.stringify(orders))} />
+    </div>
+  );
 }
 
-export default Orders
+export default OrdersPage;

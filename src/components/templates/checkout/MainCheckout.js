@@ -12,6 +12,7 @@ function MainCheckout() {
   const [discountCode, setDiscountCode] = useState("");
   const [discountPercent, setDiscountPercent] = useState(0);
   const [discountMessage, setDiscountMessage] = useState("");
+  const [discountApplied, setDiscountApplied] = useState(false);
 
   useEffect(() => {
     const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
@@ -26,26 +27,33 @@ function MainCheckout() {
     setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
   };
 
-  const handleDiscountApply = async () => {
-    try {
-      const res = await fetch("/api/discount", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ code: discountCode }),
-      });
+const handleDiscountApply = async () => {
+  if (discountApplied) {
+    setDiscountMessage("⚠️ Discount already applied");
+    return;
+  }
 
-      const result = await res.json();
-      if (result.success) {
-        setDiscountPercent(result.data.percent); // percent from server
-        setDiscountMessage(`✅ ${result.message} (${result.data.percent}% off)`);
-      } else {
-        setDiscountPercent(0);
-        setDiscountMessage(`❌ ${result.message}`);
-      }
-    } catch (err) {
-      setDiscountMessage("❌ Server error");
+  try {
+    const res = await fetch("/api/discount", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code: discountCode }),
+    });
+
+    const result = await res.json();
+    if (result.success) {
+      setDiscountPercent(result.data.percent);
+      setDiscountMessage(`✅ ${result.message} (${result.data.percent}% off)`);
+      setDiscountApplied(true); // ✅ prevent future clicks
+    } else {
+      setDiscountPercent(0);
+      setDiscountMessage(`❌ ${result.message}`);
     }
-  };
+  } catch (err) {
+    setDiscountMessage("❌ Server error");
+  }
+};
+
 
   const handleSubmit = (e) => {
     e.preventDefault();

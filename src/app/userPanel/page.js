@@ -5,6 +5,7 @@ import connectToDB from "@/configs/db";
 import ticketModel from "@/models/Ticket";
 import wishlistModel from "@/models/wishList";
 import commentModel from "@/models/Comment";
+import orderModel from "@/models/Order";
 import { authUser } from "@/utils/authUser";
 import {
   FaComment,
@@ -18,10 +19,11 @@ export default async function userHome() {
   const user = await authUser();
 
   // ✅ Parallel count queries for performance
-  const [wishCount, commentCount, ticketCount] = await Promise.all([
+  const [wishCount, commentCount, ticketCount,orderCount] = await Promise.all([
     wishlistModel.countDocuments({ userId: user._id }),
     commentModel.countDocuments({ userID: user._id }),
     ticketModel.countDocuments({ userID: user._id }),
+    orderModel.countDocuments({ userId: user._id }),
   ]);
 
   // ✅ Fetch ticket details for rendering
@@ -31,6 +33,15 @@ export default async function userHome() {
     .populate("subDepartment")
     .populate("userID");
 
+  // ✅ Fetch orders details for rendering
+  const orders = await orderModel
+    .find({ userId: user._id })
+    .populate("userId")
+    .populate({
+      path: "items.productId",
+      model: "Product",
+    });
+
   return (
     <>
       <h1 className="text-3xl font-bold mb-6 border-b border-gray-300 pb-2">
@@ -39,18 +50,10 @@ export default async function userHome() {
 
       {/* ✅ Stats Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-4">
-        <Box
-          icon={<FaComment />}
-          title="Comments"
-          number={commentCount}
-        />
+        <Box icon={<FaComment />} title="Comments" number={commentCount} />
         <Box icon={<FaHeart />} title="Favorites" number={wishCount} />
-        <Box
-          icon={<FaTicketAlt />}
-          title="Tickets "
-          number={ticketCount}
-        />
-        <Box icon={<FaShoppingCart />} title="Orders " number={7} />
+        <Box icon={<FaTicketAlt />} title="Tickets " number={ticketCount} />
+        <Box icon={<FaShoppingCart />} title="Orders " number={orderCount} />
       </div>
 
       <div className="mt-10 space-y-10">
@@ -70,7 +73,7 @@ export default async function userHome() {
           <h2 className="text-2xl font-bold text-gray-800">🎫 Recent Orders</h2>
         </div>
         <div className="space-y-4">
-          <Orders />
+          <Orders orders={JSON.parse(JSON.stringify(orders)).slice(0, 6)} />
         </div>
       </div>
     </>

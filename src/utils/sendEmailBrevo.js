@@ -23,7 +23,7 @@ const sendWelcomeEmail = async ({ email, username }) => {
         htmlContent: `
           <div style="font-family: sans-serif; color: #333;">
             <h2>Hi ${username || "there"},</h2>
-            <p>Welcome to <strong>Coffee Market</strong>! We're thrilled to have you.</p>
+            <p>Welcome to <strong>Nexr Coffee Market</strong>! We're thrilled to have you.</p>
             <p>Explore our finest blends, track your orders, and enjoy exclusive perks.</p>
             <p>Let us know if you ever need help—we're just a sip away ☕</p>
             <br/>
