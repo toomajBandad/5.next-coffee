@@ -64,12 +64,30 @@ function ArticleEdit({ articles }) {
     const result = await res.json();
 
     if (res.ok && result.success !== false) {
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "success",
+        title: selectedArticle ? "Article updated!" : "Article created!",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+      });
+
       setSelectedArticle(null);
       setShowEditForm(false);
       setIsAdding(false);
       router.refresh();
     } else {
-      alert(result.message || "Failed to save article.");
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "error",
+        title: result.message || "Failed to save article.",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+      });
     }
   }
 
@@ -108,15 +126,15 @@ function ArticleEdit({ articles }) {
 
       {showEditForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm bg-white/10">
-            <ArticleEditForm
-              selectedArticle={selectedArticle}
-              onSubmit={onSubmit}
-              onCancel={() => {
-                setShowEditForm(false);
-                setSelectedArticle(null);
-                setIsAdding(false);
-              }}
-            />
+          <ArticleEditForm
+            selectedArticle={selectedArticle}
+            onSubmit={onSubmit}
+            onCancel={() => {
+              setShowEditForm(false);
+              setSelectedArticle(null);
+              setIsAdding(false);
+            }}
+          />
         </div>
       )}
     </>

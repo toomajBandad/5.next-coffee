@@ -1,11 +1,12 @@
 'use client';
 import { useState } from 'react';
 
-export default function FotoUploaderConfirmable({ onUpload }) {
+export default function FotoUploaderConfirmable({ currentUrl, onUpload }) {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [uploading, setUploading] = useState(false);
-  const [uploadedUrl, setUploadedUrl] = useState(null);
+  const [originalUrl] = useState(currentUrl || null);
+  const [uploadedUrl, setUploadedUrl] = useState(currentUrl || null);
 
   const handleFileChange = (e) => {
     const selected = e.target.files[0];
@@ -24,41 +25,48 @@ export default function FotoUploaderConfirmable({ onUpload }) {
     setFile(selected);
     const reader = new FileReader();
     reader.readAsDataURL(selected);
-    reader.onload = () => setPreview(reader.result);
+    reader.onload = () => {
+      try {
+        setPreview(reader.result);
+      } catch (err) {
+        console.error('Preview error:', err);
+        alert('Failed to generate preview');
+      }
+    };
   };
 
-const handleConfirmUpload = async () => {
-  if (!preview) return;
-  setUploading(true);
+  const handleConfirmUpload = async () => {
+    if (!preview) return;
+    setUploading(true);
 
-  try {
-    const res = await fetch('/api/fotoUpload', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ image: preview }),
-    });
+    try {
+      const res = await fetch('/api/fotoUpload', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image: preview }),
+      });
 
-    const data = await res.json();
-    console.log('Upload response:', data);
+      const data = await res.json();
+      console.log('Upload response:', data);
 
-    if (data.url) {
-      setUploadedUrl(data.url);
-      onUpload(data.url);
-    } else {
-      alert('Upload failed');
+      if (data.url) {
+        setUploadedUrl(data.url);
+        onUpload(data.url);
+      } else {
+        alert('Upload failed');
+      }
+    } catch (err) {
+      console.error('Upload error:', err);
+      alert('Something went wrong');
+    } finally {
+      setUploading(false);
     }
-  } catch (err) {
-    console.error('Upload error:', err);
-    alert('Something went wrong');
-  } finally {
-    setUploading(false);
-  }
-};
+  };
 
   const reset = () => {
     setFile(null);
     setPreview(null);
-    setUploadedUrl(null);
+    setUploadedUrl(originalUrl);
   };
 
   return (
@@ -71,6 +79,18 @@ const handleConfirmUpload = async () => {
         className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
       />
 
+      {uploadedUrl && !preview && (
+        <div className="text-sm text-gray-600">
+          📷 Current photo:
+          <br />
+          <img
+            src={uploadedUrl}
+            alt="Current"
+            className="w-20 rounded-md border object-cover mt-2"
+          />
+        </div>
+      )}
+
       {preview && (
         <div className="flex flex-col gap-2">
           <img
@@ -78,7 +98,7 @@ const handleConfirmUpload = async () => {
             alt="Preview"
             className="w-20 rounded-md border object-cover"
           />
-          {!uploadedUrl && (
+          {!uploadedUrl || preview !== uploadedUrl ? (
             <div className="flex gap-2">
               <button
                 onClick={handleConfirmUpload}
@@ -94,11 +114,11 @@ const handleConfirmUpload = async () => {
                 Cancel
               </button>
             </div>
-          )}
+          ) : null}
         </div>
       )}
 
-      {uploadedUrl && (
+      {uploadedUrl && preview === uploadedUrl && (
         <div className="text-sm text-green-600">
           ✅ Uploaded successfully!
           <br />

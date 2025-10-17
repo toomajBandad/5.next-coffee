@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import FotoUploader from "@/components/modules/fotoUploader/FotoUploader";
+import FotoUploaderConfirmable from "@/components/modules/fotoUploader/FotoUploader";
 
 const typeOptions = ["whole bean", "ground", "capsule", "instant"];
 const roastOptions = ["light", "medium", "dark"];
@@ -13,7 +13,7 @@ export default function ProductFormModal({
   onSubmit,
   initialData = {},
 }) {
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState(initialData?.image || "");
 
   const {
     register,
@@ -42,6 +42,7 @@ export default function ProductFormModal({
     if (initialData && Object.keys(initialData).length > 0) {
       const tagsAsString = initialData.tags?.join(", ") || "";
       reset({ ...initialData, tags: tagsAsString });
+      setImageUrl(initialData.image || "");
     }
   }, [initialData, reset]);
 
@@ -173,8 +174,11 @@ export default function ProductFormModal({
           </div>
 
           {/* fotouploader */}
-          <div >
-            <FotoUploader onUpload={(url) => setImageUrl(url)} />
+          <div>
+            <FotoUploaderConfirmable
+              onUpload={(url) => setImageUrl(url)}
+              currentUrl={initialData?.image || null}
+            />
           </div>
 
           <div className="md:col-span-2 mt-6 flex justify-end space-x-3">
