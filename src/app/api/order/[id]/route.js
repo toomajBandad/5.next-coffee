@@ -14,9 +14,9 @@ export async function PUT(req, { params }) {
       );
     }
 
-    const { userId, items, total, status } = await req.json();
+    const { userId, items, total, status, address } = await req.json();
 
-    if (!userId || !items || !total || !status) {
+    if (!userId || !items || !total || !status || !address) {
       return NextResponse.json(
         { message: "All required fields must be filled", success: false },
         { status: 400 }
@@ -30,6 +30,7 @@ export async function PUT(req, { params }) {
         items,
         total,
         status,
+        address,
       },
       { new: true }
     );

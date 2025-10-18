@@ -11,6 +11,8 @@ function MainCheckout({ user }) {
   const [discountPercent, setDiscountPercent] = useState(0);
   const [discountApplied, setDiscountApplied] = useState(false);
 
+  const [saveAddress, setSaveAddress] = useState(false); 
+
   useEffect(() => {
     const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
     setCart(storedCart);
@@ -29,12 +31,12 @@ function MainCheckout({ user }) {
   const discountAmount = subtotal * (discountPercent / 100);
   const totalPrice = Math.max(0, subtotal - discountAmount);
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const result = await Swal.fire({
-    title: "🧾 Confirm Your Order",
-    html: `
+    const result = await Swal.fire({
+      title: "🧾 Confirm Your Order",
+      html: `
       <div style="text-align:left; font-size:14px;">
         <p><strong>Name:</strong> ${user.username}</p>
         <p><strong>Email:</strong> ${user.email}</p>
@@ -42,51 +44,63 @@ const handleSubmit = async (e) => {
         <p><strong>Total:</strong> $${totalPrice.toLocaleString()}</p>
       </div>
     `,
-    icon: "question",
-    showCancelButton: true,
-    confirmButtonText: "Place Order",
-    cancelButtonText: "Cancel",
-  });
-
-  if (!result.isConfirmed) return;
-
-  // ✅ Transform cart to match required format
-  const items = cart.map((item) => ({
-    productId: item.productID,
-    quantity: item.quantity,
-  }));
-
-  try {
-    const res = await fetch("/api/order", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        userId: user._id,
-        items,
-        total: totalPrice,
-        status: "Pending",
-      }),
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "Place Order",
+      cancelButtonText: "Cancel",
     });
 
-    const data = await res.json();
+    if (!result.isConfirmed) return;
 
-    if (data.success) {
-      Swal.fire({
-        title: "🎉 Order Placed!",
-        text: "Thank you for your purchase.",
-        icon: "success",
-        confirmButtonColor: "#10b981",
-      });
-      localStorage.removeItem("cart");
-      setCart([]);
-    } else {
-      Swal.fire("❌ Error", data.message || "Something went wrong.", "error");
+    // ✅ Save address if checkbox is checked
+    if (saveAddress) {
+      try {
+        await fetch(`/api/user/addressUpdate/${user._id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ address: userAddress }),
+        });
+      } catch (err) {
+        console.error("Failed to save address:", err);
+      }
     }
-  } catch (err) {
-    Swal.fire("❌ Server Error", "Please try again later.", "error");
-  }
-};
 
+    // ✅ Transform cart to match required format
+    const items = cart.map((item) => ({
+      productId: item.productID,
+      quantity: item.quantity,
+    }));
+
+    try {
+      const res = await fetch("/api/order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: user._id,
+          items,
+          total: totalPrice,
+          status: "Pending",
+          address: userAddress,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        Swal.fire({
+          title: "🎉 Order Placed!",
+          text: "Thank you for your purchase.",
+          icon: "success",
+        });
+        localStorage.removeItem("cart");
+        setCart([]);
+      } else {
+        Swal.fire("❌ Error", data.message || "Something went wrong.", "error");
+      }
+    } catch (err) {
+      Swal.fire("❌ Server Error", "Please try again later.", "error");
+    }
+  };
 
   return (
     <div className="max-w-4xl mx-auto my-10 p-6 bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-lg">
@@ -118,6 +132,19 @@ const handleSubmit = async (e) => {
             className="w-full p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-green-500"
             required
           />
+          {/* ✅ NEW CHECKBOX */}
+          <div className="flex items-center mt-4">
+            <input
+              type="checkbox"
+              id="saveAddress"
+              checked={saveAddress}
+              onChange={(e) => setSaveAddress(e.target.checked)}
+              className="mr-2 h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+            />
+            <label htmlFor="saveAddress" className="text-sm text-gray-700">
+              💾 Save this address to my profile
+            </label>
+          </div>
         </div>
 
         <DiscountCodeInput

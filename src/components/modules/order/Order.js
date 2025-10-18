@@ -50,6 +50,9 @@ export default function Order({ order }) {
       <div className="text-sm font-semibold text-gray-800">
         Total: €{order.total.toFixed(2)}
       </div>
+      <div className="text-sm font-semibold text-gray-800">
+        Address: {order.address}
+      </div>
     </div>
   );
 }

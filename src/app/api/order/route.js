@@ -33,9 +33,9 @@ export async function POST(req) {
     await connectToDB();
 
     const body = await req.json();
-    const { userId, items, total, status } = body;
+    const { userId, items, total, status ,address} = body;
 
-    if (!userId || !Array.isArray(items) || items.length === 0 || !total) {
+    if (!userId || !Array.isArray(items) || items.length === 0 || !total ||!address) {
       return NextResponse.json(
         {
           message: "Missing required fields: userId, items, or total",
@@ -67,6 +67,7 @@ export async function POST(req) {
       items,
       total,
       status: status || "Pending",
+      address,
     });
 
     return NextResponse.json(

@@ -14,6 +14,7 @@ const orderSchema = new mongoose.Schema(
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     items: { type: [orderItemSchema], required: true },
     total: { type: Number, required: true },
+    address: { type: String, required: true },
     status: {
       type: String,
       enum: ["Pending", "Processing", "Shipped", "Delivered", "Cancelled"],
