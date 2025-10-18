@@ -1,6 +1,5 @@
 import Sidebar from "@/components/modules/sidebar/Sidebar";
 import SidebarTop from "@/components/modules/sidebartop/SidebarTop";
-import Topbar from "@/components/modules/topbar/Topbar";
 import { authUser } from "@/utils/authUser";
 import { redirect } from "next/navigation";
 
@@ -21,7 +20,6 @@ export default async function AdminLayout({ children }) {
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
-      <Topbar username={JSON.parse(JSON.stringify(user.username))} />
 
       {/* Show SidebarTop on sm and md */}
       <div className="block lg:hidden w-full">

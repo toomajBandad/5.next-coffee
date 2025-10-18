@@ -5,12 +5,32 @@ import PageTitle from "@/components/modules/pageTitle/PageTitle";
 import connectToDB from "@/configs/db";
 import StoreMain from "@/components/templates/store/StoreMain";
 
-async function Store() {
-  let products = [];
+export default async function Store({ searchParams }) {
+  await connectToDB();
 
+  const origins = await productModel.distinct("origin");
+  const roastLevels = await productModel.distinct("roastLevel");
+  const types = await productModel.distinct("type");
+  const smells = await productModel.distinct("smell");
+
+  const query = {};
+   searchParams = (await searchParams) || {};
+  if (searchParams.roastLevel) query.roastLevel = searchParams.roastLevel;
+  if (searchParams.origin) query.origin = searchParams.origin;
+  if (searchParams.type) query.type = searchParams.type;
+  if (searchParams.smell) query.smell = searchParams.smell;
+
+  if (searchParams.priceMin || searchParams.priceMax) {
+    query.price = {};
+    if (searchParams.priceMin) query.price.$gte = Number(searchParams.priceMin);
+    if (searchParams.priceMax) query.price.$lte = Number(searchParams.priceMax);
+  }
+
+  if (searchParams.score) query.score = Number(searchParams.score);
+
+  let products = [];
   try {
-    await connectToDB();
-    products = await productModel.find({}).lean();
+    products = await productModel.find(query).lean();
   } catch (err) {
     console.error("Error loading products:", err);
   }
@@ -23,10 +43,14 @@ async function Store() {
           title="Discover Our Coffee Collection"
           subtitle="Handpicked, roasted, and curated for every kind of coffee lover."
         />
-        <StoreMain products={JSON.parse(JSON.stringify(products))} />
+        <StoreMain
+          products={JSON.parse(JSON.stringify(products))}
+          origins={origins}
+          roastLevels={roastLevels}
+          types={types}
+          smells={smells}
+        />
       </div>
     </div>
   );
 }
-
-export default Store;

@@ -30,6 +30,8 @@ function OrderEdit({ orders }) {
       html: `
         <p><strong>Items:</strong></p>
         ${itemList}
+        <p class="mt-5"><strong>Address:</strong></p>
+        ${order.address}
       `,
       confirmButtonText: "Close",
     });

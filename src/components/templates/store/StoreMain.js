@@ -3,8 +3,9 @@
 import React, { useEffect, useState } from "react";
 import Pagination from "@/components/modules/pagination/Pagination";
 import Card from "@/components/modules/card/Card";
+import StoreFilters from "@/components/modules/storeFilter/StoreFilter";
 
-function StoreMain({ products }) {
+function StoreMain({ products, origins, roastLevels, types, smells }) {
   const itemsPerPage = 8;
   const totalItems = products.length;
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,6 +25,13 @@ function StoreMain({ products }) {
 
   return (
     <div>
+      <StoreFilters
+        origins={origins}
+        roastLevels={roastLevels}
+        types={types}
+        smells={smells}
+      />
+
       <div
         data-aos="fade-up"
         className="items-center grid grid-cols-1 px-4 md:px-6 lg:px-8 xl:px-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-6 mx-auto"
